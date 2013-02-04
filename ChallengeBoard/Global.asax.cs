@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Threading;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using ChallengeBoard.Models;
 using ChallengeBoard.Services;
 using Munq.MVC3;
 

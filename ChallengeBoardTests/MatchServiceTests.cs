@@ -12,7 +12,7 @@ namespace ChallengeBoardTests
         public void ThrowsIfBoardDoesNotExist()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
 
             Assert.Throws<ServiceException>(() => service.GenerateMatch(100, "User1", "User3"));
         }
@@ -21,7 +21,7 @@ namespace ChallengeBoardTests
         public void ThrowsIfReporterNotFound()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
 
             Assert.Throws<ServiceException>(() => service.GenerateMatch(1, "User3", "User2"));
         }
@@ -30,7 +30,7 @@ namespace ChallengeBoardTests
         public void ThrowsIfOpponentNotFound()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
             
             Assert.Throws<ServiceException>(() => service.GenerateMatch(1, "User1", "User3"));
         }
@@ -39,7 +39,7 @@ namespace ChallengeBoardTests
         public void ThrowsIfPlayingYourself()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
 
             // Can't find board
             Assert.Throws<ServiceException>(() => service.GenerateMatch(1, "User1", "User1"));
@@ -49,7 +49,7 @@ namespace ChallengeBoardTests
         public void ThrowsIfBoardHasEnded()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
 
             var board = repository.GetBoardByIdWithCompetitors(1);
             board.End = DateTime.Now.AddDays(-1);
@@ -61,7 +61,7 @@ namespace ChallengeBoardTests
         public void GeneratesMatch()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
 
             var match = service.GenerateMatch(1, "User1", "User2");
 
@@ -76,7 +76,7 @@ namespace ChallengeBoardTests
         public void CreatesMatch()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
 
             var matchCount = repository.Matches.Count();
 
@@ -93,7 +93,7 @@ namespace ChallengeBoardTests
         public void ThrowsIfMatchNotFound()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
 
             Assert.Throws<ServiceException>(() => service.VerifyMatch(100));
         }
@@ -102,7 +102,7 @@ namespace ChallengeBoardTests
         public void VerifiesMatch()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
             
             service.VerifyMatch(1);
             
@@ -126,7 +126,7 @@ namespace ChallengeBoardTests
         public void VerifiesTiedMatch()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository);
+            var service = new MatchService(repository, null);
 
             repository.GetMatchById(1).Tied = true;
             

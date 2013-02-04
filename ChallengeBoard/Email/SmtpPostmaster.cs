@@ -6,9 +6,13 @@ namespace ChallengeBoard.Email
 {
     public class SmtpPostmaster : IPostmaster
     {
+        public void Send(EmailContact to, string subject, string body)
+        {
+            Send(new[] {to}, subject, body);
+        }
         public void Send(ICollection<EmailContact> to, string subject, string body)
         {
-            var message = new MailMessage { From = new MailAddress("test@gmail.com", "The Challenge Board") }; //TODO Web.config
+            var message = new MailMessage();
             foreach (var contact in to)
                 message.To.Add(new MailAddress(contact.EmailAddress, contact.Name));
 

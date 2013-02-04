@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using ChallengeBoard.Email;
 using ChallengeBoard.Infrastucture;
 using ChallengeBoard.Scoring;
 using ChallengeBoard.Models;
@@ -9,10 +10,23 @@ namespace ChallengeBoard.Services
     public class MatchService : IMatchService
     {
         private readonly IRepository _repository;
-        
-        public MatchService(IRepository repository)
+        private readonly IPostmaster _postmaster;
+
+        private static readonly Func<Match, string> MatchMessage = match =>
+            String.Format(
+                "<p>Hello {0},</p>" +
+                "We're just dropping you a line to let you know that {1} has reported a match with you on the {2} " +
+                "challenge board.  If this is accurate, there isn't anything you have to do.  If this is in err, head on over " +
+                "to to reject the match so that it will not count.  You have {3} hours to reject this match.</p>" +
+                "<p>Thanks,<br/>The Challenge Board</p>",
+                match.Loser.Name, match.Winner.Name,
+                match.Board.Name,
+                match.Board.AutoVerification);
+
+        public MatchService(IRepository repository, IPostmaster postmaster)
         {
             _repository = repository;
+            _postmaster = postmaster;
         }
 
         public Match CreateMatch(int boardId, string winnerName, string loserName, bool tie = false)
@@ -21,6 +35,10 @@ namespace ChallengeBoard.Services
 
             _repository.Add(match);
             _repository.CommitChanges();
+
+            if (_postmaster != null)
+                _postmaster.Send(new EmailContact(match.Loser.Name, match.Loser.Profile.EmailAddress),
+                                 "Match Notification", MatchMessage(match));
 
             return (match);
         }
