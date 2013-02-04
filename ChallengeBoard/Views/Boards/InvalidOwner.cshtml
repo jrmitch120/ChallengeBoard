@@ -1,0 +1,12 @@
+﻿@model ChallengeBoard.Models.Board
+@using ChallengeBoard.Infrastucture
+@{
+    ViewBag.Title = "Invalid Ownership";
+}
+@Html.Partial("_HeaderPartial", new PageHeader("You Don't Own This Challenge Board"))
+<div clss="well">
+    Sorry charlie, but you can only modify boards that you own.
+</div>
+<p>
+    @Html.ActionLink("Back to Board", "Details", new { id = Model.BoardId })
+</p>

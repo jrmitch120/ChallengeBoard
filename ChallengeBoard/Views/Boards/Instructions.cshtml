@@ -1,0 +1,39 @@
+﻿@model ChallengeBoard.Models.Board
+@{
+    ViewBag.Title = "Instructions";
+}
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name,"Instructions"))
+@Html.Partial("_BoardNav", Model)
+<div class="well">
+    <section id="Instructions">
+        <p>
+            You have successfully joined @Model.Name.  The starting rating for this challenge board is <u>@Model.StartingRating</u>.  
+            You can improve your rating by playing matches with your fellow players.
+        </p>
+        <p>
+            Match winners are responsible for reporting the outcome of their match.  Once reported, the loser will be notified 
+            and have a certain amount of time to reject the match result.  If no action is taken prior to the deadline, the 
+            match result will become perminant and participants' ratings will be adjusted.
+        </p>
+        <h3>Where to next?</h3>
+        <ul>
+            <li>
+                @Html.ActionLink("The Challenge Board", "Details", new { id = Model.BoardId }) -
+                The main landing page.  Here you'll find the current standings and other information about 
+                your challenge board.
+            </li> 
+            <li>
+                @Html.ActionLink("Match History", "List", "Matches", new { boardId = Model.BoardId }, null) - 
+                Here you can view recent and outstanding matches.  
+                Matches that you have lost can also be rejected here.
+            </li> 
+            <li>
+                @Html.ActionLink("Report a Match", "Create", "Matches", new { boardId = Model.BoardId }, null) - 
+                Have you played a match?  Here is where you should go to report it.
+            </li> 
+        </ul>
+    </section>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/components")
+}

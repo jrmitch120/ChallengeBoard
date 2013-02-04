@@ -1,0 +1,13 @@
+﻿@model ChallengeBoard.Models.Board
+
+@{
+    ViewBag.Title = "Standings";
+}
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name, "Standings"))
+@Html.Partial("_BoardNav", Model)
+<section id="Standings">
+    @Html.Partial("_StandingsPartial", Model.Competitors)
+</section>
+@section Scripts {
+    @Scripts.Render("~/bundles/components")
+}

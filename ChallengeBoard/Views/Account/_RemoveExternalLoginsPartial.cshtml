@@ -1,0 +1,37 @@
+﻿@model ICollection<ChallengeBoard.Models.ExternalLogin>
+
+@if (Model.Count > 0)
+{
+    <h3>Registered external logins</h3>
+    <div class="well">
+        <table>
+            <tbody>
+                <tr>
+                    @foreach (ChallengeBoard.Models.ExternalLogin externalLogin in Model)
+                    {
+                        <td>
+                            @if (ViewBag.ShowRemoveButton)
+                            {
+                                using (Html.BeginForm("Disassociate", "Account", FormMethod.Post, new { @class = "form-condensed" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <fieldset>
+                                        @Html.Hidden("provider", externalLogin.Provider)
+                                        @Html.Hidden("providerUserId", externalLogin.ProviderUserId)
+                                        <button type="submit" class="btn btn-primary" title="Remove this @externalLogin.ProviderDisplayName credential from your account">
+                                            Remove @externalLogin.ProviderDisplayName
+                                        </button>
+                                    </fieldset>
+                                }
+                            }
+                            else
+                            {
+                                @: &nbsp;
+                            }
+                        </td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}

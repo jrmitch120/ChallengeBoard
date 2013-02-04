@@ -1,0 +1,15 @@
+﻿@using ChallengeBoard.Models
+@using ChallengeBoard.Infrastucture
+@model Board
+@{
+    ViewBag.Title = "Can Not Delete";
+}
+@Html.Partial("_HeaderPartial", new PageHeader(@Model.Name, "Delete"))
+<div class="well">
+    Sorry charlie, but this challenge board is already underway.  In other words, matche reports have started to roll in.  
+    You can no longer delete it.  To close down the board now, you will need to @Html.ActionLink("edit", "Edit", new { id = Model.BoardId }) 
+    the ending date.
+</div>
+<p>
+    @Html.ActionLink("Back to Board", "Details", new { id = Model.BoardId })
+</p>

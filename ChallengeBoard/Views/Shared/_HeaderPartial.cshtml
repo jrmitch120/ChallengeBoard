@@ -1,0 +1,18 @@
+﻿@model ChallengeBoard.Infrastucture.PageHeader
+<div class="page-header">
+    <h1>@Html.DisplayFor(m => m.Heading)
+        @if (!Model.SubHeading.IsEmpty())
+        {
+            <span class="subhead">
+                <small>@Html.DisplayFor(m => m.SubHeading)</small>
+            </span>
+        }
+    </h1>
+</div>
+@if (ViewBag.StatusMessage != null)
+{
+    <div class="alert alert-info">
+        <a class="close" data-dismiss="alert">&times;</a>
+        @ViewBag.StatusMessage
+    </div>
+}

@@ -1,0 +1,83 @@
+﻿@using ChallengeBoard.Infrastucture;
+@model IEnumerable<ChallengeBoard.Models.Board>
+
+@{
+    ViewBag.Title = "Active Challenge Boards";
+}
+@Html.Partial("_HeaderPartial", new PageHeader(ViewBag.Title))
+<div class="well">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    @Html.ActionLink("Create New", "Create")
+</div>
+@if (Model.Any())
+{
+    <table class="table table-striped no-more-tables">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => m.Name)
+                </th>
+                <th>
+                    Organizer
+                </th>
+                <th class="centered">
+                    @Html.DisplayNameFor(m => m.Created)
+                </th>
+                <th class="centered">
+                    @Html.DisplayNameFor(m => m.End)
+                </th>
+                <th class="centered">
+                    Progress
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td data-title="@Html.DisplayNameFor(m => m.Name)">
+                        @Html.ActionLink(item.Name, "Standings", new {id = item.BoardId})
+                    </td>
+                    <td data-title="Organizer">
+                        @Html.DisplayFor(modelItem => item.Owner.Name)
+                    </td>
+                    <td class="centered" data-title="@Html.DisplayNameFor(m => m.Created)">
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </td>
+                    <td class="centered" data-title="@Html.DisplayNameFor(m => m.End)">
+                        @Html.DisplayFor(modelItem => item.End)
+                    </td>
+                    <td data-title="Progress">
+                        <div class="progress">
+                            @{
+                                int percent;
+                                
+                                if (item.Started == DateTime.MinValue)
+                                {
+                                    percent = 0;
+                                }
+                                else if (DateTime.Now >= item.End)
+                                {
+                                    percent = 100;
+                                }
+                                else
+                                {
+                                    var totalDays = (item.End - item.Started).TotalDays;
+                                    var elapsedDays = totalDays - (item.End - DateTime.Now).TotalDays;
+                                    percent = (elapsedDays/totalDays*100).RoundToWhole();
+                                }
+                            }
+                            <div class="bar" style="width: @string.Format("{0}%", percent)"></div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="well">
+        No challenge boards have been created yet.  Why don't you @Html.ActionLink("create", "Create") the fist one?
+    </div>
+}

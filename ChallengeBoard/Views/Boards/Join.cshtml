@@ -1,0 +1,28 @@
+﻿@using ChallengeBoard.Infrastucture
+@model ChallengeBoard.Models.Board
+@{
+    ViewBag.Title = "Join";
+}
+@Html.Partial("_HeaderPartial", new PageHeader(Model.Name, "Join"))
+<div class="well">
+    @Model.Name requires a password to join.  If you don't know the password, ask the organizer.  
+    Otherwise, please enter the password below.
+</div>
+@using (Html.BeginForm("Join", "Boards", new { id = Model.BoardId }, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Partial("_ValidationSummary", ViewData.ModelState)
+    <div class="control-group">
+        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+
+        <div class="controls">
+            @Html.PasswordFor(m => m.Password, new { maxlength = "16" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Join Challenge Board</button>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/components")
+}

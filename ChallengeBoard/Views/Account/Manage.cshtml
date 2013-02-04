@@ -1,0 +1,36 @@
+﻿@model ChallengeBoard.Models.LocalPasswordModel
+@{
+    ViewBag.Title = "Manage Account";
+}
+
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(ViewBag.Title))
+
+
+<p class="message-success">@ViewBag.StatusMessage</p>
+
+<div class="well">
+   You're logged in as <strong>@User.Identity.Name</strong>. 
+</div>
+
+<div class="row">
+    <div class="span6">
+        <h3>Manage Account</h3>
+        <section id="password">
+            @(ViewBag.HasLocalPassword ? Html.Partial("_ChangePasswordPartial") : Html.Partial("_SetPasswordPartial"))
+        </section>
+    </div>
+    <div class="span6">
+        <section id="externalLogins">
+            @Html.Action("RemoveExternalLogins")
+
+            <h3>Add an external login</h3>
+            @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,42 @@
+﻿@model ChallengeBoard.Models.Board
+
+@{
+    ViewBag.Title = "Delete";
+}
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name, "Retire"))
+<h2>Are you sure you want retire?</h2>
+<div class="well">
+    You are just about ready to retire from @Model.Name.  You won't show up in the standing or be able to participate 
+    in matches anymore.  If you happen to change your mind, you can still rejoin the after you retire.  You will be 
+    reinstated at your current rating.
+</div>
+@using (Html.BeginForm("Retire", "Boards", new { id = @Model.BoardId }, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="control-group">
+        <div class="controls">
+            @Html.TextBox("ConfirmRetire", "", new { maxlength = 6, @class = "danger", autocomplete = "off" })
+            <span class="help-inline">Please type the word RETIRE to confirm.</span>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" id="Retire" disabled="disabled" class="btn btn-primary disabled">Retire</button>
+        @Html.ActionLink("Cancel", "Details", new { id = Model.BoardId }, new { @class = "btn" })
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function() {
+            // Force them to type "RETIRE" before enabling the reject button.
+            $('#ConfirmRetire').keyup(function() {
+                if ($(this).val().toLowerCase() == "retire") {
+                    $('#Retire').removeClass('disabled');
+                    $('#Retire').removeAttr('disabled');
+                } else {
+                    $('#Retire').addClass('disabled');
+                    $('#Retire').attr('disabled', 'disabled');
+                }
+            });
+        });
+    </script>
+}

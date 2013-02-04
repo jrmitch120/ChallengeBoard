@@ -1,0 +1,13 @@
+﻿@model ChallengeBoard.Models.Board
+
+@{
+    ViewBag.Title = "Banned";
+}
+
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader("You've Been Hit By The Ban Hammer"))
+<p>
+    The administrator for @Model.Name has banned you from competition.  Was it something you said?
+</p>
+<p>
+    @Html.ActionLink("Back to Board", "Details", new { id=Model.BoardId }) 
+</p>

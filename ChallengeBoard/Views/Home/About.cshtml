@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+<article>
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader("About"))
+    <p>
+        Some stuff about the site forthcoming.
+    </p>
+</article>
+
+<aside>
+    <h2>Asides</h2>
+    <p>
+        Different information forthcomming.
+    </p>
+    <ul>
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    </ul>
+</aside>

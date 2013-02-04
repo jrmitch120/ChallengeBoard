@@ -1,0 +1,94 @@
+﻿@model ChallengeBoard.Models.Board
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="page-header">
+    <h1>New Challenge Board</h1>
+</div>
+<div class="well">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</div>
+@using (Html.BeginForm("Create", "Boards", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Partial("_ValidationSummary", ViewData.ModelState)
+    <div class="control-group">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Name, new {  @class="span3", maxlength = "45" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Password, new { maxlength = "16" })
+            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Password Protection" data-content="Leave the password empty to allow anyone to join."><i class="icon-question-sign icon-white"></i></a>
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.End, new { @class = "control-label" })
+
+        <div class="controls">
+            <div class="input-append date" id="DatePicker" data-date="@Model.End.ToShortDateString()" data-date-format="m/d/yyyy">
+                @Html.TextBox("End", Model.End.ToShortDateString(), new { @class = "span2", size = 16 })
+                <span class="add-on"><i class="icon-calendar"></i></span>
+            </div>
+            @Html.ValidationMessageFor(m => m.End)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.StartingRating, new { @class = "control-label" })
+
+        <div class="controls">
+        <!--  Chrome number support 
+            <input class="span1" data-val="true" data-val-number="The field Starting Rating must be a number." data-val-range="The field Starting Rating must be between 0 and 5000." data-val-range-max="5000" data-val-range-min="0" data-val-required="The Starting Rating field is required." id="StartingRating" name="StartingRating" type="number" value="1500" />
+            -->
+            @Html.TextBoxFor(m => m.StartingRating, new { @class = "span1" })
+            @Html.ValidationMessageFor(m => m.StartingRating)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.AutoVerification, new { @class = "control-label" })
+
+        <div class="controls">
+            @Html.TextBoxFor(m => m.AutoVerification, new { @class = "span1" })
+            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Auto Verification" data-content="Matches have this long to be accepted or rejected before they are automatically verified."><i class="icon-question-sign icon-white"></i></a>
+            @Html.ValidationMessageFor(m => m.AutoVerification)
+        </div>
+    </div>
+    <hr />
+    <div class="control-group">
+        @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Description, new { rows = "20", @class = "editor" })
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+    </div>  
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Create Challenge Board</button>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/components")
+    <script type="text/javascript">
+        $(function () {
+            $("[rel='popover']").popover();
+            $('#DatePicker').datepicker().on('changeDate', function () {
+                $('#DatePicker').datepicker('hide');
+            });
+            $('#Description').wysihtml5({
+                "html": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+            });
+        });
+    </script>
+}

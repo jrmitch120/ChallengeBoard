@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Not Found";
+}
+
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader("Challenge Board Not Found"))
+<p>
+    Sorry, we can't find the challenge board you are looking for.
+</p>
+<p>
+    @Html.ActionLink("Back to List", "Index", "Boards")
+</p>

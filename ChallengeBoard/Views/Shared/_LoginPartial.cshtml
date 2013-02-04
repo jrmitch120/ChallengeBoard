@@ -1,0 +1,18 @@
+﻿@using ChallengeBoard.Infrastucture
+@if (Request.IsAuthenticated) {
+    <ul class="nav pull-right">
+        @Html.MenuLink("Manage Account", "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        </li>
+    </ul>
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", style="float:right"}))
+    {
+        @Html.AntiForgeryToken()
+    }
+} else {
+    <ul class="nav pull-right">
+        @Html.MenuLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+        @Html.MenuLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </ul>
+}

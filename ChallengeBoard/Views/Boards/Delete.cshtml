@@ -1,0 +1,40 @@
+﻿@model ChallengeBoard.Models.Board
+
+@{
+    ViewBag.Title = "Delete";
+}
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name, "Delete"))
+<h2>Are you sure you want to delete this?</h2>
+<div class="well">
+    You are just about ready to delete this Challenge Board.  There is no going back!  Once it's gone, it's gone.
+</div>
+@using (Html.BeginForm("Delete", "Boards", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="control-group">
+        <div class="controls">
+            @Html.TextBox("ConfirmDelete", "", new { @class = "danger", maxlength = 6, autocomplete = "off" })
+            <span class="help-inline">Please type the word DELETE to confirm.</span>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" disabled="disabled" id="Delete" class="btn btn-primary disabled">Delete Board</button>
+        @Html.ActionLink("Cancel", "Details", new { id = Model.BoardId }, new { @class = "btn" })
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function() {
+            // Force them to type "DELETE" before enabling the delete button.
+            $('#ConfirmDelete').keyup(function () {
+                if ($(this).val().toLowerCase() == "delete") {
+                    $('#Delete').removeClass('disabled');
+                    $('#Delete').removeAttr('disabled');
+                } else {
+                    $('#Delete').addClass('disabled');
+                    $('#Delete').attr('disabled', 'disabled');
+                }
+            });
+        });
+    </script>
+}

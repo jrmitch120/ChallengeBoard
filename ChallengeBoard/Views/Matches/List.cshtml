@@ -1,0 +1,117 @@
+﻿@model ChallengeBoard.ViewModels.RecentMatchesViewModel
+@{
+    ViewBag.Title = "Match Activity";
+}
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Board.Name, "Match Activity"))
+@Html.Partial("_BoardNav", Model.Board)
+<div class="well">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</div>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#pending" data-toggle="tab">Pending Matches</a></li>
+    <li><a href="#recent" data-toggle="tab">Recent Matches</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="pending">
+        <h3>Pending Matches</h3>
+        @if (Model.UnVerified.Any())
+        {
+            @Html.Partial("_MatchesPartial", Model.UnVerified)
+        }
+        else
+        {
+            <div class="well">
+                No outstanding matches require verification.
+            </div>
+        }
+        <p>
+            <small class="muted">* Pending match +/- calculations include unverified matches, and may change if matches are rejected.</small>
+        </p>
+    </div>
+    <div class="tab-pane" id="recent">
+        <h3>Recent Matches</h3>
+
+        @if (Model.Verified.Any())
+        {
+            @Html.Partial("_MatchesPartial", Model.Verified)
+        }
+        else
+        {
+            <div class="well">
+                No matches have been played on this Challenge Board yet.
+            </div>
+        }
+    </div>
+</div>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    @using (Html.BeginForm("Reject", "Matches", null, FormMethod.Post, new { id = "RejectForm" }))
+    {
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Reject Match</h3>
+        </div>
+        <div class="modal-body">
+            <input id="boardId" name="boardId" type="hidden" data-bind="value: boardId">
+            <input id="matchId" name="matchId" type="hidden" data-bind="value: matchId">
+            <p>You are about to reject the following match:</p>
+            <p data-bind="text: winner"></p>
+            <p data-bind="text: loser"></p>
+            @Html.TextBox("ConfirmReject", "", new { maxlength = 6, @class = "danger", autocomplete = "off" })
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="submit" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button id="Reject" class="btn btn-primary disabled">Reject Match</button>
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/components")
+    <script type="text/javascript">
+        $(function() {
+
+            // Knockout ViewModel for a match rejection.
+            var viewModel = function() {
+                var self = this;
+
+                self.winner = ko.observable(),
+                self.loser = ko.observable(),
+                self.boardId = ko.observable(),
+                self.matchId = ko.observable();
+            };
+
+            var matchResult = new viewModel();
+            ko.applyBindings(matchResult);
+
+            // Force them to type "REJECT" before enabling the reject button.
+            $('#ConfirmReject').keyup(function() {
+                if ($(this).val().toLowerCase() == "reject") {
+                    $('#Reject').removeClass('disabled');
+                    $('#Reject').removeAttr('disabled');
+                } else {
+                    $('#Reject').addClass('disabled');
+                    $('#Reject').attr('disabled', 'disabled');
+                }
+            });
+
+            // When hidding the modal, reset the rejection confirmation box.
+            $('#myModal').on('hidden', function() {
+                $('#ConfirmReject').val('');
+            });
+
+            // User wants to reject a match.  Set the ViewModel and pop the modal
+            $('.validate').click(function() {
+
+                matchResult.winner(this.getAttribute('data-winner'));
+                matchResult.loser(this.getAttribute('data-loser'));
+                matchResult.boardId(this.getAttribute('data-boardId'));
+                matchResult.matchId(this.getAttribute('data-matchId'));
+                $('#myModal').modal();
+                return false;
+
+            });
+        });
+    </script>
+}

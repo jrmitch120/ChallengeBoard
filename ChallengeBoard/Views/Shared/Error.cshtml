@@ -1,0 +1,13 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader("Ohhhhh boy. "))
+<p>
+    We've got problems somewhere.  You  can give it another shot, or better yet, tell us what went wrong!
+</p>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

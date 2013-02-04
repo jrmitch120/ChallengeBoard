@@ -1,0 +1,95 @@
+﻿@using System.Text
+@model IEnumerable<ChallengeBoard.Models.Match>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(m => m.Winner)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Loser)
+        </th>
+        <th class="centered">Unofficial Result
+        </th>
+        <th class="centered">
+            @Html.DisplayNameFor(m => m.Created)
+        </th>
+        <th class="centered">Auto&nbsp;Verifies
+        </th>
+    </tr>
+    @foreach (var match in Model)
+    {
+        <tr>
+            <td class="span4">
+                @Html.DisplayFor(modelItem => match.Winner.Name)&nbsp;
+                <span class="badge badge-success">+@Html.DisplayFor(modelItem => match.WinnerRatingDelta)
+                </span>
+            </td>
+            <td class="span4">
+                @Html.DisplayFor(modelItem => match.Loser.Name)&nbsp;
+                <span class="badge badge-info">
+                    @Html.DisplayFor(modelItem => match.LoserRatingDelta)
+                </span>
+            </td>
+            <td class="centered">
+                @if (match.Tied)
+                {
+                    @:Tie Match
+                }
+                else
+                {
+                    @:Reporter Win
+                }
+            </td>
+            <td class="centered">
+                @match.Created.ToShortDateString()
+            </td>
+            <td class="commands">
+                @{
+                    var diff = match.VerificationDeadline - DateTime.Now;
+                    var remaining = "moments";
+                                
+                    if (diff.Hours > 0)
+                    {
+                        remaining = diff.Hours.ToString() + "hr";
+                    }
+                    else if (diff.Minutes > 0)
+                    {
+                        remaining = diff.Minutes.ToString() + "min";
+                    }
+                }
+                @if (match.Verified == null && match.Loser.Name.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    <ul class="nav nav-pills">
+                        <li>
+                            @Html.ActionLink(remaining, "Validate", new { id = match.Board.BoardId, matchId = match.MatchId },
+                                             new
+                                             {
+                                                 @class = "validate", title = "Validate", 
+                                                 data_winner = match.Winner.Name, 
+                                                 data_loser = match.Loser.Name, 
+                                                 data_matchId = match.MatchId, 
+                                                 data_boardId = match.Board.BoardId
+                                             })
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    @remaining
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+@functions{
+
+    public HtmlString MatchResult(string player, bool tie)
+    {
+        var sb = new StringBuilder();
+
+        return (new HtmlString(sb.ToString()));
+    }
+
+}

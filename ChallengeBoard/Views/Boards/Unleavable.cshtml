@@ -1,0 +1,11 @@
+﻿@model ChallengeBoard.Models.Board
+@{
+    ViewBag.Title = "Can Not Leave";
+}
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader("You Can Not Leave This Challenge Board"))
+<div class="well">
+    Since you are the owner of this challenge board, you are not allowed to abandon it.
+</div>
+<p>
+    @Html.ActionLink("Back to Board", "Details", new { id=Model.BoardId }) 
+</p>

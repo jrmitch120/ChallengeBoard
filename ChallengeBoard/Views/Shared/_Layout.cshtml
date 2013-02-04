@@ -1,0 +1,66 @@
+﻿@using ChallengeBoard.Infrastucture
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Challenge Board: @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="wrap">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Challenge Board", "Index", "Home", null, new { @class = "brand" })
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            @Html.MenuLink("Home", "Index", "Home", null, null)
+                            @Html.MenuLink("Challenge Boards", "Index", "Boards", null, null, new[] { "Matches", "Boards" }, null, new[] { "user" })
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @Html.MenuLink("Your Boards", "Index", "Boards", new { user = User.Identity.Name }, null, new[] { "Matches", "Boards" }, new[] { "user" })    
+                            }
+                            @Html.MenuLink("About", "About", "Home", null, null)
+                            @Html.MenuLink("Contact", "Contact", "Home", null, null)
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="main" class="container">
+            <div class="row">
+                <div class="span12">
+                    @RenderSection("featured", required: false)
+                    <section>
+                        @RenderBody()
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
+    <footer id="footer" class="container">
+        <hr />
+        <div class="pull-left">
+            @DateTime.Now.Year - Challenge Board
+        </div>
+        <div class="pull-right">
+            <small>version @typeof(ChallengeBoard.MvcApplication).Assembly.GetName().Version</small>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrapcore")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

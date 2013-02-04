@@ -1,0 +1,58 @@
+﻿@model Board
+@using ChallengeBoard.Infrastucture
+@using ChallengeBoard.Models
+<!-- <ul id="matchNav" data-spy="affix" data-offset-top="100" class="nav nav-pills embedded"> -->
+@{
+    var alreadyJoined = Model.Competitors.Active().ContainsCompetitor(User.Identity.Name);   
+}
+<div class="embedded">
+    <ul id="matchNav" class="nav nav-pills">
+        @Html.MenuLink("Standings", "Standings", "Boards", new { id = Model.BoardId }, null)
+        @Html.MenuLink("Information", "Details", "Boards", new { id = Model.BoardId }, null)
+        @Html.MenuLink("Match Activity", "List", "Matches", new { boardId = Model.BoardId }, null)
+        @Html.MenuLink("Report a Match", "Create", "Matches", new { boardId = Model.BoardId }, null)
+        @Html.MenuLink("Instructions", "Instructions", "Boards", new { id = Model.BoardId }, null)
+        @if (alreadyJoined)
+        {
+            <li class="dropdown pull-right">
+                <a class="dropdown-toggle"
+                   data-toggle="dropdown"
+                   href="#">
+                    Options
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    @if (Model.Owner.Name.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        <li>
+                            @Html.ActionLink("Edit Board", "Edit", "Boards", new {id = Model.BoardId}, null)
+                        </li>
+                        <li>
+                            @Html.ActionLink("Delete Board", "Delete", "Boards", new {id = Model.BoardId}, null)
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            @Html.ActionLink("Retire from Board", "Retire", "Boards", new {id = Model.BoardId}, null)
+                        </li>
+                    }
+                </ul>        
+            </li>
+        }
+    </ul>
+    @if (!alreadyJoined)
+    {
+        if (Model.Password.IsEmpty())
+         {
+             using (Html.BeginForm("Join", "Boards", new { id = Model.BoardId }, FormMethod.Post, new { @class = "form-condensed pull-right" }))
+             {
+                 <button type="submit" class="btn btn-primary">Join Board</button>
+             }
+         }
+         else
+         {
+             @Html.ActionLink("Join Board", "Join", "Boards", new { id = Model.BoardId }, new { @class = "btn btn-primary pull-right" })
+         }
+    }
+</div>

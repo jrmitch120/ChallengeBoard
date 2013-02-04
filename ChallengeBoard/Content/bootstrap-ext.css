@@ -1,0 +1,235 @@
+#main {
+    padding-top: 65px;
+}
+
+H1 .subhead {
+    float: right;
+}
+
+@media (max-width: 980px) {
+    #main {
+        padding-top: 0;
+    }
+    .embedded .pull-right {
+        float: left;
+    }
+}
+
+@media (max-width: 767px) {
+    H1 .subhead {
+        float: none;
+    }
+}
+
+@media (max-width: 480px) {
+    
+
+    /* Force table to not be like tables anymore */
+	.no-more-tables table, 
+	.no-more-tables thead, 
+	.no-more-tables tbody, 
+	.no-more-tables th, 
+	.no-more-tables td, 
+	.no-more-tables tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.no-more-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	.no-more-tables tr { border: 2px solid #2f2f2f; }
+ 
+	.no-more-tables td { 
+		/* Behave  like a "row" */
+		border: none;
+        border-bottom: 1px solid #2f2f2f; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align: left !important;
+	    width: auto !important;
+	}
+ 
+	.no-more-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+ 
+	/* Label the data using data-title attribute */
+	.no-more-tables td:before { content: attr(data-title); }
+}
+
+.embedded {
+    border: solid 1px #2f2f2f;
+    background-color: black;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 5px;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.embedded > ul {
+    display: inline;
+}
+
+.form-condensed {
+    padding-top: 2px;
+    margin-bottom: 0;
+}
+
+.form-horizontal .help-block {
+  margin-top: 10px;
+}
+
+input.danger {
+    color: #b94a48 !important;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 3.7em;
+}
+
+/* Match Rporting */
+.matchVerification {
+    width:40%;
+    display:inline-block;
+}
+
+.matchSpacer {
+    width:3%;
+    display:inline-block;
+}
+
+.centered-text {
+    text-align:center
+}   
+
+.arrow-up {
+    position: relative;
+    bottom: 12px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #468847;
+}
+
+.arrow-down {
+	position: relative;
+    top: 12px;
+    width: 0;
+    height: 0;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-top: 8px solid #0099cc;
+}
+
+.editor {
+    width: 610px;
+}
+
+.table-fixed {
+    table-layout: fixed;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table th.centered,
+.table td.centered {
+    text-align: center;
+}
+
+.table td.commands {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.table td ul.nav {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.table td ul.nav-pills > li {
+    float: none;
+}
+
+.table th.gravatar,
+.table td.gravatar {
+    width: 20px;
+}
+
+/* Remove margin from table contained progress bars */
+.table td .progress {
+    margin-bottom: 0;
+}
+
+/* Remove the exess padding from a control group that's immidiately proceeded by a <legend> */
+legend + .control-group {
+    margin-top: 0px;
+}
+
+.btn-login {
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background -color: #fefefe;
+    background-image: -moz-linear-gradient(top, #fff, #ABABAB);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#ABABAB));
+    background-image: -webkit-linear-gradient(top, #fff, #ABABAB);
+    background-image: -o-linear-gradient(top, #fff, #ABABAB);
+    background-image: linear-gradient(to bottom, #fff, #ABABAB);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0099cc', endColorstr='#ffABABAB', GradientType=0);
+    border-color: #ABABAB #ABABAB #00394d;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    *background-color: #ABABAB;
+    /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+.btn-login:hover,
+.btn-login:active,
+.btn-login.active,
+.btn-login.disabled,
+.btn-login[disabled] {
+    color: #ffffff;
+    background-color: #ABABAB;
+}
+
+/* Fixed footer */
+html {
+    height: 100%;
+}
+
+body {
+    background-attachment:fixed;
+    height: 100%;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -70px;
+}
+
+#push,
+#footer {
+    height: 70px;
+}

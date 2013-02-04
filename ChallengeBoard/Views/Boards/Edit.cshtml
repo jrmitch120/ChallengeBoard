@@ -1,0 +1,96 @@
+﻿@using ChallengeBoard.Models
+@model Board
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name, "Editing"))
+
+@using (Html.BeginForm("Edit", "Boards", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Partial("_ValidationSummary", ViewData.ModelState)
+    @Html.HiddenFor(m => m.BoardId)
+
+    <div class="control-group">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Name, new { @class="span3", maxlength = "45" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Password, new { maxlength = "16" })
+            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Password Protection" data-content="Leave the password empty to allow anyone to join."><i class="icon-question-sign icon-white"></i></a>
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.End, new { @class = "control-label" })
+        <div class="controls">
+            <div class="input-append date" id="DatePicker" data-date="@Model.End.ToShortDateString()" data-date-format="m/d/yyyy">
+                @Html.TextBox("End", Model.End.ToShortDateString(), new { @class = "span2", size = 16 })
+                <span class="add-on"><i class="icon-calendar"></i></span>
+            </div>
+            @Html.ValidationMessageFor(m => m.End)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.StartingRating, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.StartingRating, new { @class = "span1" })
+            @Html.ValidationMessageFor(m => m.StartingRating)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.AutoVerification, new { @class = "control-label" })
+
+        <div class="controls">
+            @Html.TextBoxFor(m => m.AutoVerification, new { @class = "span1" })
+            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Auto Verification" data-content="Matches have this long to be accepted or rejected before they are automatically verified.  Changing this will NOT affect currently un-verified matches."><i class="icon-question-sign icon-white"></i></a>
+            @Html.ValidationMessageFor(m => m.AutoVerification)
+        </div>
+    </div>
+    <hr />
+    <div class="control-group">
+        @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Description, new { rows = "20", @class = "editor" })
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+    </div>
+    foreach (var competitor in Model.Competitors)
+    {
+    <div>@competitor.Name - <a href="#" class="deleteLink">delete</a></div>
+    }
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        @Html.ActionLink("Cancel", "Details", new { id = Model.BoardId }, new { @class = "btn" })
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/components")
+    <script type="text/javascript">
+        // TODO:  Hook this up to a delete action
+        $("a.deleteLink").live("click", function () {
+            alert($(this).parents("div:first"));
+            $(this).parents("div:first").remove();
+            return false;
+        });
+
+        $(function () {
+            $("[rel='popover']").popover();
+            $('#DatePicker').datepicker().on('changeDate', function () {
+                $('#DatePicker').datepicker('hide');
+            });
+            $('#Description').wysihtml5({
+                "html": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+            });
+        });
+    </script>
+}

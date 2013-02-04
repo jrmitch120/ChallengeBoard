@@ -1,0 +1,50 @@
+﻿@using ChallengeBoard.Infrastucture
+@using ChallengeBoard.Models
+@model ChallengeBoard.Models.Board
+@{
+    ViewBag.Title = "Information";
+}
+@Html.Partial("_HeaderPartial", new PageHeader(Model.Name, "Information"))
+@Html.Partial("_BoardNav", Model)
+<div class="well">
+    <section id="BoardDetails">
+        <div class="form-horizontal">
+            <dl class="dl-horizontal">
+                <dt>Challenge Board @Html.DisplayNameFor(m => m.Owner):</dt>
+                <dd>@Html.DisplayFor(m => m.Owner.Name)</dd>
+                <dt>Active @Html.DisplayNameFor(m => m.Competitors):</dt>
+                <dd>@Model.Competitors.Active().Count().ToString()</dd>
+                <dt>Retired @Html.DisplayNameFor(m => m.Competitors):</dt>
+                <dd>@Model.Competitors.Retired().Count().ToString()</dd>
+                <dt>Password Protected:</dt>
+                <dd>
+                @if (!Model.Password.IsEmpty())
+                {
+                    @:Yes
+                    if (Model.Owner.Name.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                     @:&nbsp;(<i>@Model.Password</i>)
+                    }
+                }
+                else
+                {
+                    @:No.  Open to public.
+                }
+                </dd>
+                <dt>@Html.DisplayNameFor(m => m.Created):</dt>
+                <dd>@Html.DisplayFor(m => m.Created)</dd>
+                <dt>@Html.DisplayNameFor(m => m.Started):</dt>
+                <dd>@Html.DisplayFor(m => m.Started)</dd>
+                <dt>@Html.DisplayNameFor(m => m.End):</dt>
+                <dd>@Html.DisplayFor(m => m.End)</dd>
+            </dl>
+        </div>
+    </section>
+</div>
+@if (!Model.Description.IsEmpty())
+{
+    @Html.Raw(HtmlSanitizer.Sanitize(Model.Description))
+}        
+@section Scripts {
+    @Scripts.Render("~/bundles/components")
+}

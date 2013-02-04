@@ -1,0 +1,123 @@
+﻿@using System.Text
+@model IEnumerable<ChallengeBoard.Models.Match>
+<table class="table table-striped no-more-tables">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => m.Winner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.Loser)
+            </th>
+            <th>Match Result
+            </th>
+            <th class="centered">
+                @Html.DisplayNameFor(m => m.Created)
+            </th>
+            <th class="centered">
+                @if (Model.Any(m => m.IsResolved))
+                {
+                    @:Resolved On
+                }
+                else
+                {
+                    @:Auto&nbsp;Verifies
+                }
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var match in Model)
+        {
+            <tr>
+                <td data-title="@Html.DisplayNameFor(m => m.Winner)">
+                    @Html.DisplayFor(modelItem => match.Winner.Name) 
+                    <span class="badge badge-success">
+                        @if(match.WinnerRatingDelta >= 0) 
+                        { 
+                            @:+
+                        }
+                        @Html.DisplayFor(modelItem => match.WinnerRatingDelta)
+                    </span>
+                </td>
+                <td data-title="@Html.DisplayNameFor(m => m.Loser)">
+                    @Html.DisplayFor(modelItem => match.Loser.Name) 
+                    <span class="badge badge-info">
+                        @if(match.LoserRatingDelta >= 0) 
+                        {
+                            @:+
+                        } 
+                        @Html.DisplayFor(modelItem => match.LoserRatingDelta)
+                    </span>
+                </td>
+                <td data-title="Result">
+                    @if (match.Rejected)
+                    {
+                        <span class="label label-important">
+                            Match rejected.
+                        </span>
+                    }
+                    else if (match.Tied)
+                    {
+                        @: Tie match.
+                    }
+                    else
+                    {
+                        @: Reporter wins.
+                    }
+                </td>
+                <td class="centered"  data-title="@Html.DisplayNameFor(m => m.Created)">
+                    @match.Created.ToShortDateString()
+                </td>
+            
+                @if (match.IsResolved)
+                {
+                    <td class="centered" data-title="Resolved">
+                        @if (match.Resolved.HasValue)
+                        {
+                            @match.Resolved.Value.ToShortDateString()
+                        }
+                    </td>
+                }       
+                else
+                {
+                    <td class="commands" data-title="Auto Verifies">
+                        @{
+                            var diff = match.VerificationDeadline.Subtract(DateTime.Now);
+                            var remaining = "moments";
+
+                            if (diff.TotalHours >= 1)
+                            {
+                                remaining = Math.Round(diff.TotalHours,0) + "hr";
+                            }
+                            else if (diff.Minutes >= 1)
+                            {
+                                remaining = diff.Minutes + "min";
+                            }
+                        }
+                        @if (match.Loser.Name.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase))
+                        {
+                            <ul class="nav nav-pills">
+                                <li>
+                                    @Html.ActionLink(remaining, "Validate", new { id = match.Board.BoardId, matchId = match.MatchId },
+                                                     new
+                                                     {
+                                                         @class = "validate", title = "Reject Match", 
+                                                         data_winner = match.Winner.Name, 
+                                                         data_loser = match.Loser.Name, 
+                                                         data_matchId = match.MatchId, 
+                                                         data_boardId = match.Board.BoardId
+                                                     })
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            @remaining
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
