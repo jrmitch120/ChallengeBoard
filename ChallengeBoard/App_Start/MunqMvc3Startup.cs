@@ -1,3 +1,4 @@
+using System.Configuration;
 using System.Web.Mvc;
 using ChallengeBoard.Email;
 using ChallengeBoard.Models;
@@ -22,7 +23,12 @@ namespace ChallengeBoard.App_Start {
 		    ioc.Register<IRepository, PersistedRepository>();
             ioc.Register<IMatchService, MatchService>();
             ioc.Register<ChallengeBoardContext, ChallengeBoardContext>();
-            ioc.Register<IPostmaster, SmtpPostmaster>();
+            //ioc.Register<IPostmaster, SmtpPostmaster>();
+
+		    ioc.Register<IPostmaster>(
+		        r =>
+		        new SmtpPostmaster(ConfigurationManager.AppSettings["email:FromEmail"],
+		                           ConfigurationManager.AppSettings["email:FromName"]));
 		}
 	}
 }

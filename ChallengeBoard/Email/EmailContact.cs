@@ -5,7 +5,7 @@ namespace ChallengeBoard.Email
         public readonly string Name;
         public readonly string EmailAddress;
 
-        public EmailContact(string name, string emailAddress)
+        public EmailContact(string emailAddress, string name)
         {
             EmailAddress = emailAddress;
             Name = name;

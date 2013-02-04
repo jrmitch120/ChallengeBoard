@@ -37,7 +37,7 @@ namespace ChallengeBoard.Services
             _repository.CommitChanges();
 
             if (_postmaster != null)
-                _postmaster.Send(new EmailContact(match.Loser.Name, match.Loser.Profile.EmailAddress),
+                _postmaster.Send(new EmailContact(match.Loser.Profile.EmailAddress, match.Loser.Name),
                                  "Match Notification", MatchMessage(match));
 
             return (match);
