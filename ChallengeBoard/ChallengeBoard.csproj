@@ -198,6 +198,10 @@
     </Compile>
     <Compile Include="Infrastucture\AjaxOnlyAttribute.cs" />
     <Compile Include="Infrastucture\HtmlExtensions.cs" />
+    <Compile Include="Migrations\201302041909034_InitialCreate.cs" />
+    <Compile Include="Migrations\201302041909034_InitialCreate.Designer.cs">
+      <DependentUpon>201302041909034_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
@@ -379,7 +383,9 @@
     <Content Include="Views\Boards\CanNotDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <EmbeddedResource Include="Migrations\201302041909034_InitialCreate.resx">
+      <DependentUpon>201302041909034_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

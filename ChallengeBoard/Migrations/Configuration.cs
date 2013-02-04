@@ -1,19 +1,12 @@
 namespace ChallengeBoard.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ChallengeBoard.Models.ChallengeBoardContext>
     {
         public Configuration()
         {
-            //AutomaticMigrationsEnabled = false;
-
-            // TODO: Shutoff automatic migrations
-            AutomaticMigrationsEnabled = true; // Leave on for now
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(ChallengeBoard.Models.ChallengeBoardContext context)
