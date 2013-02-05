@@ -50,7 +50,7 @@
 
         <div class="controls">
             @Html.TextBoxFor(m => m.AutoVerification, new { @class = "span1" })
-            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Auto Verification" data-content="Matches have this long to be accepted or rejected before they are automatically verified.  Changing this will NOT affect currently un-verified matches."><i class="icon-question-sign icon-white"></i></a>
+            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Auto Verification" data-content="Matches have this long to be accepted or rejected before they are automatically verified.  Changing this WILL affect currently un-verified matches."><i class="icon-question-sign icon-white"></i></a>
             @Html.ValidationMessageFor(m => m.AutoVerification)
         </div>
     </div>

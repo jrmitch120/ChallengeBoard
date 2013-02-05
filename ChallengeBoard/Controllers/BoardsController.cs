@@ -3,16 +3,19 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using ChallengeBoard.Models;
+using ChallengeBoard.Services;
 
 namespace ChallengeBoard.Controllers
 {
     public class BoardsController : Controller
     {
         private readonly IRepository _repositiory;
+        private readonly IBoardService _boardService;
 
-        public BoardsController(IRepository repository)
+        public BoardsController(IRepository repository, IBoardService boardService)
         {
             _repositiory = repository;
+            _boardService = boardService;
         }
 
         //
@@ -193,8 +196,16 @@ namespace ChallengeBoard.Controllers
                 if (board.Owner.Name != User.Identity.Name)
                     return View("InvalidOwner", board);
 
+                if (userBoard.AutoVerification != board.AutoVerification)
+                {
+                    board.Matches = _repositiory.GetUnresolvedMatchesByBoardId(board.BoardId).ToList();
+                    _boardService.AdjustMatchDeadlines(board);
+                }
+
                 UpdateModel(board);
+
                 _repositiory.CommitChanges();
+                
                 return RedirectToAction("Details", new { id = userBoard.BoardId });
             }
 

@@ -21,6 +21,7 @@ namespace ChallengeBoard.App_Start {
 			// ...
 
 		    ioc.Register<IRepository, PersistedRepository>();
+            ioc.Register<IBoardService, BoardService>();
             ioc.Register<IMatchService, MatchService>();
             ioc.Register<ChallengeBoardContext, ChallengeBoardContext>();
             //ioc.Register<IPostmaster, SmtpPostmaster>();

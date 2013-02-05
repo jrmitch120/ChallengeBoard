@@ -219,6 +219,8 @@
     <Compile Include="Scoring\IScoringSystem.cs" />
     <Compile Include="Scoring\KFactor.cs" />
     <Compile Include="Scoring\ScoringSystemAttribute.cs" />
+    <Compile Include="Services\BoardService.cs" />
+    <Compile Include="Services\IBoardService.cs" />
     <Compile Include="ViewModels\RecentMatchesViewModel.cs" />
     <Compile Include="Models\MatchBinder.cs" />
     <Compile Include="Models\IRepository.cs" />

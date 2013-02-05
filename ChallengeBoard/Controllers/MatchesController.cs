@@ -12,10 +12,10 @@ namespace ChallengeBoard.Controllers
         private readonly IRepository _repository;
         private readonly IMatchService _service;
 
-        public MatchesController(IRepository repository, IMatchService challengeService)
+        public MatchesController(IRepository repository, IMatchService matchService)
         {
             _repository = repository;
-            _service = challengeService;
+            _service = matchService;
         }
 
         //
@@ -35,7 +35,7 @@ namespace ChallengeBoard.Controllers
             {
                 Board = board,
                 UnVerified = _repository.Matches.Where(m => !m.Verified && !m.Rejected && m.Board.BoardId == boardId)
-                                        .OrderBy(m => m.Created),
+                                        .OrderBy(m => m.VerificationDeadline),
                 Verified =
                     _repository.Matches.Where(m => (m.Verified || m.Rejected) && m.Board.BoardId == boardId)
                                .OrderByDescending(m => m.Resolved)
