@@ -198,8 +198,8 @@ namespace ChallengeBoard.Controllers
 
                 if (userBoard.AutoVerification != board.AutoVerification)
                 {
-                    board.Matches = _repositiory.GetUnresolvedMatchesByBoardId(board.BoardId).ToList();
-                    _boardService.AdjustMatchDeadlines(board);
+                    userBoard.Matches = _repositiory.GetUnresolvedMatchesByBoardId(userBoard.BoardId).ToList();
+                    _boardService.AdjustMatchDeadlines(userBoard);
                 }
 
                 UpdateModel(board);
