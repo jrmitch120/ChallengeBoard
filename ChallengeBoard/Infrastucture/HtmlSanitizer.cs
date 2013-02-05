@@ -32,7 +32,7 @@ namespace ChallengeBoard.Infrastucture
     public class HtmlSanitizer
     {
         public static Regex ForbiddenTags = new Regex("^(script|object|embed|link|style|form|input)$");
-        public static Regex AllowedTags = new Regex("^(b|p|i|s|a|img|table|thead|tbody|tfoot|tr|th|td|dd|dl|dt|em|h1|h2|h3|h4|h5|h6|li|ul|ol|span|div|strike|strong|" +
+        public static Regex AllowedTags = new Regex("^(b|p|i|s|u|a|img|table|thead|tbody|tfoot|tr|th|td|dd|dl|dt|em|h1|h2|h3|h4|h5|h6|li|ul|ol|span|div|strike|strong|" +
                 "sub|sup|pre|del|code|blockquote|strike|kbd|br|hr|area|map|object|embed|param|link|form|small|big)$");
 
         private static readonly Regex CommentPattern = new Regex("<!--.*");  // <!--.........> 

@@ -8,9 +8,9 @@
 @Html.Partial("_BoardNav", Model)
 <div class="well">
     <section id="BoardDetails">
-        <div class="form-horizontal">
+        <div>
             <dl class="dl-horizontal">
-                <dt>Challenge Board @Html.DisplayNameFor(m => m.Owner):</dt>
+                <dt>Board @Html.DisplayNameFor(m => m.Owner):</dt>
                 <dd>@Html.DisplayFor(m => m.Owner.Name)</dd>
                 <dt>Active @Html.DisplayNameFor(m => m.Competitors):</dt>
                 <dd>@Model.Competitors.Active().Count().ToString()</dd>
@@ -18,19 +18,21 @@
                 <dd>@Model.Competitors.Retired().Count().ToString()</dd>
                 <dt>Password Protected:</dt>
                 <dd>
-                @if (!Model.Password.IsEmpty())
-                {
-                    @:Yes
-                    if (Model.Owner.Name.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase))
+                    @if (!Model.Password.IsEmpty())
                     {
-                     @:&nbsp;(<i>@Model.Password</i>)
+                        @:Yes
+                        if (Model.Owner.Name.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            @:&nbsp;(<i>@Model.Password</i>)
+                        }
                     }
-                }
-                else
-                {
-                    @:No.  Open to public.
-                }
+                    else
+                    {
+                        @:No.  Open to public.
+                    }
                 </dd>
+                <dt>@Html.DisplayNameFor(m => m.AutoVerification):</dt>
+                <dd>@Html.DisplayFor(m => m.AutoVerification)</dd>
                 <dt>@Html.DisplayNameFor(m => m.Created):</dt>
                 <dd>@Html.DisplayFor(m => m.Created)</dd>
                 <dt>@Html.DisplayNameFor(m => m.Started):</dt>
