@@ -5,16 +5,11 @@
 
 @Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(ViewBag.Title))
 
-
 <p class="message-success">@ViewBag.StatusMessage</p>
-
-<div class="well">
-   You're logged in as <strong>@User.Identity.Name</strong>. 
-</div>
 
 <div class="row">
     <div class="span6">
-        <h3>Manage Account</h3>
+        <h3>Settings for @User.Identity.Name</h3>
         <section id="password">
             @(ViewBag.HasLocalPassword ? Html.Partial("_ChangePasswordPartial") : Html.Partial("_SetPasswordPartial"))
         </section>
