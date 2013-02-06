@@ -12,7 +12,7 @@ H1 .subhead {
     }
     .embedded .pull-right {
         float: left;
-    }
+    }   
 }
 
 @media (max-width: 767px) {
@@ -83,8 +83,8 @@ H1 .subhead {
             box-sizing: border-box;
 }
 
-.embedded > ul {
-    display: inline;
+.embedded > div > .nav {
+    margin-bottom: 0;
 }
 
 .form-condensed {
