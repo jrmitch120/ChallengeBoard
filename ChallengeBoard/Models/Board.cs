@@ -29,7 +29,7 @@ namespace ChallengeBoard.Models
         public string Password { get; set; }
 
         [Display(Name = "Created")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
 
         [Display(Name = "Starting Rating")]
@@ -41,12 +41,12 @@ namespace ChallengeBoard.Models
         public int AutoVerification { get; set; }
 
         [Display(Name = "Ends")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
         [CustomValidation(typeof(Board), "ValidateEndDate")]
         public DateTime End { get; set; }
 
         [Display(Name = "Started")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
         public DateTime Started { get; set; }
 
         public static ValidationResult ValidateEndDate(DateTime date)

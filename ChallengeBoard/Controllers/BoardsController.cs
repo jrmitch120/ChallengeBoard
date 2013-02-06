@@ -176,7 +176,7 @@ namespace ChallengeBoard.Controllers
             if (board == null)
                 return View("BoardNotFound");
 
-            if (board.Owner.Name != User.Identity.Name)
+            if (!board.IsOwner(User.Identity.Name))
                 return View("InvalidOwner", board);
 
             return View(board);
@@ -193,7 +193,7 @@ namespace ChallengeBoard.Controllers
             {
                 var board = _repositiory.GetBoardById(id);
 
-                if (board.Owner.Name != User.Identity.Name)
+                if (!board.IsOwner(User.Identity.Name))
                     return View("InvalidOwner", board);
 
                 if (userBoard.AutoVerification != board.AutoVerification)
@@ -226,7 +226,7 @@ namespace ChallengeBoard.Controllers
             if (board == null)
                 return View("BoardNotFound");
 
-            if (board.Owner.Name != User.Identity.Name)
+            if (!board.IsOwner(User.Identity.Name))
                 return View("InvalidOwner", board);
 
             return View(board);
@@ -247,7 +247,7 @@ namespace ChallengeBoard.Controllers
             if (board == null)
                 return View("BoardNotFound");
 
-            if (board.Owner.Name != User.Identity.Name)
+            if (!board.IsOwner(User.Identity.Name))
                 return View("InvalidOwner", board);
 
             board.Owner = null;
@@ -287,7 +287,7 @@ namespace ChallengeBoard.Controllers
             if(competitor == null)
                 return RedirectToAction("Index");
 
-            if (competitor.Name == existingBoard.Owner.Name)
+            if (existingBoard.IsOwner(competitor.Name))
                 return View("Unleavable", existingBoard);
 
             if (competitor.Status == CompetitorStatus.Active)

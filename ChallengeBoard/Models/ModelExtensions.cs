@@ -6,6 +6,11 @@ namespace ChallengeBoard.Models
 {
     public static class ModelExtensions
     {
+        public static bool IsOwner(this Board board, string name)
+        {
+            return (board.Owner.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+        }
+
         public static IEnumerable<Competitor> Active(this ICollection<Competitor> competitors)
         {
             return (competitors.Where(x => x.Status == CompetitorStatus.Active));

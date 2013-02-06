@@ -21,9 +21,11 @@ namespace ChallengeBoard.Models
         public Competitor Loser { get; set; }
 
         [Display(Name = "Reported On")]
+        [DisplayFormat(DataFormatString = "{0:g}")]
         public DateTime Created { get; set; }
         public DateTime VerificationDeadline { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:g}")]
         [Display(Name = "Resolved On")]
         public DateTime? Resolved { get; set; }
 

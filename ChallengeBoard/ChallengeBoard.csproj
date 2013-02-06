@@ -373,7 +373,6 @@
     <Content Include="Views\Boards\Unleavable.cshtml" />
     <Content Include="Views\Matches\List.cshtml" />
     <Content Include="Views\Matches\Create.cshtml" />
-    <Content Include="Views\Matches\_PendingMatchesPartial.cshtml" />
     <Content Include="Views\Shared\_ValidationSummary.cshtml" />
     <Content Include="Views\Boards\_StandingsPartial.cshtml" />
     <Content Include="Views\Shared\_HeaderPartial.cshtml" />

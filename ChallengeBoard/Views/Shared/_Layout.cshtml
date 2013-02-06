@@ -56,7 +56,11 @@
             @DateTime.Now.Year - Challenge Board
         </div>
         <div class="pull-right">
-            <small>version @typeof(ChallengeBoard.MvcApplication).Assembly.GetName().Version</small>
+            <small>
+                @DateTime.Now.ToString()
+                &nbsp;|&nbsp;
+                version @typeof(ChallengeBoard.MvcApplication).Assembly.GetName().Version
+            </small>
         </div>
     </footer>
     @Scripts.Render("~/bundles/jquery")

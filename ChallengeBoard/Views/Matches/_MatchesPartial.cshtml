@@ -67,7 +67,7 @@
                     }
                 </td>
                 <td class="centered"  data-title="@Html.DisplayNameFor(m => m.Created)">
-                    @match.Created.ToShortDateString()
+                    @Html.DisplayFor(modelItem => match.Created)
                 </td>
             
                 @if (match.IsResolved)
@@ -75,7 +75,7 @@
                     <td class="centered" data-title="Resolved">
                         @if (match.Resolved.HasValue)
                         {
-                            @match.Resolved.Value.ToShortDateString()
+                            @Html.DisplayFor(modelItem => match.Resolved)
                         }
                     </td>
                 }       
