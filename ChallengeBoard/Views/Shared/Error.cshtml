@@ -9,5 +9,14 @@
     We've got problems somewhere.  You  can give it another shot, or better yet, tell us what went wrong!
 </p>
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Model.Exception.Message;
+</p>
+<p>
+    @Model.Exception.InnerException;
+</p>
+<p>
+    @Model.Exception.StackTrace;
+</p>
+<p>
+    @Html.ActionLink("Back Home", "Index", "Home")
 </p>
