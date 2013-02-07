@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Moq;
 using NUnit.Framework;
 using ChallengeBoard.Services;
 
@@ -76,7 +77,8 @@ namespace ChallengeBoardTests
         public void CreatesMatch()
         {
             var repository = Repository.CreatePopulatedRepository();
-            var service = new MatchService(repository, null);
+            
+            var service = new MatchService(repository, new Mock<IMailService>().Object);
 
             var matchCount = repository.Matches.Count();
 

@@ -45,10 +45,10 @@ namespace ChallengeBoardTests
                 Owner = new Competitor {Name = "User1"},
                 Started = DateTime.Now,
                 StartingRating = 1500,
-                Competitors = new List<Competitor> {competitor1, competitor2}
+                Competitors = new [] {competitor1, competitor2}
             };
 
-            var match = new Match
+            var match1 = new Match
             {
                 Board = board,
                 Created = DateTime.Now,
@@ -60,10 +60,38 @@ namespace ChallengeBoardTests
                 WinnerRatingDelta = 10
             };
 
+            var match2 = new Match
+            {
+                Board = board,
+                Created = DateTime.Now,
+                Loser = competitor1,
+                Winner = competitor2,
+                VerificationDeadline = DateTime.Now.AddHours(board.AutoVerification),
+                MatchId = 2,
+                LoserRatingDelta = -10,
+                WinnerRatingDelta = 10
+            };
+
+            var match3 = new Match
+            {
+                Board = board,
+                Created = DateTime.Now,
+                Loser = competitor2,
+                Winner = competitor1,
+                VerificationDeadline = DateTime.Now.AddHours(board.AutoVerification),
+                MatchId = 3,
+                LoserRatingDelta = -10,
+                WinnerRatingDelta = 10
+            };
+
+            board.Matches = new[] { match1, match2, match3 };
+
             repository.Add(board);
             repository.Add(competitor1);
             repository.Add(competitor2);
-            repository.Add(match);
+            repository.Add(match1);
+            repository.Add(match2);
+            repository.Add(match3);
 
             return (repository);
         }

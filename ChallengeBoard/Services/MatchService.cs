@@ -1,32 +1,22 @@
 using System;
 using System.Linq;
 using ChallengeBoard.Email;
+using ChallengeBoard.Email.Models;
 using ChallengeBoard.Infrastucture;
-using ChallengeBoard.Scoring;
 using ChallengeBoard.Models;
+using ChallengeBoard.Scoring;
 
 namespace ChallengeBoard.Services
 {
     public class MatchService : IMatchService
     {
         private readonly IRepository _repository;
-        private readonly IPostmaster _postmaster;
+        private readonly IMailService _mailService;
 
-        private static readonly Func<Match, string> MatchMessage = match =>
-            String.Format(
-                "<p>Hello {0},</p>" +
-                "We're just dropping you a line to let you know that {1} has reported a match with you on the {2} " +
-                "challenge board.  If this is accurate, there isn't anything you have to do.  If this is in err, head on over " +
-                "to to reject the match so that it will not count.  You have {3} hours to reject this match.</p>" +
-                "<p>Thanks,<br/>The Challenge Board</p>",
-                match.Loser.Name, match.Winner.Name,
-                match.Board.Name,
-                match.Board.AutoVerification);
-
-        public MatchService(IRepository repository, IPostmaster postmaster)
+        public MatchService(IRepository repository, IMailService mailService)
         {
             _repository = repository;
-            _postmaster = postmaster;
+            _mailService = mailService;
         }
 
         public Match CreateMatch(int boardId, string winnerName, string loserName, bool tie = false)
@@ -36,9 +26,15 @@ namespace ChallengeBoard.Services
             _repository.Add(match);
             _repository.CommitChanges();
 
-            if (_postmaster != null)
-                _postmaster.Send(new EmailContact(match.Loser.Profile.EmailAddress, match.Loser.Name),
-                                 "Match Notification", MatchMessage(match));
+            _mailService.SendEmail(match.Loser.Profile.EmailAddress, match.Loser.Name,
+                                   "Match Notification", EmailType.MatchNotification,
+                                   new MatchNotification
+                                   {
+                                       WinnerName = match.Winner.Name,
+                                       LoserName = match.Loser.Name,
+                                       BoardName = match.Board.Name,
+                                       AutoVerifies = match.Board.AutoVerification
+                                   });
 
             return (match);
         }

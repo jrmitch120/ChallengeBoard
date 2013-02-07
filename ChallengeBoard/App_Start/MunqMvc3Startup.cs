@@ -20,12 +20,11 @@ namespace ChallengeBoard.App_Start {
 			// ioc.Register<IMyRepository, MyRepository>();
 			// ...
 
+            ioc.Register<ChallengeBoardContext, ChallengeBoardContext>();
 		    ioc.Register<IRepository, PersistedRepository>();
             ioc.Register<IBoardService, BoardService>();
             ioc.Register<IMatchService, MatchService>();
-            ioc.Register<ChallengeBoardContext, ChallengeBoardContext>();
-            //ioc.Register<IPostmaster, SmtpPostmaster>();
-
+            ioc.Register<IMailService, MailService>();
 		    ioc.Register<IPostmaster>(
 		        r =>
 		        new SmtpPostmaster(ConfigurationManager.AppSettings["email:FromEmail"],

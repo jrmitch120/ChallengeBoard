@@ -1,0 +1,25 @@
+﻿@model ChallengeBoard.Email.Models.MatchNotification
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>The Challenge Board: Match Notiication</title>
+    <style>
+        p { margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+    <p>
+        Hello @Model.LoserName,
+    </p>
+    <p>
+        We're just dropping you a line to let you know that @Model.WinnerName has reported a match with you on the 
+        @Model.BoardName challenge board.  If this is accurate, there isn't anything you have to do.  If this is in err, head on over 
+        to reject the match so that it will not count.  You have @Model.AutoVerifies hour(s) to reject this match.
+    </p>
+    <p>
+        Thanks,<br/>
+        The Challenge Board
+    </p>
+</body>
+</html>

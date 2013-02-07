@@ -60,6 +60,9 @@
     <Reference Include="NGravatar">
       <HintPath>..\packages\NGravatar.0.3.2\lib\net40\NGravatar.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\RazorEngine.3.2.0\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -72,6 +75,9 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -111,10 +117,6 @@
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -189,7 +191,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Email\EmailContact.cs" />
+    <Compile Include="Email\EmailFactory.cs" />
+    <Compile Include="Email\EmailType.cs" />
     <Compile Include="Email\IPostmaster.cs" />
+    <Compile Include="Email\Models\IEmailModel.cs" />
+    <Compile Include="Email\Models\MatchNotification.cs" />
     <Compile Include="Email\SmtpPostmaster.cs" />
     <Compile Include="Infrastucture\NumberExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -220,6 +226,8 @@
     <Compile Include="Scoring\KFactor.cs" />
     <Compile Include="Scoring\ScoringSystemAttribute.cs" />
     <Compile Include="Services\BoardService.cs" />
+    <Compile Include="Services\IMailService.cs" />
+    <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\IBoardService.cs" />
     <Compile Include="ViewModels\RecentMatchesViewModel.cs" />
     <Compile Include="Models\MatchBinder.cs" />
@@ -303,6 +311,9 @@
     <Content Include="Scripts\bootstrap-toggle.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Email\Templates\MatchNotification.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
     <Content Include="Scripts\boostrapvalidation.js" />
@@ -391,6 +402,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
