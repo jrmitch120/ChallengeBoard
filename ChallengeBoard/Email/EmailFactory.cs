@@ -23,13 +23,17 @@ namespace ChallengeBoard.Email
 
         private static string GetTemplatePath(EmailType emailType)
         {
-            var codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            var uri = new UriBuilder(codeBase);
-            var dir = new DirectoryInfo(Uri.UnescapeDataString(uri.Path));
 
-            return dir.Parent != null && dir.Parent != null
-                       ? Path.Combine(dir.Parent.FullName, "Email\\Templates\\", string.Format("{0}.cshtml", emailType))
-                       : string.Empty;
+            string path = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "Email\\Templates",
+                                       string.Format("{0}.cshtml", emailType));
+            return (path);
+            //var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            //var uri = new UriBuilder(codeBase);
+            //var dir = new DirectoryInfo(Uri.UnescapeDataString(uri.Path));
+
+            //return dir.Parent != null && dir.Parent != null
+            //           ? Path.Combine(dir.Parent.FullName, "Email\\Templates\\", string.Format("{0}.cshtml", emailType))
+            //           : string.Empty;
         }
     }
 }
