@@ -138,10 +138,6 @@ input.danger {
 	border-top: 8px solid #0099cc;
 }
 
-.editor {
-    width: 610px;
-}
-
 .table-fixed {
     table-layout: fixed;
 }

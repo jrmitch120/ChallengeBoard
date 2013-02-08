@@ -49,15 +49,40 @@
     {
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Reject Match</h3>
+            <h3 id="myModalLabel">You are about to reject the following match</h3>
         </div>
         <div class="modal-body">
             <input id="boardId" name="boardId" type="hidden" data-bind="value: boardId">
             <input id="matchId" name="matchId" type="hidden" data-bind="value: matchId">
-            <p>You are about to reject the following match:</p>
-            <p data-bind="text: winner"></p>
-            <p data-bind="text: loser"></p>
-            @Html.TextBox("ConfirmReject", "", new { maxlength = 6, @class = "danger", autocomplete = "off" })
+            <div class="centered-text matchVerification well">
+                <h4 class="label-success">Match Winner</h4>
+                <p data-bind="text: winner"></p>
+                <p>
+                    <b>Rating Change:</b>
+                    &nbsp;
+                    <span data-bind="css: { 'arrow-up' : winnerRatingDelta() > 0, 'arrow-down' : winnerRatingDelta() < 0 }"></span>
+                    &nbsp;
+                    <span data-bind="text: winnerRatingDelta"></span>
+                </p>
+            </div>
+            <div class="matchSpacer">
+            </div>
+            <div class="centered-text matchVerification well">
+                <h4 class="label-info">Match Loser</h4>
+                <p data-bind="text: loser"></p>
+                <p>
+                    <b>Rating Change:</b>
+                    &nbsp;
+                    <span data-bind="css: { 'arrow-up' : loserRatingDelta() > 0, 'arrow-down' : loserRatingDelta() < 0 }"></span>
+                    &nbsp;
+                    <span data-bind="text: loserRatingDelta"></span>
+                </p>
+            </div>
+            <div class="centered-text well well-small">
+                <h3 class="lead">Type "reject" to confirm rejection of this match.
+                </h3>
+                @Html.TextBox("ConfirmReject", "", new { maxlength = 6, @class = "danger", autocomplete = "off" })
+            </div>
         </div>
         <div class="modal-footer">
             <button class="btn" type="submit" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -71,13 +96,14 @@
     @Scripts.Render("~/bundles/components")
     <script type="text/javascript">
         $(function() {
-
             // Knockout ViewModel for a match rejection.
             var viewModel = function() {
                 var self = this;
 
                 self.winner = ko.observable(),
+                self.winnerRatingDelta = ko.observable(),
                 self.loser = ko.observable(),
+                self.loserRatingDelta = ko.observable(),
                 self.boardId = ko.observable(),
                 self.matchId = ko.observable();
             };
@@ -105,9 +131,11 @@
             $('.validate').click(function() {
 
                 matchResult.winner(this.getAttribute('data-winner'));
-                matchResult.loser(this.getAttribute('data-loser'));
-                matchResult.boardId(this.getAttribute('data-boardId'));
+                matchResult.winnerRatingDelta(this.getAttribute('data-winnerRatingDelta'));
+                matchResult.loser(this.getAttribute('data-Loser'));
+                matchResult.loserRatingDelta(this.getAttribute('data-loserRatingDelta'));
                 matchResult.matchId(this.getAttribute('data-matchId'));
+                matchResult.boardId(this.getAttribute('data-boardId'));
                 $('#myModal').modal();
                 return false;
 
