@@ -87,7 +87,7 @@ namespace ChallengeBoard.Models
 
         public IQueryable<Match> GetUnresolvedMatchesByBoardId(int id)
         {
-            return (Matches.Where(x => !x.Verified && !x.Rejected));
+            return (Matches.Where(x => !x.Resolved.HasValue));
         }
 
         public Match GetMatchById(int id)

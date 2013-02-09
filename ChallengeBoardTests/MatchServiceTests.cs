@@ -150,4 +150,40 @@ namespace ChallengeBoardTests
             Assert.That(match.Winner.Ties, Is.EqualTo(1));
         }
     }
+
+    [TestFixture]
+    public class MatchRejectionTests
+    {
+        [Test]
+        public void ThrowsIfMatchNotFound()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+            var match = repository.GetUnresolvedMatchesByBoardId(1).First();
+
+            Assert.Throws<ServiceException>(() => service.RejectMatch(match.Board.BoardId, 9999, match.Loser.Name));
+        }
+
+        [Test]
+        public void ThrowsIfNotLoser()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+
+            var match = repository.GetUnresolvedMatchesByBoardId(1).First();
+            Assert.Throws<ServiceException>(() => service.RejectMatch(match.Board.BoardId, match.MatchId, match.Winner.Name));
+        }
+
+        [Test]
+        public void ThrowsIfResolved()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+
+            var match = repository.Matches.First(x => x.Board.BoardId == 1 && x.Resolved.HasValue);
+            Assert.Throws<ServiceException>(() => service.RejectMatch(match.Board.BoardId, match.MatchId, match.Loser.Name));
+        }
+
+        // Todo, continue
+    }
 }

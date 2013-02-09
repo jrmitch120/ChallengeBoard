@@ -85,6 +85,9 @@ namespace ChallengeBoard.Services
         {
             // Grab user profile
             var user = _repository.UserProfiles.FindProfile(userName);
+
+            if (user == null)
+                throw new InvalidOperationException("Can not find your profile.");
             
             // All unresolved matches for this challenge board.
             var unresolvedMatches =
@@ -97,6 +100,12 @@ namespace ChallengeBoard.Services
             
             if (rejectedMatch.Loser.ProfileUserId != user.UserId)
                 throw new ServiceException("You are not able to reject this match.");
+
+            if(rejectedMatch.IsResolved)
+                throw new ServiceException("This match has already been resolved.");
+
+            if (DateTime.Now > rejectedMatch.VerificationDeadline)
+                throw new ServiceException("The deadline for rejecting this match has passed.");
 
             rejectedMatch.Rejected = true;
             rejectedMatch.Resolved = DateTime.Now;
