@@ -13,6 +13,14 @@ H1 .subhead {
     .embedded .pull-right {
         float: left;
     }   
+    .editor {
+        display: block;
+        width: 100% !important;
+        min-height: 30px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
 }
 
 @media (max-width: 767px) {
@@ -101,6 +109,11 @@ input.danger {
     text-transform: uppercase;
     font-weight: bold;
     width: 3.7em;
+}
+
+textarea.editor {
+    width: 610px;
+    height: 500px;
 }
 
 /* Match Rporting */
