@@ -1,91 +1,166 @@
-﻿@using ChallengeBoard.Models
+﻿@using System.Web.Script.Serialization
+@using ChallengeBoard.Infrastucture;
+@using ChallengeBoard.Models
 @model Board
-
 @{
     ViewBag.Title = "Edit";
 }
 
-@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name, "Editing"))
-
-@using (Html.BeginForm("Edit", "Boards", FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    @Html.Partial("_ValidationSummary", ViewData.ModelState)
-    @Html.HiddenFor(m => m.BoardId)
-
-    <div class="control-group">
-        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
-        <div class="controls">
-            @Html.TextBoxFor(m => m.Name, new { @class="input-xlarge", maxlength = "45" })
-            @Html.ValidationMessageFor(m => m.Name)
-        </div>
+@Html.Partial("_HeaderPartial", new PageHeader(Model.Name, "Editing"))
+@Html.Partial("_BoardNav", Model)
+<div class="row">
+    <div class="span2">
+        <ul class="nav nav-tabs nav-stacked" id="myTab">
+            <li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
+            <li><a href="#competitors" data-toggle="tab">Competitors</a></li>
+        </ul>
     </div>
-    <div class="control-group">
-        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+    <div class="span10">
+        <div class="tab-content">
+            <div class="tab-pane active" id="settings">
+                <div class="well">
+                    You are editing the challenge board.  Changes be will not become perminant unless they are saved.
+                </div>
+                @using (Html.BeginForm("Edit", "Boards", new { id = Model.BoardId }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.Partial("_ValidationSummary", ViewData.ModelState)
+                    @Html.HiddenFor(m => m.BoardId)
 
-        <div class="controls">
-            @Html.TextBoxFor(m => m.Password, new { maxlength = "16" })
-            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Password Protection" data-content="Leave the password empty to allow anyone to join."><i class="icon-question-sign icon-white"></i></a>
-            @Html.ValidationMessageFor(m => m.Password)
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor(m => m.End, new { @class = "control-label" })
-        <div class="controls">
-            <div class="input-append date" id="DatePicker" data-date="@Model.End.ToShortDateString()" data-date-format="m/d/yyyy">
-                @Html.TextBox("End", Model.End.ToShortDateString(), new { @class = "input-small", maxlength = 10 })
-                <span class="add-on"><i class="icon-calendar"></i></span>
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "input-xlarge", maxlength = "45" })
+                            @Html.ValidationMessageFor(m => m.Name)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Password, new { maxlength = "16" })
+                            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Password Protection" data-content="Leave the password empty to allow anyone to join."><i class="icon-question-sign icon-white"></i></a>
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.End, new { @class = "control-label" })
+                        <div class="controls">
+                            <div class="input-append date" id="DatePicker" data-date="@Model.End.ToShortDateString()" data-date-format="m/d/yyyy">
+                                @Html.TextBox("End", Model.End.ToShortDateString(), new { @class = "input-small", maxlength = 10 })
+                                <span class="add-on"><i class="icon-calendar"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.End)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.StartingRating, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.StartingRating, new { @class = "input-mini" })
+                            @Html.ValidationMessageFor(m => m.StartingRating)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.AutoVerification, new { @class = "control-label" })
+
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.AutoVerification, new { @class = "input-mini" })
+                            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Auto Verification" data-content="Matches have this long to be accepted or rejected before they are automatically verified.  Changing this WILL affect currently un-verified matches."><i class="icon-question-sign icon-white"></i></a>
+                            @Html.ValidationMessageFor(m => m.AutoVerification)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "editor" })
+                            @Html.ValidationMessageFor(m => m.Description)
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        @Html.ActionLink("Cancel", "Details", new { id = Model.BoardId }, new { @class = "btn" })
+                    </div>
+                }
+
             </div>
-            @Html.ValidationMessageFor(m => m.End)
+            <div class="tab-pane" id="competitors">
+                <table class="table table-striped table-bordered no-more-tables">
+                    <thead>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(Model.Competitors, m => m.Name)
+                            </td>
+                            <td class="centered">
+                                @Html.DisplayNameFor(Model.Competitors, m => m.Joined)
+                            </td>
+                            <td class="centered">
+                                @Html.DisplayNameFor(Model.Competitors, m => m.GamesPlayed)
+                            </td>
+                            <td class="centered">
+                                @Html.DisplayNameFor(Model.Competitors, m => m.RejectionsGiven)
+                            </td>
+                            <td class="centered">
+                                @Html.DisplayNameFor(Model.Competitors, m => m.RejectionsReceived)
+                            </td>
+                            <td class="centered span2">
+                                @Html.DisplayNameFor(Model.Competitors, m => m.Status)
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: competitors">
+                        <tr>
+                            <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Name)">
+                                <ul class="nav nav-pills">
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" data-bind="html: statusOptions">
+                                            <b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu"style="text-align:left;">
+                                            <li>
+                                                <a data-title="Result" href="#" data-bind="click: $root.setStatus.bind($data, 0)">Activate</a>
+                                            </li>
+                                            <li>
+                                                <a data-title="Result" href="#" data-bind="click: $root.setStatus.bind($data, 1)">Retire</a>
+                                            </li>
+                                            <li>
+                                                <a data-title="Result" href="#" data-bind="click: $root.setStatus.bind($data, 2)">Ban Hammer</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>   
+                            </td>
+                            <td class="centered" data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Joined)" data-bind="date: joined"></td>
+                            <td class="centered" data-title="@Html.DisplayNameFor(Model.Competitors, m => m.RejectionsGiven)" data-bind="text: gamesPlayed"></td>
+                            <td class="centered" data-title="@Html.DisplayNameFor(Model.Competitors, m => m.RejectionsGiven)" data-bind="text: rejectionsGiven"></td>
+                            <td class="centered" data-title="@Html.DisplayNameFor(Model.Competitors, m => m.RejectionsReceived)" data-bind="text: rejectionsReceived"></td>
+                            <td class="centered" data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Status)" 
+                                data-bind="text: displayStatus, 
+                                                        css: { 'text-success': status() == 0, 'text-error': status() == 2, centered: true }"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br /><br /><br /><br />
+            </div>
         </div>
     </div>
-    <div class="control-group">
-        @Html.LabelFor(m => m.StartingRating, new { @class = "control-label" })
-        <div class="controls">
-            @Html.TextBoxFor(m => m.StartingRating, new { @class = "input-mini" })
-            @Html.ValidationMessageFor(m => m.StartingRating)
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor(m => m.AutoVerification, new { @class = "control-label" })
+</div>
 
-        <div class="controls">
-            @Html.TextBoxFor(m => m.AutoVerification, new { @class = "input-mini" })
-            <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Auto Verification" data-content="Matches have this long to be accepted or rejected before they are automatically verified.  Changing this WILL affect currently un-verified matches."><i class="icon-question-sign icon-white"></i></a>
-            @Html.ValidationMessageFor(m => m.AutoVerification)
-        </div>
-    </div>
-    <hr />
-    <div class="control-group">
-        @Html.LabelFor(m => m.Description, new { @class = "control-label" })
-        <div class="controls">
-            @Html.TextAreaFor(m => m.Description, new { @class = "editor" })
-            @Html.ValidationMessageFor(m => m.Description)
-        </div>
-    </div>
-    foreach (var competitor in Model.Competitors)
-    {
-    <div>@competitor.Name - <a href="#" class="deleteLink">delete</a></div>
-    }
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        @Html.ActionLink("Cancel", "Details", new { id = Model.BoardId }, new { @class = "btn" })
-    </div>
+
+
+@{
+    // Serialized competitor data for KO viewmodel.
+    var data = @Html.Raw(new JavaScriptSerializer().Serialize(Model.Competitors.OrderBy(x=> x.Name)));
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/components")
+    @Scripts.Render("~/bundles/knockout")
     <script type="text/javascript">
-        // TODO:  Hook this up to a delete action
-        $("a.deleteLink").live("click", function () {
-            alert($(this).parents("div:first"));
-            $(this).parents("div:first").remove();
-            return false;
-        });
+        $(function() {
+            ko.applyBindings(new CompetitorStatusModel(@Model.BoardId, @data));
 
-        $(function () {
             $("[rel='popover']").popover();
-            $('#DatePicker').datepicker().on('changeDate', function () {
+            $('#DatePicker').datepicker().on('changeDate', function() {
                 $('#DatePicker').datepicker('hide');
             });
             $('#Description').wysihtml5({

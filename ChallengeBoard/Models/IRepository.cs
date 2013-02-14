@@ -26,6 +26,7 @@ namespace ChallengeBoard.Models
         void Delete(Competitor competitor);
         void Delete(Match match);
 
-        Board GetBoardByIdWithCompetitors(int id);
+        Board GetBoardByIdWithCompetitors(int id, bool includeProfiles = true);
+        Competitor GetCompetitorByName(int boardId, string name);
     }
 }

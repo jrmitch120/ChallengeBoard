@@ -12,7 +12,7 @@
 @using (Html.BeginForm("Validate", "Matches", new { boardId = Model.Board.BoardId }, FormMethod.Post, new { id = "MatchForm", @class = "form-horizontal" }))
 {
     <div class="control-group">
-        <div class="cont    rols">
+        <div class="controls">
             <div class="alert alert-info fade in hidden" id="error">
                 <a class="close">&times;</a>
                 <strong>There was a problem with your match:</strong>
@@ -102,6 +102,8 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/components")
     <script type="text/javascript">
+        var MatchModel;
+        
         $(function () {
             var form = $("#MatchForm");
 
@@ -126,6 +128,10 @@
             $('#report').click(function () {
                 form.attr('action', form.attr('action').replace("Validate", "Create"));
                 form.unbind('submit');
+
+                $('#report').addClass('disabled');
+                $('#report').attr('disabled', 'disabled');
+
                 form.submit();
             });
 
@@ -147,8 +153,10 @@
                             $("#error").removeClass('hidden');
                             return false;
                         }
-                        var viewModel = ko.mapping.fromJS(data.Result);
-                        ko.applyBindings(viewModel);
+
+                        MatchModel = ko.mapping.fromJS(data.Result);
+                        ko.applyBindings(MatchModel);
+                        
                         $('#myModal').modal();
                         return false;
                     },

@@ -21,10 +21,15 @@ namespace ChallengeBoard.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
+        [Display(Name = "Status")]
         public CompetitorStatus Status { get; set; }
 
         [Display(Name = "Rating")]
         public int Rating { get; set; }
+
+        [Display(Name = "Joined")]
+        [DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
+        public DateTime Joined { get; set; }
 
         [Display(Name = "Wins")]
         public int Wins { get; set; }
@@ -51,7 +56,15 @@ namespace ChallengeBoard.Models
             get { return Wins == 0 ? 0 : (Math.Round((double) Wins/GamesPlayed*100, 1)); }
         }
 
+        [Display(Name = "Rejections Received")]
         public int RejectionsReceived { get; set; }
+
+        [Display(Name = "Rejections")]
         public int RejectionsGiven { get; set; }
+
+        public Competitor()
+        {
+            Joined = DateTime.Now;
+        }
     }
 }

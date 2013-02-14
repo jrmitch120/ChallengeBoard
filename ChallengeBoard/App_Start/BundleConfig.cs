@@ -31,7 +31,8 @@ namespace ChallengeBoard
                         "~/Scripts/knockout-{version}.debug.js",
                         "~/Scripts/knockout.mapping-latest.debug.js",
                         "~/Scripts/knockout-{version}.js",
-                        "~/Scripts/knockout.mapping-latest.js"));
+                        "~/Scripts/knockout.mapping-latest.js",
+                        "~/Scripts/knockoutModels/*.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

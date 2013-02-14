@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using ChallengeBoard.Infrastucture;
 using ChallengeBoard.Models;
 using ChallengeBoard.Services;
 
@@ -9,12 +10,12 @@ namespace ChallengeBoard.Controllers
 {
     public class BoardsController : Controller
     {
-        private readonly IRepository _repositiory;
+        private readonly IRepository _repository;
         private readonly IBoardService _boardService;
 
         public BoardsController(IRepository repository, IBoardService boardService)
         {
-            _repositiory = repository;
+            _repository = repository;
             _boardService = boardService;
         }
 
@@ -23,11 +24,11 @@ namespace ChallengeBoard.Controllers
 
         public ActionResult Index(string user = "", int page = 1)
         {
-            var boards = _repositiory.Boards;
+            var boards = _repository.Boards;
 
             if (!user.IsEmpty())
             {
-                var profile = _repositiory.UserProfiles.FindProfile(User.Identity.Name);
+                var profile = _repository.UserProfiles.FindProfile(User.Identity.Name);
                 boards =
                     boards.Where(
                         x =>
@@ -47,7 +48,7 @@ namespace ChallengeBoard.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            var board = _repositiory.GetBoardByIdWithCompetitors(id);
+            var board = _repository.GetBoardByIdWithCompetitors(id);
             
             if (board == null)
                 return View("BoardNotFound");
@@ -77,19 +78,19 @@ namespace ChallengeBoard.Controllers
                 {
                     Name = User.Identity.Name,
                     Rating = board.StartingRating,
-                    Profile = _repositiory.UserProfiles.FindProfile(User.Identity.Name)
+                    Profile = _repository.UserProfiles.FindProfile(User.Identity.Name)
                 };
 
-                _repositiory.Add(owner);
-                _repositiory.CommitChanges();
+                _repository.Add(owner);
+                _repository.CommitChanges();
 
                 board.Created = DateTime.Now;
                 board.Started = DateTime.Now;
                 board.Owner = owner;
                 board.Competitors.Add(owner);
 
-                _repositiory.Add(board);
-                _repositiory.CommitChanges();
+                _repository.Add(board);
+                _repository.CommitChanges();
 
                 return RedirectToAction("Index");
             }
@@ -102,7 +103,7 @@ namespace ChallengeBoard.Controllers
         [Authorize]
         public ActionResult Instructions(int id = 0)
         {
-            var existingBoard = _repositiory.GetBoardByIdWithCompetitors(id);
+            var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
             if (existingBoard == null)
                 return View("BoardNotFound");
@@ -115,7 +116,7 @@ namespace ChallengeBoard.Controllers
         [Authorize]
         public ActionResult Join(int id = 0)
         {
-            var existingBoard = _repositiory.GetBoardByIdWithCompetitors(id);
+            var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
             if (existingBoard == null)
                 return View("BoardNotFound");
@@ -134,7 +135,7 @@ namespace ChallengeBoard.Controllers
         public ActionResult JoinBoard(int id, string password = "")
         {
             // TODO, move this into a BoardService
-            var existingBoard = _repositiory.GetBoardByIdWithCompetitors(id);
+            var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
             // Password failure
             if (!existingBoard.Password.IsEmpty() && 
@@ -152,7 +153,7 @@ namespace ChallengeBoard.Controllers
                 {
                     Name = User.Identity.Name,
                     Rating = existingBoard.StartingRating,
-                    Profile = _repositiory.UserProfiles.FindProfile(User.Identity.Name)
+                    Profile = _repository.UserProfiles.FindProfile(User.Identity.Name)
                 });
             }
             else if (competitor.Status == CompetitorStatus.Retired) // Retired
@@ -160,7 +161,7 @@ namespace ChallengeBoard.Controllers
             else
                 return View("Banned", existingBoard); // Banned
 
-            _repositiory.CommitChanges();
+            _repository.CommitChanges();
 
             return RedirectToAction("Instructions", new { id = existingBoard.BoardId });
         }
@@ -171,7 +172,7 @@ namespace ChallengeBoard.Controllers
         [Authorize]
         public ActionResult Edit(int id = 0)
         {
-            var board = _repositiory.GetBoardByIdWithCompetitors(id);
+            var board = _repository.GetBoardByIdWithCompetitors(id, false);
             
             if (board == null)
                 return View("BoardNotFound");
@@ -191,20 +192,20 @@ namespace ChallengeBoard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var board = _repositiory.GetBoardById(id);
+                var board = _repository.GetBoardById(id);
 
                 if (!board.IsOwner(User.Identity.Name))
                     return View("InvalidOwner", board);
 
                 if (userBoard.AutoVerification != board.AutoVerification)
                 {
-                    userBoard.Matches = _repositiory.GetUnresolvedMatchesByBoardId(userBoard.BoardId).ToList();
+                    userBoard.Matches = _repository.GetUnresolvedMatchesByBoardId(userBoard.BoardId).ToList();
                     _boardService.AdjustMatchDeadlines(userBoard);
                 }
 
                 UpdateModel(board);
 
-                _repositiory.CommitChanges();
+                _repository.CommitChanges();
                 
                 return RedirectToAction("Details", new { id = userBoard.BoardId });
             }
@@ -218,9 +219,9 @@ namespace ChallengeBoard.Controllers
         [Authorize]
         public ActionResult Delete(int id = 0)
         {
-            var board = _repositiory.GetBoardById(id);
+            var board = _repository.GetBoardById(id);
 
-            if(_repositiory.Matches.Any(x => x.Board.BoardId == id))
+            if(_repository.Matches.Any(x => x.Board.BoardId == id))
                 return View("CanNotDelete", board);
 
             if (board == null)
@@ -239,9 +240,9 @@ namespace ChallengeBoard.Controllers
         [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
-            var board = _repositiory.GetBoardById(id);
+            var board = _repository.GetBoardById(id);
 
-            if (_repositiory.Matches.Any(x => x.Board.BoardId == id))
+            if (_repository.Matches.Any(x => x.Board.BoardId == id))
                 return View("CanNotDelete", board);
 
             if (board == null)
@@ -251,10 +252,10 @@ namespace ChallengeBoard.Controllers
                 return View("InvalidOwner", board);
 
             board.Owner = null;
-            _repositiory.CommitChanges();
+            _repository.CommitChanges();
 
-            _repositiory.Delete(board);
-            _repositiory.CommitChanges();
+            _repository.Delete(board);
+            _repository.CommitChanges();
 
             return RedirectToAction("Index");
         }
@@ -263,7 +264,7 @@ namespace ChallengeBoard.Controllers
         [Authorize]
         public ActionResult Retire(int id)
         {
-            var existingBoard = _repositiory.GetBoardByIdWithCompetitors(id);
+            var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
             if (existingBoard == null)
                 return View("BoardNotFound");
@@ -280,7 +281,7 @@ namespace ChallengeBoard.Controllers
         [Authorize]
         public ActionResult RetireConfirmed(int id)
         {
-            var existingBoard = _repositiory.GetBoardByIdWithCompetitors(id);
+            var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
             var competitor = existingBoard.Competitors.Active().FirstOrDefault(x => x.Name == User.Identity.Name);
 
@@ -293,7 +294,7 @@ namespace ChallengeBoard.Controllers
             if (competitor.Status == CompetitorStatus.Active)
             {
                 competitor.Status = CompetitorStatus.Retired;
-                _repositiory.CommitChanges();
+                _repository.CommitChanges();
             }
 
             // Rejection message persisted across redirection.
@@ -307,7 +308,7 @@ namespace ChallengeBoard.Controllers
 
         public ActionResult Standings(int id = 0)
         {
-            var existingBoard = _repositiory.GetBoardByIdWithCompetitors(id);
+            var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
             if (existingBoard == null)
                 return View("BoardNotFound");

@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
 using System.Linq;
 
 namespace ChallengeBoard.Models
@@ -87,9 +84,17 @@ namespace ChallengeBoard.Models
             return (Boards.FirstOrDefault(x => x.BoardId == id));
         }
 
-        public Board GetBoardByIdWithCompetitors(int id)
+        public Board GetBoardByIdWithCompetitors(int id, bool includeProfiles = true)
         {
             return (Boards.FirstOrDefault(x => x.BoardId == id));
+        }
+
+        public Competitor GetCompetitorByName(int boardId, string name)
+        {
+            return
+                (GetBoardByIdWithCompetitors(boardId)
+                    .Competitors.FirstOrDefault(
+                        x => x.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase)));
         }
 
         public IQueryable<Match> GetUnresolvedMatchesByBoardId(int id)

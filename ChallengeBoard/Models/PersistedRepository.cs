@@ -80,9 +80,20 @@ namespace ChallengeBoard.Models
             return (Boards.FirstOrDefault(x => x.BoardId == id));
         }
 
-        public Board GetBoardByIdWithCompetitors(int id)
+        public Board GetBoardByIdWithCompetitors(int id, bool includeProfiles = true)
         {
-            return (Boards.Include(c => c.Competitors.Select(p => p.Profile)).FirstOrDefault(x => x.BoardId == id));
+            if(includeProfiles)
+                return (Boards.Include(c => c.Competitors.Select(p => p.Profile)).FirstOrDefault(x => x.BoardId == id));
+
+            return (Boards.Include(c => c.Competitors).FirstOrDefault(x => x.BoardId == id));
+        }
+
+        public Competitor GetCompetitorByName(int boardId, string name)
+        {
+            return
+                (GetBoardByIdWithCompetitors(boardId)
+                    .Competitors.FirstOrDefault(
+                        x => x.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase)));
         }
 
         public IQueryable<Match> GetUnresolvedMatchesByBoardId(int id)

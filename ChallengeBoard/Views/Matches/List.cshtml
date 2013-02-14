@@ -96,19 +96,7 @@
     @Scripts.Render("~/bundles/components")
     <script type="text/javascript">
         $(function() {
-            // Knockout ViewModel for a match rejection.
-            var viewModel = function() {
-                var self = this;
-
-                self.winner = ko.observable(),
-                self.winnerRatingDelta = ko.observable(),
-                self.loser = ko.observable(),
-                self.loserRatingDelta = ko.observable(),
-                self.boardId = ko.observable(),
-                self.matchId = ko.observable();
-            };
-
-            var matchResult = new viewModel();
+            var matchResult = new MatchModel();
             ko.applyBindings(matchResult);
 
             // Force them to type "REJECT" before enabling the reject button.

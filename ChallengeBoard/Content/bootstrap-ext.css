@@ -151,6 +151,10 @@ textarea.editor {
 	border-top: 8px solid #0099cc;
 }
 
+.table-nonfluid {
+   width: auto;
+}
+
 .table-fixed {
     table-layout: fixed;
 }
@@ -177,6 +181,7 @@ textarea.editor {
 
 .table td ul.nav-pills > li {
     float: none;
+    /*float: left;*/
 }
 
 .table th.gravatar,

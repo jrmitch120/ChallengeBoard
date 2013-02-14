@@ -188,6 +188,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
+    <Compile Include="Controllers\CompetitorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Email\EmailContact.cs" />
@@ -207,6 +208,10 @@
     <Compile Include="Migrations\201302041909034_InitialCreate.cs" />
     <Compile Include="Migrations\201302041909034_InitialCreate.Designer.cs">
       <DependentUpon>201302041909034_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302132357248_AddCompetitorJoin.cs" />
+    <Compile Include="Migrations\201302132357248_AddCompetitorJoin.Designer.cs">
+      <DependentUpon>201302132357248_AddCompetitorJoin.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InMemoryRepository.cs" />
@@ -331,6 +336,10 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
+    <Content Include="Scripts\KnockoutModels\BindingHandlers.js" />
+    <Content Include="Scripts\KnockoutModels\boardModels.js" />
+    <Content Include="Scripts\KnockoutModels\competitorModels.js" />
+    <Content Include="Scripts\KnockoutModels\matchModels.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\wysiwyg\bootstrap-wysihtml5.js" />
     <Content Include="Scripts\wysiwyg\wysihtml5-0.3.0.js" />
@@ -397,6 +406,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201302041909034_InitialCreate.resx">
       <DependentUpon>201302041909034_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302132357248_AddCompetitorJoin.resx">
+      <DependentUpon>201302132357248_AddCompetitorJoin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
