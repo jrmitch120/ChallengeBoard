@@ -9,9 +9,6 @@ H1 .subhead {
 @media (max-width: 980px) {
     #main {
         padding-top: 0;
-    }
-    .embedded .pull-right {
-        float: left;
     }   
     .editor {
         display: block;
@@ -30,7 +27,9 @@ H1 .subhead {
 }
 
 @media (max-width: 480px) {
-    
+    .embedded .pull-right {
+        float: left;
+    }
 
     /* Force table to not be like tables anymore */
 	.no-more-tables table, 

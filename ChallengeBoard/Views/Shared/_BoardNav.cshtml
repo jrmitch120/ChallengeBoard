@@ -57,7 +57,9 @@
             }
             else
             {
-                @Html.ActionLink("Join Board", "Join", "Boards", new { id = Model.BoardId }, new { @class = "btn btn-primary pull-right" })
+                <div class="form-condensed">
+                    @Html.ActionLink("Join Board", "Join", "Boards", new { id = Model.BoardId }, new { @class = "btn btn-primary pull-right" })
+                </div>
             }
         }
     </div>
