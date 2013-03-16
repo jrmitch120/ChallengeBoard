@@ -208,12 +208,12 @@ legend + .control-group {
     background-image: -o-linear-gradient(top, #fff, #ABABAB);
     background-image: linear-gradient(to bottom, #fff, #ABABAB);
     background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ABABAB', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffff', endColorstr='#ABABAB', GradientType=0);
     border-color: #ABABAB #ABABAB #00394d;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     *background-color: #ABABAB;
-    /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    /* Darken IE7 buttons by default so they stand out more given they won't have borders 
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);*/
 }
 
 .btn-login:hover,
