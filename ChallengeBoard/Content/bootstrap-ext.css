@@ -208,7 +208,7 @@ legend + .control-group {
     background-image: -o-linear-gradient(top, #fff, #ABABAB);
     background-image: linear-gradient(to bottom, #fff, #ABABAB);
     background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffff', endColorstr='#ABABAB', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffABABAB', GradientType=0);
     border-color: #ABABAB #ABABAB #00394d;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     *background-color: #ABABAB;
