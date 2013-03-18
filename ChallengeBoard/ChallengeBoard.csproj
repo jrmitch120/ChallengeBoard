@@ -402,6 +402,9 @@
     <Content Include="Views\Boards\Join.cshtml" />
     <Content Include="Views\Boards\Retire.cshtml" />
     <Content Include="Views\Boards\CanNotDelete.cshtml" />
+    <Content Include="Web.AppHarbor.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201302041909034_InitialCreate.resx">
