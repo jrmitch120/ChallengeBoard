@@ -1,6 +1,8 @@
 # git ignore file
 #ignore thumbnails created by windows
 Thumbs.db
+#Ignore release web.config transformation
+ChallengeBoard/Web.Release.config
 #Ignore files build by Visual Studio
 [Oo]bj/
 [Bb]in/
