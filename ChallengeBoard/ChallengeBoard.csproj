@@ -344,12 +344,6 @@
     <Content Include="Scripts\wysiwyg\bootstrap-wysihtml5.js" />
     <Content Include="Scripts\wysiwyg\wysihtml5-0.3.0.js" />
     <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Scripts\_references.js" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />

@@ -3,6 +3,7 @@
 Thumbs.db
 #Ignore release web.config transformation
 ChallengeBoard/Web.Release.config
+ChallengeBoard/Web.Debug.config
 #Ignore files build by Visual Studio
 [Oo]bj/
 [Bb]in/
