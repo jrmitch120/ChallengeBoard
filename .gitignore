@@ -4,6 +4,8 @@ Thumbs.db
 #Ignore release web.config transformation
 ChallengeBoard/Web.Release.config
 ChallengeBoard/Web.Debug.config
+#Ignore Deployment
+PublishProfiles/
 #Ignore files build by Visual Studio
 [Oo]bj/
 [Bb]in/
@@ -15,4 +17,3 @@ target/
 packages/
 msbuild.log
 _Resharper*/
-ChallengeBoard/App_Data/*

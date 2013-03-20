@@ -396,6 +396,12 @@
     <Content Include="Views\Boards\Join.cshtml" />
     <Content Include="Views\Boards\Retire.cshtml" />
     <Content Include="Views\Boards\CanNotDelete.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201302041909034_InitialCreate.resx">
