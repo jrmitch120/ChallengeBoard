@@ -21,13 +21,13 @@ namespace ChallengeBoard.Migrations
                         Verified = c.Boolean(nullable: false),
                         Rejected = c.Boolean(nullable: false),
                         Board_BoardId = c.Int(),
-                        Board_BoardId1 = c.Int(),
+                        Board_BoardId1 = c.Int(nullable: false),
                         Winner_CompetitorId = c.Int(),
                         Loser_CompetitorId = c.Int(),
                     })
                 .PrimaryKey(t => t.MatchId)
-                .ForeignKey("dbo.Boards", t => t.Board_BoardId, cascadeDelete: true)
-                .ForeignKey("dbo.Boards", t => t.Board_BoardId1)
+                .ForeignKey("dbo.Boards", t => t.Board_BoardId)
+                .ForeignKey("dbo.Boards", t => t.Board_BoardId1, cascadeDelete: true)
                 .ForeignKey("dbo.Competitors", t => t.Winner_CompetitorId)
                 .ForeignKey("dbo.Competitors", t => t.Loser_CompetitorId)
                 .Index(t => t.Board_BoardId)
@@ -63,6 +63,7 @@ namespace ChallengeBoard.Migrations
                         Name = c.String(),
                         Status = c.Int(nullable: false),
                         Rating = c.Int(nullable: false),
+                        Joined = c.DateTime(nullable: false),
                         Wins = c.Int(nullable: false),
                         Loses = c.Int(nullable: false),
                         Ties = c.Int(nullable: false),

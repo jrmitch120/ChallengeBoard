@@ -25,14 +25,16 @@ namespace ChallengeBoard.Models
 
             //http://stackoverflow.com/questions/5471374/how-do-you-ensure-cascade-delete-is-enabled-on-a-table-relationship-in-ef-code-f
             modelBuilder.Entity<Board>()
-                        .HasMany(r => r.Matches)
+                        .HasMany(b => b.Matches)
+                        .WithOptional();
+                        //.WillCascadeOnDelete(true); Once matches roll in, boards can't be deleted.
+
+            modelBuilder.Entity<Board>()
+                        .HasMany(b => b.Competitors)
                         .WithOptional()
                         .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Board>()
-                        .HasMany(r => r.Competitors)
-                        .WithOptional()
-                        .WillCascadeOnDelete(true);
+            modelBuilder.Entity<Match>().HasRequired<Board>(m => m.Board);
 
             //modelBuilder.Entity<Competitor>()
             //   .HasOptional(r => r.Profile)

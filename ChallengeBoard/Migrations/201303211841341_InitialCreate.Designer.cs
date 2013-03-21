@@ -11,7 +11,7 @@ namespace ChallengeBoard.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201302041909034_InitialCreate"; }
+            get { return "201303211841341_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

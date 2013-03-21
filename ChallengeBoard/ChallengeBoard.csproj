@@ -205,14 +205,6 @@
     </Compile>
     <Compile Include="Infrastucture\AjaxOnlyAttribute.cs" />
     <Compile Include="Infrastucture\HtmlExtensions.cs" />
-    <Compile Include="Migrations\201302041909034_InitialCreate.cs" />
-    <Compile Include="Migrations\201302041909034_InitialCreate.Designer.cs">
-      <DependentUpon>201302041909034_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302132357248_AddCompetitorJoin.cs" />
-    <Compile Include="Migrations\201302132357248_AddCompetitorJoin.Designer.cs">
-      <DependentUpon>201302132357248_AddCompetitorJoin.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
@@ -403,14 +395,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201302041909034_InitialCreate.resx">
-      <DependentUpon>201302041909034_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302132357248_AddCompetitorJoin.resx">
-      <DependentUpon>201302132357248_AddCompetitorJoin.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
