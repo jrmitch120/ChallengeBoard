@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -249,7 +250,9 @@ namespace ChallengeBoard.Controllers
                 return View("ExternalLoginConfirmation",
                             new RegisterExternalLoginModel
                             {
-                                UserName = result.UserName,
+                                UserName =
+                                    Regex.Replace(result.UserName, "\\b@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b", "",
+                                                  RegexOptions.IgnoreCase),
                                 Email = result.ExtraData["email"] ?? string.Empty,
                                 ExternalLoginData = loginData
                             });
