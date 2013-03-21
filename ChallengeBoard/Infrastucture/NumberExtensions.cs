@@ -1,4 +1,6 @@
-﻿namespace ChallengeBoard.Infrastucture
+﻿using System;
+
+namespace ChallengeBoard.Infrastucture
 {
     public static class NumberExtensions
     {
@@ -7,7 +9,7 @@
         /// </summary>
         public static int RoundToWhole(this double d)
         {
-            return (int)(d + 0.5);
+            return (int)Math.Round(d, 0, MidpointRounding.AwayFromZero);
         }
     } 
 }
