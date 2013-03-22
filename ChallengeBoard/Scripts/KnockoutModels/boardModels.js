@@ -1,4 +1,20 @@
 ﻿/***************************************************************************************************************
+* BoardListModel - A model for listing available challenge boards
+***************************************************************************************************************/
+function BoardListModel(boards) {
+    var self = this;
+
+    self.boards = ko.observableArray(boards);
+
+    self.search = ko.observable();
+
+    ko.computed(function () {
+        if(self.search() != null)
+            console.info('searching for:' + self.search());
+    }).extend({ throttle: 500 });
+}
+
+/***************************************************************************************************************
 * CompetitorStatusModel - A model for modifying a board's competitor (status only right now)
 ***************************************************************************************************************/
 function CompetitorStatusModel(boardId, competitosData) {
@@ -31,3 +47,4 @@ function CompetitorStatusModel(boardId, competitosData) {
         });
     };
 };
+

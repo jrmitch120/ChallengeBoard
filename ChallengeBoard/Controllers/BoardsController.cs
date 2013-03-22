@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
-using ChallengeBoard.Infrastucture;
 using ChallengeBoard.Models;
 using ChallengeBoard.Services;
+using ChallengeBoard.ViewModels;
 
 namespace ChallengeBoard.Controllers
 {
@@ -40,7 +40,7 @@ namespace ChallengeBoard.Controllers
             // Persist any status messages across redirection.
             ViewBag.StatusMessage = TempData["StatusMessage"];
 
-            return View(boards.OrderByDescending(x => x.End).Skip(Math.Abs(page-1)).Take(50));
+            return View(new BoardListViewModel(boards.OrderByDescending(x => x.End).Skip(Math.Abs(page - 1)).Take(50).ToList()));
         }
 
         //

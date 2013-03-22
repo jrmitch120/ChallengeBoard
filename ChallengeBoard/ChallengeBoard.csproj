@@ -230,6 +230,9 @@
     <Compile Include="Services\IMailService.cs" />
     <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\IBoardService.cs" />
+    <Compile Include="ViewModels\CompetitorViewModel.cs" />
+    <Compile Include="ViewModels\BoardListViewModel.cs" />
+    <Compile Include="ViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\RecentMatchesViewModel.cs" />
     <Compile Include="Models\MatchBinder.cs" />
     <Compile Include="Models\IRepository.cs" />
