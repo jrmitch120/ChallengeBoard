@@ -4,13 +4,22 @@
 function BoardListModel(boards) {
     var self = this;
 
-    self.boards = ko.observableArray(boards);
+    self.initialLoad = boards;
 
+    self.boards = ko.observableArray(boards);
     self.search = ko.observable();
 
     ko.computed(function () {
-        if(self.search() != null)
-            console.info('searching for:' + self.search());
+        if (self.search() != null) {
+            if (self.search() == '')
+                self.boards(self.initialLoad);
+            else {
+                $.getJSON(window.location.pathname + "/Search?search=" + self.search(), function (data) {
+                    self.boards(data.Boards);
+                    console.info(data.Boards[0]);
+                });
+            }
+        }
     }).extend({ throttle: 500 });
 }
 

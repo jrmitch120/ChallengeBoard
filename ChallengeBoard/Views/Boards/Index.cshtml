@@ -8,55 +8,18 @@
 <div class="well">
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     @Html.ActionLink("Create New", "Create")
+    <hr />
+    <div class="centered-text">
+        <div class="input-prepend">
+            <span class="add-on">
+                <i class="icon-search"></i>
+            </span>
+            @Html.TextBox("Search", null, new { @class="span6", placeholder="Search...", data_bind = "value: search, valueUpdate: 'afterkeydown'" });
+        </div>
+    </div>
 </div>
 @if (Model.Boards.Any())
-{
-    <table class="table table-striped no-more-tables">
-        <thead>
-            <tr>
-                <th class="span3">
-                    @Html.DisplayNameFor(Model.Boards, m => m.Name)
-                </th>
-                <th class="centered span2">
-                    Organizer
-                </th>
-                <th class="centered span2">
-                    @Html.DisplayNameFor(Model.Boards, m => m.Created)
-                </th>
-                <th class="centered span2">
-                    @Html.DisplayNameFor(Model.Boards, m => m.End)
-                </th>
-                <th class="centered span2">
-                    Progress
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Boards)
-            {
-                <tr>
-                    <td data-title="@Html.DisplayNameFor(Model.Boards, m => m.Name)">
-                        @Html.ActionLink(item.Name, "Standings", new {id = item.BoardId})
-                    </td>
-                    <td class="centered" data-title="Organizer">
-                        @Html.DisplayFor(modelItem => item.Owner.Name)
-                    </td>
-                    <td class="centered" data-title="@Html.DisplayNameFor(Model.Boards, m => m.Created)">
-                        @Html.DisplayFor(modelItem => item.Created)
-                    </td>
-                    <td class="centered" data-title="@Html.DisplayNameFor(Model.Boards, m => m.End)">
-                        @Html.DisplayFor(modelItem => item.End)
-                    </td>
-                    <td data-title="Progress">
-                        <div class="progress">
-                            <div class="bar" style="width: @string.Format("{0}%", item.PercentComplete)"></div>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <input data-bind='value: search, valueUpdate: "afterkeydown"' />
+{   
     <table class="table table-striped no-more-tables" data-bind="visible: boards().length &gt; 0">
         <thead>
             <tr>

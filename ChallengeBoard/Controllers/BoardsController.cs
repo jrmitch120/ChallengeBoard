@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using ChallengeBoard.Infrastucture;
 using ChallengeBoard.Models;
 using ChallengeBoard.Services;
 using ChallengeBoard.ViewModels;
@@ -40,7 +41,19 @@ namespace ChallengeBoard.Controllers
             // Persist any status messages across redirection.
             ViewBag.StatusMessage = TempData["StatusMessage"];
 
-            return View(new BoardListViewModel(boards.OrderByDescending(x => x.End).Skip(Math.Abs(page - 1)).Take(50).ToList()));
+            return View(new BoardListViewModel(boards.OrderByDescending(x => x.End).Skip(Math.Abs(page - 1)).Take(100).ToList()));
+        }
+
+        [AjaxOnly]
+        public ActionResult Search(string search)
+        {
+            var boards =
+                _repository.Boards.Where(
+                    x => x.Name.ToLower().Contains(search.ToLower().Trim()) && x.End > DateTime.Now)
+                           .OrderByDescending(x => x.End)
+                           .Take(100)
+                           .ToList();
+            return (Json(new BoardListViewModel(boards), JsonRequestBehavior.AllowGet));
         }
 
         //
