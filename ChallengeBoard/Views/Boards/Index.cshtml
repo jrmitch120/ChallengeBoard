@@ -71,7 +71,7 @@ else
     
     @Scripts.Render("~/bundles/knockout")
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             var boardsModel = new window.BoardListModel(@Html.Raw(serializer.Serialize(Model.Boards)));
             ko.applyBindings(boardsModel);
         });

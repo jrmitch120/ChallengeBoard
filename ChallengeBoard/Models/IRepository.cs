@@ -15,6 +15,7 @@ namespace ChallengeBoard.Models
         IQueryable<Board> Boards { get; }
         IQueryable<Match> Matches { get; }
 
+        IQueryable<Board> GetBoardsForCompetitor(string userName);
         IQueryable<Match> GetUnresolvedMatchesByBoardId(int id);
 
         void Add(Competitor competitor);

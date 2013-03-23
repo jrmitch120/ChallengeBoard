@@ -89,6 +89,14 @@ namespace ChallengeBoard.Models
             return (Boards.FirstOrDefault(x => x.BoardId == id));
         }
 
+        public IQueryable<Board> GetBoardsForCompetitor(string userName)
+        {
+            var profileUserId = UserProfiles.FindProfile(userName).UserId;
+            return
+                (Boards.Where(
+                    x => x.Competitors.Any(y => y.ProfileUserId == profileUserId)));
+        }
+
         public Competitor GetCompetitorByName(int boardId, string name)
         {
             return
