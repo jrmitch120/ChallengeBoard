@@ -5149,6 +5149,12 @@ body {
   background-image: linear-gradient(to bottom, #060606, #252a30);
   background-repeat: repeat-x;
   /*
+  min-height: 100%;
+  background-color: #121417;
+  background-image: url("../Content/images/bg.png");
+  background-repeat: repeat-x;
+  */
+  /*
       There is a bug here with using a fixed footer.  Filter only works on the 
       viewport and not the page.  Can not figure a fix, not work the effort for IE users ;)
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff060606', endColorstr='#ff252a30', GradientType=0);

@@ -250,6 +250,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap-ext.css" />
     <Content Include="Content\bootstrap-toggle.css" />
+    <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\google-logo.png" />
     <Content Include="Content\wysiwyg\bootstrap-wysihtml5.css" />
     <Content Include="Content\wysiwyg\wysiwyg-color.css" />

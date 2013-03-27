@@ -17,7 +17,7 @@
     </div>
     <div class="span10">
         <div class="tab-content">
-            <div class="tab-pane active" id="settings">
+            <div class="tab-pane active no-overflow" id="settings">
                 <div class="well">
                     You are editing the challenge board.  Changes be will not become perminant unless they are saved.
                 </div>
@@ -55,7 +55,7 @@
                     <div class="control-group">
                         @Html.LabelFor(m => m.StartingRating, new { @class = "control-label" })
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.StartingRating, new { @class = "input-mini" })
+                            @Html.TextBoxFor(m => m.StartingRating, new { @class = "input-mini",  maxlength = 4 })
                             @Html.ValidationMessageFor(m => m.StartingRating)
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         @Html.LabelFor(m => m.AutoVerification, new { @class = "control-label" })
 
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.AutoVerification, new { @class = "input-mini" })
+                            @Html.TextBoxFor(m => m.AutoVerification, new { @class = "input-mini",  maxlength = 3 })
                             <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Auto Verification" data-content="Matches have this long to be accepted or rejected before they are automatically verified.  Changing this WILL affect currently un-verified matches."><i class="icon-question-sign icon-white"></i></a>
                             @Html.ValidationMessageFor(m => m.AutoVerification)
                         </div>

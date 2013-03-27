@@ -4,23 +4,22 @@
 @{
     ViewBag.Title = "Report Match";
 }
-@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Board.Name, "Report a Match"))
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Board.Name, "Report"))
 @Html.Partial("_BoardNav", Model.Board)
 <div class="well">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    Reporting matches is a simple affair.  Fill out the information below and validate your match.  If everything checks out, 
+    you'll see a preview of the results prior to submitting them.  Once submitted, your opponent will be notified via email  
+    and have <b>@Model.Board.AutoVerification</b> hours to reject the result.  If the match is not rejected, the result will become 
+    official and the standings will be adjusted accordingly.
 </div>
 @using (Html.BeginForm("Validate", "Matches", new { boardId = Model.Board.BoardId }, FormMethod.Post, new { id = "MatchForm", @class = "form-horizontal" }))
 {
-    <div class="control-group">
-        <div class="controls">
-            <div class="alert alert-info fade in hidden" id="error">
-                <a class="close">&times;</a>
-                <strong>There was a problem with your match:</strong>
-                <ul>
-                    <li id="errorMsg"></li>
-                </ul>
-            </div>
-        </div>
+    <div class="alert alert-info fade in hidden" id="error">
+        <a class="close">&times;</a>
+        <strong>There was a problem with your match:</strong>
+        <ul>
+            <li id="errorMsg"></li>
+        </ul>
     </div>
     <div class="control-group">
 

@@ -2,8 +2,8 @@
     padding-top: 65px;
 }
 
-H1 .subhead {
-    float: right;
+.subhead {
+    text-align: right;
 }
 
 @media (max-width: 980px) {
@@ -21,16 +21,16 @@ H1 .subhead {
 }
 
 @media (max-width: 767px) {
-    H1 .subhead {
-        float: none;
+    .subhead {
+        text-align: left;
     }
-}
 
-@media (max-width: 480px) {
     .embedded .pull-right {
         float: left;
     }
+}
 
+@media (max-width: 480px) {    
     /* Force table to not be like tables anymore */
 	.no-more-tables table, 
 	.no-more-tables thead, 
@@ -94,6 +94,12 @@ H1 .subhead {
     margin-bottom: 0;
 }
 
+/* This is needed to remove unwanted space that the empty validation 
+    spans generate on 100% responsive width inputs*/
+.help-inline.field-validation-valid {
+    display: none;
+}
+
 .form-condensed {
     padding-top: 2px;
     margin-bottom: 0;
@@ -101,6 +107,14 @@ H1 .subhead {
 
 .form-horizontal .help-block {
   margin-top: 10px;
+}
+
+.no-overflow {
+    overflow: hidden;
+}
+
+.no-space {
+    margin-left: 0;
 }
 
 input.danger {
