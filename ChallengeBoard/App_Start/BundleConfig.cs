@@ -18,9 +18,7 @@ namespace ChallengeBoard
 
             bundles.Add(new ScriptBundle("~/bundles/components").Include(
                         "~/Scripts/wysiwyg/wysihtml5-{version}.js",
-                        "~/Scripts/wysiwyg/bootstrap-wysihtml5.js",
-                        "~/Scripts/bootstrap-datepicker.js",
-                        "~/Scripts/bootstrap-toggle.js"));
+                        "~/Scripts/wysiwyg/bootstrap-wysihtml5.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
@@ -44,7 +42,7 @@ namespace ChallengeBoard
                         "~/Content/bootstrap-ext.css",
                         "~/Content/wysiwyg/*.css",
                         "~/Content/bootstrap-datepicker.css",
-                        "~/Content/bootstrap-toggle.css"));
+                        "~/Content/bootstrap-switch.css"));
 
             //bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
             //            "~/Content/themes/base/jquery.ui.core.css",

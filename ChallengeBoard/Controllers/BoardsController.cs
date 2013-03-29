@@ -41,10 +41,12 @@ namespace ChallengeBoard.Controllers
         [AjaxOnly]
         public ActionResult Search(string search, string user = "")
         {
-            var boards = !user.IsEmpty() ? _repository.GetBoardsForCompetitor(User.Identity.Name) : _repository.Boards;
+            var boards = !user.IsEmpty()
+                             ? _repository.GetBoardsForCompetitor(User.Identity.Name)
+                             : _repository.Boards.Where(x => x.End > DateTime.Now);
 
             boards =
-                boards.Where(x => x.Name.ToLower().Contains(search.ToLower().Trim()) && x.End > DateTime.Now)
+                boards.Where(x => x.Name.ToLower().Contains(search.ToLower().Trim()))
                       .OrderByDescending(x => x.End)
                       .Take(100);
 

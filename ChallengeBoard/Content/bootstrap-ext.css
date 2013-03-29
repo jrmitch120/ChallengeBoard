@@ -164,6 +164,13 @@ textarea.editor {
 	border-top: 8px solid #0099cc;
 }
 
+.progress .bar {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
 .table-nonfluid {
    width: auto;
 }
