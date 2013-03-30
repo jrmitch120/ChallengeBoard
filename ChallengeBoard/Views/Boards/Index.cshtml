@@ -6,15 +6,16 @@
 }
 @Html.Partial("_HeaderPartial", new PageHeader(ViewBag.Title))
 <div class="well">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    @Html.ActionLink("Create New", "Create")
+    Challenge boards are a fun and unique way to have some friendly competition amoung friends.  You can search for a challenge 
+    board if you're looking for something specific.  If you're thinking about starting up something yourself, you may want to 
+    @Html.ActionLink("create a new challenge board", "Create") and recruit some friends!
     <hr />
-    <div class="centered-text">
+    <div class="centered-text controls">
         <div class="input-prepend">
             <span class="add-on">
                 <i class="icon-search"></i>
             </span>
-            @Html.TextBox("Search", null, new { @class="span6", placeholder="Search...", data_bind = "value: search, valueUpdate: 'afterkeydown'" });
+            @Html.TextBox("Search", null, new { @class="span8", placeholder="Search...", data_bind = "value: search, valueUpdate: 'afterkeydown'" });
         </div>
     </div>
 </div>
@@ -71,7 +72,7 @@ else
     
     @Scripts.Render("~/bundles/knockout")
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             var boardsModel = new window.BoardListModel(@Html.Raw(serializer.Serialize(Model.Boards)));
             ko.applyBindings(boardsModel);
         });

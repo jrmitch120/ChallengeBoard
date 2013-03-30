@@ -1,13 +1,13 @@
 ﻿@model ChallengeBoard.Infrastucture.PageHeader
-<div class="page-header">
-    <h1>@Html.DisplayFor(m => m.Heading)
-        @if (!Model.SubHeading.IsEmpty())
-        {
-            <span class="subhead">
-                <small>@Html.DisplayFor(m => m.SubHeading)</small>
-            </span>
-        }
-    </h1>
+<div class="page-header row no-space">
+    <div class="span10 no-space">
+        <h1>@Html.DisplayFor(m => m.Heading)</h1>
+    </div>
+    <div class="span2 subhead">
+        <h2>
+            <small>@Html.DisplayFor(m => m.SubHeading)</small>
+        </h2>
+    </div>
 </div>
 @if (ViewBag.StatusMessage != null)
 {

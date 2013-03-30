@@ -25,18 +25,9 @@ namespace ChallengeBoard.Controllers
 
         public ActionResult Index(string user = "", int page = 1)
         {
-            var boards = _repository.Boards;
-
-            if (!user.IsEmpty())
-            {
-                var profile = _repository.UserProfiles.FindProfile(User.Identity.Name);
-                boards =
-                    boards.Where(
-                        x =>
-                        x.Competitors.Any(y => y.ProfileUserId == profile.UserId && y.Status == CompetitorStatus.Active));
-            }
-            else
-                boards = boards.Where(x => x.End > DateTime.Now); // Hide expired boards if not looking at "yours"
+            var boards = !user.IsEmpty()
+                             ? _repository.GetBoardsForCompetitor(User.Identity.Name)
+                             : _repository.Boards.Where(x => x.End > DateTime.Now);
 
             // Persist any status messages across redirection.
             ViewBag.StatusMessage = TempData["StatusMessage"];
@@ -44,15 +35,21 @@ namespace ChallengeBoard.Controllers
             return View(new BoardListViewModel(boards.OrderByDescending(x => x.End).Skip(Math.Abs(page - 1)).Take(100).ToList()));
         }
 
+        //
+        // GET: /Boards/Search?search=Test+Search[&user=Tom]
+
         [AjaxOnly]
-        public ActionResult Search(string search)
+        public ActionResult Search(string search, string user = "")
         {
-            var boards =
-                _repository.Boards.Where(
-                    x => x.Name.ToLower().Contains(search.ToLower().Trim()) && x.End > DateTime.Now)
-                           .OrderByDescending(x => x.End)
-                           .Take(100)
-                           .ToList();
+            var boards = !user.IsEmpty()
+                             ? _repository.GetBoardsForCompetitor(User.Identity.Name)
+                             : _repository.Boards.Where(x => x.End > DateTime.Now);
+
+            boards =
+                boards.Where(x => x.Name.ToLower().Contains(search.ToLower().Trim()))
+                      .OrderByDescending(x => x.End)
+                      .Take(100);
+
             return (Json(new BoardListViewModel(boards), JsonRequestBehavior.AllowGet));
         }
 

@@ -20,7 +20,7 @@ namespace ChallengeBoard.App_Start {
 			// ioc.Register<IMyRepository, MyRepository>();
 			// ...
 
-            ioc.Register<ChallengeBoardContext, ChallengeBoardContext>();
+		    ioc.Register<ChallengeBoardContext, ChallengeBoardContext>();
 		    ioc.Register<IRepository, PersistedRepository>();
             ioc.Register<IBoardService, BoardService>();
             ioc.Register<IMatchService, MatchService>();

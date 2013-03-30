@@ -47,7 +47,7 @@
         <!--  Chrome number support 
             <input class="span1" data-val="true" data-val-number="The field Starting Rating must be a number." data-val-range="The field Starting Rating must be between 0 and 5000." data-val-range-max="5000" data-val-range-min="0" data-val-required="The Starting Rating field is required." id="StartingRating" name="StartingRating" type="number" value="1500" />
             -->
-            @Html.TextBoxFor(m => m.StartingRating, new { @class = "input-mini" })
+            @Html.TextBoxFor(m => m.StartingRating, new { @class = "input-mini",  maxlength = 4 })
             @Html.ValidationMessageFor(m => m.StartingRating)
         </div>
     </div>
@@ -55,7 +55,7 @@
         @Html.LabelFor(m => m.AutoVerification, new { @class = "control-label" })
 
         <div class="controls">
-            @Html.TextBoxFor(m => m.AutoVerification, new { @class = "input-mini" })
+            @Html.TextBoxFor(m => m.AutoVerification, new { @class = "input-mini",  maxlength = 3 })
             <a href="#" rel="popover" data-trigger="hover" data-placement="right" data-original-title="Auto Verification" data-content="Matches have this long to be accepted or rejected before they are automatically verified."><i class="icon-question-sign icon-white"></i></a>
             @Html.ValidationMessageFor(m => m.AutoVerification)
         </div>

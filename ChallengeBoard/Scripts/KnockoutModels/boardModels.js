@@ -14,7 +14,11 @@ function BoardListModel(boards) {
             if (self.search() == '')
                 self.boards(self.initialLoad);
             else {
-                $.getJSON(window.location.pathname + "/Search?search=" + self.search(), function (data) {
+                var filter = '';
+                if (window.location.search != '')
+                    filter = '&' + window.location.search.substring(1);
+                
+                $.getJSON(window.location.pathname + "/Search?search=" + self.search() + filter, function (data) {
                     self.boards(data.Boards);
                     console.info(data.Boards[0]);
                 });
