@@ -17,7 +17,7 @@
         @Html.LabelFor(m => m.Name, new { @class = "control-label" })
 
         <div class="controls">
-            @Html.TextBoxFor(m => m.Name, new {  @class="input-xlarge", maxlength = "45" })
+            @Html.TextBoxFor(m => m.Name, new {  @class="input-xlarge", maxlength = "45", autofocus = "" })
             @Html.ValidationMessageFor(m => m.Name)
         </div>
     </div>
