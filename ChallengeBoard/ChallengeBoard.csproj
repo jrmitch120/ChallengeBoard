@@ -195,6 +195,7 @@
     <Compile Include="Email\EmailFactory.cs" />
     <Compile Include="Email\EmailType.cs" />
     <Compile Include="Email\IPostmaster.cs" />
+    <Compile Include="Email\Models\MatchRejectionNotice.cs" />
     <Compile Include="Email\Models\IEmailModel.cs" />
     <Compile Include="Email\Models\MatchNotification.cs" />
     <Compile Include="Email\SmtpPostmaster.cs" />
@@ -213,7 +214,7 @@
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
     <Compile Include="Models\ModelExtensions.cs" />
-    <Compile Include="Scoring\Elo.cs" />
+    <Compile Include="Scoring\StandardElo.cs" />
     <Compile Include="Infrastucture\HtmlSanitizer.cs" />
     <Compile Include="Infrastucture\PageHeader.cs" />
     <Compile Include="Infrastucture\Paging.cs" />
@@ -326,6 +327,9 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Email\Templates\MatchNotification.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Email\Templates\MatchRejectionNotice.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\SmarterAsp.net.pubxml" />

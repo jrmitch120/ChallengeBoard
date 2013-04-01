@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardServiceTests.cs" />
+    <Compile Include="ScoringTests.cs" />
     <Compile Include="EmailTests.cs" />
     <Compile Include="MatchServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

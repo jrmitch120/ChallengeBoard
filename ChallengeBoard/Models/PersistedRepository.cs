@@ -104,9 +104,11 @@ namespace ChallengeBoard.Models
                         x => x.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase)));
         }
 
-        public IQueryable<Match> GetUnresolvedMatchesByBoardId(int id)
+        public IQueryable<Match> GetUnresolvedMatchesByBoardId(int id, bool includeProfiles = true)
         {
-            return (Matches.Where(x => !x.Resolved.HasValue));
+            var matches = Matches.Where(x => !x.Resolved.HasValue);
+
+            return includeProfiles ? (matches.Include(l => l.Winner.Profile).Include(w => w.Winner.Profile)) : (matches);
         }
 
         public Match GetMatchById(int id)

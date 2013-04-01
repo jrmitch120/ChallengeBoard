@@ -33,7 +33,7 @@ namespace ChallengeBoard.Models
         public DateTime Created { get; set; }
 
         [Display(Name = "Starting Rating")]
-        [Range(0,5000)]
+        [Range(1200,1800)]
         public int StartingRating { get; set; }
 
         [Display(Name = "Auto-Verifies In (hrs)")]

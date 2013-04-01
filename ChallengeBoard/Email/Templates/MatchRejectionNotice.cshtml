@@ -1,0 +1,29 @@
+﻿@model ChallengeBoard.Email.Models.MatchRejectionNotice
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>The Challenge Board: Match Notiication</title>
+    <style>
+        p { margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+    <p>
+        Hello @Model.RejectedName,
+    </p>
+    <p>
+        We're just dropping you a line to let you know that <strong>@Model.RejectorName</strong> has rejected a match that you have 
+        recently reported on the <strong>@Model.BoardName</strong> challenge board.  The outcome of this match will no longer be 
+        included in your board rating.
+    </p>
+    <p>
+        If you feel that this match should not have been rejected, please contact your organizer, <strong>@Model.BoardOwnerName</strong>, 
+        to work out any disagreements. 
+    </p>
+    <p>
+        Thanks,<br/>
+        The Challenge Board
+    </p>
+</body>
+</html>
