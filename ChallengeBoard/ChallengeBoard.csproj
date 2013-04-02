@@ -252,6 +252,10 @@
     <Content Include="Content\bootstrap-ext.css" />
     <Content Include="Content\bootstrap-toggle.css" />
     <Content Include="Content\bootstrap-switch.css" />
+    <Content Include="Content\images\asc.gif" />
+    <Content Include="Content\images\bg.gif" />
+    <Content Include="Content\images\desc.gif" />
+    <Content Include="Content\tableSorter.css" />
     <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\google-logo.png" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -341,6 +345,7 @@
     <Content Include="Scripts\bootstrap-switch.js" />
     <Content Include="Scripts\jquery-ui-1.10.2.js" />
     <Content Include="Scripts\jquery-ui-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.tablesorter.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

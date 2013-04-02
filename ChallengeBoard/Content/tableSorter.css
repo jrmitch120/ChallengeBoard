@@ -1,0 +1,22 @@
+
+table.sortedTable thead tr .header {
+    background-image: url(../Content/images/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+    padding-right: 17px;
+}
+
+table.sortedTable thead tr .headerSortUp {
+    background-color: #020202;
+    background-image: url("../Content/images/asc.gif");
+}
+
+table.sortedTable thead tr .headerSortDown {
+    background-color: #020202;
+    background-image: url("../Content/images/desc.gif");
+}
+
+table.sortedTable tbody tr td.sorted {
+    background-color: #F7E3B0;
+}

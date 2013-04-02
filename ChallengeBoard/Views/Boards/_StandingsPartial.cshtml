@@ -4,11 +4,10 @@
 @{
     var rank = 1;
 }
-<table class="table table-striped no-more-tables">
+<table class="table table-bordered table-striped no-more-tables sortedTable">
     <thead>
         <tr>
-            <td class="centered">Rank</td>
-            <th></th>
+            <th class="centered">Rank</th>
             <th>@Html.DisplayNameFor(m => m.Name)</th>
             <th class="centered">@Html.DisplayNameFor(m => m.GamesPlayed)</th>
             <th class="centered">@Html.DisplayNameFor(m => m.Wins)</th>
@@ -25,10 +24,11 @@
         {
             <tr>
                 <td data-title="Rank" class="centered">@rank</td>
-                <td data-title="Avatar" style="width: 20px;">
-                    @Html.Gravatar(competitor.Profile.EmailAddress, 20, null, NGravatar.Rating.PG, null)
+                
+                <td data-title="@Html.DisplayNameFor(m => m.Name)">
+                    @Html.Gravatar(competitor.Profile.EmailAddress, 20, null, NGravatar.Rating.PG, null)&nbsp;
+                    @competitor.Name
                 </td>
-                <td data-title="@Html.DisplayNameFor(m => m.Name)">@competitor.Name</td>
                 <td data-title="@Html.DisplayNameFor(m => m.GamesPlayed)" class="centered">@competitor.GamesPlayed</td>
                 <td data-title="@Html.DisplayNameFor(m => m.Wins)" class="centered">@competitor.Wins</td>
                 <td data-title="@Html.DisplayNameFor(m => m.Loses)" class="centered">@competitor.Loses</td>

@@ -17,6 +17,7 @@ namespace ChallengeBoard
             //            "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/components").Include(
+                        "~/Scripts/jquery.tablesorter.js",
                         "~/Scripts/wysiwyg/wysihtml5-{version}.js",
                         "~/Scripts/wysiwyg/bootstrap-wysihtml5.js"));
 
@@ -41,6 +42,7 @@ namespace ChallengeBoard
                         "~/Content/bootstrap-responsive.css",
                         "~/Content/bootstrap-ext.css",
                         "~/Content/wysiwyg/*.css",
+                        "~/Content/tableSorter.css",
                         "~/Content/bootstrap-datepicker.css",
                         "~/Content/bootstrap-switch.css"));
 
