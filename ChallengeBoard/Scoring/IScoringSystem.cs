@@ -2,6 +2,6 @@
 {
     public interface IScoringSystem
     {
-        ScoringResult Calculate(double winnerRating, double loserRating, bool tie = false);
+        ScoringResult Calculate(double boardStartingRating, double winnerRating, double loserRating, bool tie = false);
     }
 }

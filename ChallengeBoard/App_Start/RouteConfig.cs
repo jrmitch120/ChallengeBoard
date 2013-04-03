@@ -22,6 +22,8 @@ namespace ChallengeBoard
             //    defaults: new { controller = "Matches", action = "Verify", boardId = 0, matchId = 0 }
             //);
 
+            routes.LowercaseUrls = true;
+
             routes.MapRoute(
                 name: "MatchesRoute",
                 url: "Boards/Matches/{action}/{boardId}/{matchId}",

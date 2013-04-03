@@ -195,6 +195,7 @@
     <Compile Include="Email\EmailFactory.cs" />
     <Compile Include="Email\EmailType.cs" />
     <Compile Include="Email\IPostmaster.cs" />
+    <Compile Include="Email\Models\MatchRejectionNotice.cs" />
     <Compile Include="Email\Models\IEmailModel.cs" />
     <Compile Include="Email\Models\MatchNotification.cs" />
     <Compile Include="Email\SmtpPostmaster.cs" />
@@ -213,7 +214,7 @@
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
     <Compile Include="Models\ModelExtensions.cs" />
-    <Compile Include="Scoring\Elo.cs" />
+    <Compile Include="Scoring\StandardElo.cs" />
     <Compile Include="Infrastucture\HtmlSanitizer.cs" />
     <Compile Include="Infrastucture\PageHeader.cs" />
     <Compile Include="Infrastucture\Paging.cs" />
@@ -251,6 +252,10 @@
     <Content Include="Content\bootstrap-ext.css" />
     <Content Include="Content\bootstrap-toggle.css" />
     <Content Include="Content\bootstrap-switch.css" />
+    <Content Include="Content\images\asc.gif" />
+    <Content Include="Content\images\bg.gif" />
+    <Content Include="Content\images\desc.gif" />
+    <Content Include="Content\tableSorter.css" />
     <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\google-logo.png" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -328,6 +333,9 @@
     <Content Include="Email\Templates\MatchNotification.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Email\Templates\MatchRejectionNotice.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\SmarterAsp.net.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -337,6 +345,7 @@
     <Content Include="Scripts\bootstrap-switch.js" />
     <Content Include="Scripts\jquery-ui-1.10.2.js" />
     <Content Include="Scripts\jquery-ui-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.tablesorter.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

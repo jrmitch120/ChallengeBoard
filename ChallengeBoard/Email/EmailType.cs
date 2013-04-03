@@ -2,6 +2,7 @@
 {
     public enum EmailType
     {
-        MatchNotification
+        MatchNotification,
+        MatchRejectionNotice
     }
 }

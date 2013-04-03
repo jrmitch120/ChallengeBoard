@@ -10,4 +10,5 @@ function MatchModel() {
     self.loserRatingDelta = ko.observable(),
     self.boardId = ko.observable(),
     self.matchId = ko.observable();
+    self.tied = ko.observable();
 };

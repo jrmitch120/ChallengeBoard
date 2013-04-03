@@ -29,5 +29,28 @@ namespace ChallengeBoardTests
             Assert.That(message.Contains(loserName));
             Assert.That(message.Contains(winnerName));
         }
+
+        [Test]
+        public void ParseRejectionTemplate()
+        {
+            const string boardName = "X_BOARDNAME_X";
+            const string boardOwnerName = "X_OWNERNAME_X";
+            const string loserName = "X_LOSERNAME_X";
+            const string winnerName = "X_WINNER_NAME";
+
+            var message = EmailFactory.ParseTemplate(new MatchRejectionNotice
+            {
+                BoardName = boardName,
+                BoardOwnerName = boardOwnerName,
+                RejectedName = loserName,
+                RejectorName = winnerName
+
+            }, EmailType.MatchRejectionNotice);
+
+            Assert.That(message.Contains(boardName));
+            Assert.That(message.Contains(boardOwnerName));
+            Assert.That(message.Contains(loserName));
+            Assert.That(message.Contains(winnerName));
+        }
     }
 }

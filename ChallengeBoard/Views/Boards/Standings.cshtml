@@ -10,4 +10,12 @@
 </section>
 @section Scripts {
     @Scripts.Render("~/bundles/components")
+    <script type="text/javascript">
+        $(function() {
+            $(".sortedTable").tablesorter({
+                sortList: [[8, 1]],
+                sortInitialOrder: 'desc'
+            });
+        });
+    </script>
 }

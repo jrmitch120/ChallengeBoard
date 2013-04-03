@@ -68,11 +68,12 @@ namespace ChallengeBoard.Services
                 VerificationDeadline = DateTime.Now.AddHours(board.AutoVerification)
             };
 
-            var unresolvedMatches = _repository.GetUnresolvedMatchesByBoardId(boardId).ToList();
+            var unresolvedMatches = _repository.GetUnresolvedMatchesByBoardId(boardId, false).ToList();
 
             // Run scoring calculation
             IScoringSystem system = new StandardElo();
-            var eloResult = system.Calculate(winner.CalculateUnverifiedRank(unresolvedMatches),
+            var eloResult = system.Calculate(board.StartingRating,
+                                             winner.CalculateUnverifiedRank(unresolvedMatches),
                                              loser.CalculateUnverifiedRank(unresolvedMatches), tie);
 
             match.WinnerRatingDelta = eloResult.WinnerDelta.RoundToWhole();
@@ -83,7 +84,7 @@ namespace ChallengeBoard.Services
 
         public void RejectMatch(int boardId, int matchId, string userName)
         {
-            // Grab user profile
+            // Used to match against match Loser profile for verification of rejection authority.
             var user = _repository.UserProfiles.FindProfile(userName);
 
             if (user == null)
@@ -106,6 +107,8 @@ namespace ChallengeBoard.Services
 
             if (DateTime.Now > rejectedMatch.VerificationDeadline)
                 throw new ServiceException("The deadline for rejecting this match has passed.");
+
+            var board = _repository.GetBoardById(boardId);
 
             rejectedMatch.Rejected = true;
             rejectedMatch.Resolved = DateTime.Now;
@@ -131,7 +134,8 @@ namespace ChallengeBoard.Services
                 var matchToRecalc = unresolvedMatches.First(x => x.MatchId == match.MatchId);
 
                 // Run the recalc
-                var eloRecalc = system.Calculate(matchToRecalc.Winner.CalculateUnverifiedRank(filteredUnresolved),
+                var eloRecalc = system.Calculate(board.StartingRating,
+                                                 matchToRecalc.Winner.CalculateUnverifiedRank(filteredUnresolved),
                                                  matchToRecalc.Loser.CalculateUnverifiedRank(filteredUnresolved),
                                                  matchToRecalc.Tied);
 
@@ -140,7 +144,17 @@ namespace ChallengeBoard.Services
                 matchToRecalc.LoserRatingDelta = eloRecalc.LoserDelta.RoundToWhole();
             }
 
-            _repository.CommitChanges();
+            //_repository.CommitChanges();
+
+            _mailService.SendEmail(rejectedMatch.Winner.Profile.EmailAddress, rejectedMatch.Winner.Profile.UserName,
+                                   "Match Rejected", EmailType.MatchRejectionNotice,
+                                   new MatchRejectionNotice
+                                   {
+                                       RejectorName = rejectedMatch.Loser.Name,
+                                       RejectedName = rejectedMatch.Winner.Name,
+                                       BoardName = board.Name,
+                                       BoardOwnerName = board.Owner.Name
+                                   });
         }
 
         public void SweepMatches()
