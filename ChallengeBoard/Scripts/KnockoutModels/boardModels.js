@@ -48,7 +48,7 @@ function CompetitorStatusModel(boardId, competitosData) {
             type: 'POST',
             contentType: 'application/json',
             data: ko.toJSON(competitor),
-            url: '../Competitors/Edit/' + self.boardId + '/' + competitor.name,
+            url: '../competitors/edit/' + self.boardId + '/' + competitor.name,
             success: function(data) {
                 if (data.Error) {
                     alert(data.Message);

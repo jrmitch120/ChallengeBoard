@@ -114,7 +114,7 @@
             
             // Report a match
             $('#report').click(function () {
-                form.attr('action', form.attr('action').replace("Validate", "Create"));
+                form.attr('action', form.attr('action').replace("validate", "create"));
                 form.unbind('submit');
 
                 $('#report').addClass('disabled');

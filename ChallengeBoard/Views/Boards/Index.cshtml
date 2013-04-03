@@ -44,7 +44,7 @@
         <tbody data-bind="foreach: boards">
             <tr>
                 <td data-title="@Html.DisplayNameFor(Model.Boards, m => m.Name)">
-                    <a href="#" data-bind="text: Name, attr: { href: 'Boards/Standings/' + BoardId }"></a>
+                    <a href="#" data-bind="text: Name, attr: { href: 'boards/standings/' + BoardId }"></a>
                 </td>
                 <td  class="centered" data-title="Owner" data-bind="text: Owner.Name"></td>
                 <td class="centered" data-title="@Html.DisplayNameFor(Model.Boards, m => m.Created)" data-bind="text: Created"></td>
