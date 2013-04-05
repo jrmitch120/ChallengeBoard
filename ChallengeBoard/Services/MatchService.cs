@@ -144,7 +144,7 @@ namespace ChallengeBoard.Services
                 matchToRecalc.LoserRatingDelta = eloRecalc.LoserDelta.RoundToWhole();
             }
 
-            //_repository.CommitChanges();
+            _repository.CommitChanges();
 
             _mailService.SendEmail(rejectedMatch.Winner.Profile.EmailAddress, rejectedMatch.Winner.Profile.UserName,
                                    "Match Rejected", EmailType.MatchRejectionNotice,
