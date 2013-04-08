@@ -59,10 +59,10 @@ namespace ChallengeBoard.Controllers
         public ActionResult Details(int id = 0)
         {
             var board = _repository.GetBoardByIdWithCompetitors(id);
-            
+
             if (board == null)
                 return View("BoardNotFound");
-            
+
             return View(board);
         }
 
@@ -148,7 +148,7 @@ namespace ChallengeBoard.Controllers
             var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
             // Password failure
-            if (!existingBoard.Password.IsEmpty() && 
+            if (!existingBoard.Password.IsEmpty() &&
                 !existingBoard.Password.Equals(password, StringComparison.InvariantCultureIgnoreCase))
             {
                 ModelState.AddModelError("invalidPassword", "The password you entered was incorrect");
@@ -183,7 +183,7 @@ namespace ChallengeBoard.Controllers
         public ActionResult Edit(int id = 0)
         {
             var board = _repository.GetBoardByIdWithCompetitors(id, false);
-            
+
             if (board == null)
                 return View("BoardNotFound");
 
@@ -200,10 +200,13 @@ namespace ChallengeBoard.Controllers
         //public ActionResult Edit(int id, FormCollection formValues)
         public ActionResult Edit(int id, Board userBoard)
         {
+            var board = _repository.GetBoardById(id);
+
+            if (board == null)
+                return View("BoardNotFound");
+
             if (ModelState.IsValid)
             {
-                var board = _repository.GetBoardById(id);
-
                 if (!board.IsOwner(User.Identity.Name))
                     return View("InvalidOwner", board);
 
@@ -216,11 +219,11 @@ namespace ChallengeBoard.Controllers
                 UpdateModel(board);
 
                 _repository.CommitChanges();
-                
+
                 return RedirectToAction("Details", new { id = userBoard.BoardId });
             }
 
-            return View(userBoard);
+            return View(board);
         }
 
         //
@@ -231,7 +234,7 @@ namespace ChallengeBoard.Controllers
         {
             var board = _repository.GetBoardById(id);
 
-            if(_repository.Matches.Any(x => x.Board.BoardId == id))
+            if (_repository.Matches.Any(x => x.Board.BoardId == id))
                 return View("CanNotDelete", board);
 
             if (board == null)
@@ -270,7 +273,7 @@ namespace ChallengeBoard.Controllers
             return RedirectToAction("Index");
         }
 
-        
+
         [Authorize]
         public ActionResult Retire(int id)
         {
@@ -295,7 +298,7 @@ namespace ChallengeBoard.Controllers
 
             var competitor = existingBoard.Competitors.Active().FirstOrDefault(x => x.Name == User.Identity.Name);
 
-            if(competitor == null)
+            if (competitor == null)
                 return RedirectToAction("Index");
 
             if (existingBoard.IsOwner(competitor.Name))
@@ -308,7 +311,7 @@ namespace ChallengeBoard.Controllers
             }
 
             // Rejection message persisted across redirection.
-            TempData["StatusMessage"]  = String.Format("You have retired from {0}", existingBoard.Name);
+            TempData["StatusMessage"] = String.Format("You have retired from {0}", existingBoard.Name);
 
             return RedirectToAction("Index");
         }
