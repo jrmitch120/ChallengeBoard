@@ -4,9 +4,7 @@
     ViewBag.Title = "Log in";
 }
 
-<div class="page-header">
-    <h1>Log into the Challenge Board</h1>
-</div>
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader("Log into the Challenge Board"))
 @Html.Partial("_ValidationSummary", ViewData.ModelState)
 <div class="row">
     <div class="span6">
@@ -41,7 +39,7 @@
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Log in</button>
                         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                        @Html.ActionLink("Register", "Register") if you don't have an account.
+                        @Html.ActionLink("Register", "Register") or @Html.ActionLink("Recover", "Recovery") an account.
                     </div>
                 </fieldset>
             }

@@ -5,10 +5,13 @@ using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web.Mvc;
 using System.Web.Security;
+using ChallengeBoard.Email;
+using ChallengeBoard.Services;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using ChallengeBoard.Filters;
+using ChallengeBoard.Email.Models;
 using ChallengeBoard.Models;
 
 namespace ChallengeBoard.Controllers
@@ -18,10 +21,12 @@ namespace ChallengeBoard.Controllers
     public class AccountController : Controller
     {
         private readonly IRepository _repositiory;
+        private readonly IMailService _mailService;
 
-        public AccountController(IRepository repository)
+        public AccountController(IRepository repository, IMailService mailService)
         {
             _repositiory = repository;
+            _mailService = mailService;
         }
 
         //
@@ -30,6 +35,7 @@ namespace ChallengeBoard.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            ViewBag.StatusMessage = TempData["StatusMessage"];
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -338,6 +344,67 @@ namespace ChallengeBoard.Controllers
 
             ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Reset()
+        {
+            if(Request["token"] == null)
+                return RedirectToAction("Recovery");
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult RequestReset(string token, string newPassword)
+        {
+            if(WebSecurity.ResetPassword(token, newPassword))
+            {
+                TempData["StatusMessage"] = "Your password has been changed.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            ModelState.AddModelError("", "This reset grace period has expired.  Please request another recovery email.");
+            return View("Recovery");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Recovery()
+        {
+            // Persist any status messages across redirection.
+            ViewBag.StatusMessage = TempData["StatusMessage"];
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult RequestRecovery(RegisterModel register)
+        {
+            var profile =
+                _repositiory.UserProfiles.FirstOrDefault(x => x.EmailAddress.ToLower() == register.EmailAddress.ToLower());
+
+            if (profile != null)
+            {
+                TempData["StatusMessage"] = "Instructions on how to reset your password have been sent to your email address.";
+
+                var baseUrl = Request.Url != null ? Request.Url.GetLeftPart(UriPartial.Authority) : string.Empty;
+
+                _mailService.SendEmail(profile.EmailAddress, profile.UserName, "Password Recovery",
+                                       EmailType.PasswordRecovery,
+                                       new PasswordRecovery
+                                       {
+                                           UserName = profile.UserName,
+                                           RecoveryLink =
+                                               baseUrl + "/account/reset?token=" +
+                                               WebSecurity.GeneratePasswordResetToken(profile.UserName)
+                                       });
+            }
+            else
+                TempData["StatusMessage"] = "There is not an account on record with that email address.";
+
+            return RedirectToAction("Recovery");
         }
 
         #region Helpers

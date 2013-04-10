@@ -3,6 +3,7 @@
     public enum EmailType
     {
         MatchNotification,
-        MatchRejectionNotice
+        MatchRejectionNotice,
+        PasswordRecovery
     }
 }
