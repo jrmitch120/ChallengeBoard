@@ -195,6 +195,7 @@
     <Compile Include="Email\EmailFactory.cs" />
     <Compile Include="Email\EmailType.cs" />
     <Compile Include="Email\IPostmaster.cs" />
+    <Compile Include="Email\Models\PasswordRecovery.cs" />
     <Compile Include="Email\Models\MatchRejectionNotice.cs" />
     <Compile Include="Email\Models\IEmailModel.cs" />
     <Compile Include="Email\Models\MatchNotification.cs" />
@@ -336,6 +337,9 @@
     <Content Include="Email\Templates\MatchRejectionNotice.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Email\Templates\PasswordRecovery.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\SmarterAsp.net.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -417,6 +421,8 @@
     <Content Include="Views\Boards\Join.cshtml" />
     <Content Include="Views\Boards\Retire.cshtml" />
     <Content Include="Views\Boards\CanNotDelete.cshtml" />
+    <Content Include="Views\Account\Recovery.cshtml" />
+    <Content Include="Views\Account\Reset.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -432,6 +438,7 @@
       <DependentUpon>201303211841341_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
