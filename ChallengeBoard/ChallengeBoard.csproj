@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201303211841341_InitialCreate.Designer.cs">
       <DependentUpon>201303211841341_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201304152258388_LogoUrl.cs" />
+    <Compile Include="Migrations\201304152258388_LogoUrl.Designer.cs">
+      <DependentUpon>201304152258388_LogoUrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
@@ -436,6 +440,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201303211841341_InitialCreate.resx">
       <DependentUpon>201303211841341_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304152258388_LogoUrl.resx">
+      <DependentUpon>201304152258388_LogoUrl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

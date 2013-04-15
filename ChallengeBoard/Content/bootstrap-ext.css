@@ -28,6 +28,10 @@
     .embedded .pull-right {
         float: left;
     }
+
+    .boardLogo {
+        float: left !important;
+    }
 }
 
 @media (max-width: 480px) {    
@@ -76,6 +80,11 @@
  
 	/* Label the data using data-title attribute */
 	.no-more-tables td:before { content: attr(data-title); }
+}
+
+.boardLogo {
+    margin-top: 10px;
+    float: left;
 }
 
 .embedded {

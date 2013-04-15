@@ -49,6 +49,10 @@ namespace ChallengeBoard.Models
         [DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
         public DateTime Started { get; set; }
 
+        [Display(Name = "Logo (image url)")]
+        [Url]
+        public string LogoUrl { get; set; }
+
         public static ValidationResult ValidateEndDate(DateTime date)
         {
             if (date.Date < DateTime.Today)

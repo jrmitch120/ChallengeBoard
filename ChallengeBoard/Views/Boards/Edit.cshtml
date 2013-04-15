@@ -34,6 +34,13 @@
                         </div>
                     </div>
                     <div class="control-group">
+                        @Html.LabelFor(m => m.LogoUrl, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.LogoUrl, new { @class = "input-xlarge", maxlength = "200" })
+                            @Html.ValidationMessageFor(m => m.LogoUrl)
+                        </div>
+                    </div>
+                    <div class="control-group">
                         @Html.LabelFor(m => m.Password, new { @class = "control-label" })
 
                         <div class="controls">
