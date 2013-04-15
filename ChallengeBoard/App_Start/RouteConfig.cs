@@ -32,8 +32,8 @@ namespace ChallengeBoard
 
             routes.MapRoute(
                 name: "CompetitorRoute",
-                url: "Boards/Competitors/{action}/{boardId}/{name}",
-                defaults: new { controller = "Competitors", action = "Edit", boardId = 0 }
+                url: "Boards/Competitors/{action}/{boardId}/{competitorId}/{name}",
+                defaults: new { controller = "Competitors", action = "Edit", boardId = 0, competitorId = 0, name = string.Empty }
             );
 
             routes.MapRoute(

@@ -18,7 +18,7 @@ namespace ChallengeBoard.Controllers
         [HttpPost]
         [Authorize]
         [AjaxOnly]
-        public ActionResult Edit(int boardId, string name, Competitor updatedCompetitor)
+        public ActionResult Edit(int boardId, Competitor updatedCompetitor)
         {
             var competitor = _repository.GetCompetitorByName(boardId, updatedCompetitor.Name);
             var response = new JsonResponse<bool>();
