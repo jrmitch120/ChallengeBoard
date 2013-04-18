@@ -87,6 +87,10 @@
     float: left;
 }
 
+.eloChange {
+    width:30px;
+    text-align:center;
+}
 .embedded {
     border: solid 1px #2f2f2f;
     background-color: black;
