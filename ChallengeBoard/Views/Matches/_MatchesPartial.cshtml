@@ -1,20 +1,19 @@
-﻿@using System.Text
-@model IEnumerable<ChallengeBoard.Models.Match>
-<table class="table table-striped no-more-tables">
+﻿@model IEnumerable<ChallengeBoard.Models.Match>
+<table class="table table-striped table-bordered no-more-tables">
     <thead>
         <tr>
-            <th>
+            <th class="span3">
                 @Html.DisplayNameFor(m => m.Winner)
             </th>
-            <th>
+            <th class="span3">
                 @Html.DisplayNameFor(m => m.Loser)
             </th>
-            <th>Match Result
+            <th class="span2">Match Result
             </th>
-            <th class="centered">
+            <th class="centered span2">
                 @Html.DisplayNameFor(m => m.Created)
             </th>
-            <th class="centered">
+            <th class="centered span2">
                 @if (Model.Any(m => m.IsResolved))
                 {
                     @:Resolved On
@@ -31,24 +30,18 @@
         {
             <tr>
                 <td data-title="@Html.DisplayNameFor(m => m.Winner)">
+                    <span class="label label-success eloChange" >
+                        @if(match.WinnerRatingDelta >= 0){@Html.Raw("+")}@Html.DisplayFor(modelItem => match.WinnerRatingDelta)
+                    </span>
+                     - 
                     @Html.DisplayFor(modelItem => match.Winner.Name) 
-                    <span class="badge badge-success">
-                        @if(match.WinnerRatingDelta >= 0) 
-                        { 
-                            @:+
-                        }
-                        @Html.DisplayFor(modelItem => match.WinnerRatingDelta)
-                    </span>
                 </td>
-                <td data-title="@Html.DisplayNameFor(m => m.Loser)">
-                    @Html.DisplayFor(modelItem => match.Loser.Name) 
-                    <span class="badge badge-info">
-                        @if(match.LoserRatingDelta >= 0) 
-                        {
-                            @:+
-                        } 
-                        @Html.DisplayFor(modelItem => match.LoserRatingDelta)
+                <td data-title="@Html.DisplayNameFor(m => m.Loser)"> 
+                    <span class="label label-info eloChange">
+                        @if(match.LoserRatingDelta >= 0){@Html.Raw("+")}@Html.DisplayFor(modelItem => match.LoserRatingDelta)
                     </span>
+                     - 
+                    @Html.DisplayFor(modelItem => match.Loser.Name)
                 </td>
                 <td data-title="Result">
                     @if (match.Rejected)
