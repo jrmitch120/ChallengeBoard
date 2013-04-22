@@ -40,7 +40,6 @@
         </div>
     </div>
     <div class="control-group">
-
         <label class="control-label">Reporting a</label>
         <div class="controls">
             <div class="switch" tabindex="0" data-on="info" data-off="primary"  data-animated="false" data-on-label="Tie" data-off-label="Win">
@@ -52,6 +51,14 @@
                 <input class="hidden" data-val="true" data-val-required="The Match Tied? field is required." id="Tie" name="Tie" type="checkbox" value="true" />
             </div>
             <input name="Tie" type="hidden" value="false" />
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.WinnerComment, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(m => m.WinnerComment, new { @class = "span4", rows = "5"})
+            @Html.ValidationMessageFor(m => m.WinnerComment)
+            <span id="charNum" class="help-block">Limit 140 characters</span>
         </div>
     </div>
     <div class="form-actions">
@@ -89,6 +96,7 @@
                 <span data-bind="text: LoserRatingDelta"></span>
             </p>
         </div>
+        <p><b>Comments:</b> <span data-bind="text: WinnerComment"></span></p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -103,6 +111,14 @@
         var MatchModel;
         
         $(function () {
+            $('#WinnerComment').keyup(function () {
+                var max = 140;
+                var len = $(this).val().length;
+                
+                    var chars = max - len;
+                    $('#charNum').text(chars + ' characters left.');
+            });
+
             var form = $("#MatchForm");
 
             $('input[data-provide="typeahead"][autofocus]').trigger('focus');

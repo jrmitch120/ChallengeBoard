@@ -14,6 +14,10 @@ namespace ChallengeBoard.ViewModels
         [Display(Name = "Match Tied?")]
         public bool Tie { get; set; }
 
+        [Display(Name = "Comments")]
+        [StringLength(140,ErrorMessage=" ")]
+        public string WinnerComment { get; set; }
+
         public MatchViewModel()
         {
         }

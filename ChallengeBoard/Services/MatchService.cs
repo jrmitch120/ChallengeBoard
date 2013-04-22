@@ -19,9 +19,11 @@ namespace ChallengeBoard.Services
             _mailService = mailService;
         }
 
-        public Match CreateMatch(int boardId, string winnerName, string loserName, bool tie = false)
+        public Match CreateMatch(int boardId, string winnerName, string loserName, string winnerComment = "", bool tie = false)
         {
             var match = GenerateMatch(boardId, winnerName, loserName, tie);
+
+            match.WinnerComment = winnerComment;
 
             _repository.Add(match);
             _repository.CommitChanges();
@@ -33,6 +35,7 @@ namespace ChallengeBoard.Services
                                        WinnerName = match.Winner.Name,
                                        LoserName = match.Loser.Name,
                                        BoardName = match.Board.Name,
+                                       WinnerComment = winnerComment,
                                        AutoVerifies = match.Board.AutoVerification
                                    });
 

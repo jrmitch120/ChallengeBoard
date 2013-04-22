@@ -35,6 +35,10 @@
                     </span>
                      - 
                     @Html.DisplayFor(modelItem => match.Winner.Name) 
+                    @if (!String.IsNullOrWhiteSpace(match.WinnerComment))
+                    {
+                        <a href="#" rel="popover" data-toggle="popover" data-trigger="hover" data-placement="top" data-original-title="@match.Winner.Name's comments..." data-content="@match.WinnerComment"><i class="icon-comment icon-grey"></i></a>
+                    }
                 </td>
                 <td data-title="@Html.DisplayNameFor(m => m.Loser)"> 
                     <span class="label label-info eloChange">

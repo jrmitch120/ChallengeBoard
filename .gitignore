@@ -12,3 +12,4 @@ target/
 packages/
 msbuild.log
 _Resharper*/
+*.sln.DotSettings
