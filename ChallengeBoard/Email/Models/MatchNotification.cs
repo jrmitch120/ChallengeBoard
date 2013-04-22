@@ -6,5 +6,6 @@
         public string LoserName { get; set; }
         public string BoardName { get; set; }
         public int AutoVerifies { get; set; }
+        public string WinnerComment { get; set; }
     }
 }

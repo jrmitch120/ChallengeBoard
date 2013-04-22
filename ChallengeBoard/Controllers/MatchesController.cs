@@ -39,7 +39,7 @@ namespace ChallengeBoard.Controllers
                 Verified =
                     _repository.Matches.Where(m => (m.Verified || m.Rejected) && m.Board.BoardId == boardId)
                                .OrderByDescending(m => m.Resolved)
-                               .Take(10)
+                               .Take(50)
             });
         }
 
@@ -61,13 +61,14 @@ namespace ChallengeBoard.Controllers
         [HttpPost]
         [Authorize]
         //public ActionResult Create([ModelBinder(typeof(MatchBinder))]Match match)
-        public ActionResult Create(int boardId, string loser, bool tie)
+        public ActionResult Create(int boardId, MatchViewModel match)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _service.CreateMatch(boardId, HttpContext.User.Identity.Name, loser, tie);
+                    _service.CreateMatch(boardId, HttpContext.User.Identity.Name, match.Loser, match.WinnerComment,
+                                         match.Tie);
                 }
             }
             catch (ServiceException ex)
@@ -76,8 +77,9 @@ namespace ChallengeBoard.Controllers
                 return View(new MatchViewModel
                 {
                     Board = _repository.GetBoardByIdWithCompetitors(boardId),
-                    Loser = loser,
-                    Tie = tie
+                    Loser = match.Loser,
+                    WinnerComment = match.WinnerComment,
+                    Tie = match.Tie
                 });
             }
 
@@ -89,14 +91,15 @@ namespace ChallengeBoard.Controllers
         [HttpPost]
         [Authorize]
         [AjaxOnly]
-        public ActionResult Validate(int boardId, string loser, bool tie)
+        public ActionResult Validate(int boardId, MatchViewModel match)
         //public ActionResult Validate([ModelBinder(typeof(MatchBinder))]Match match)
         {
             var response = new JsonResponse<Match>();
 
             try
             {
-                response.Result = _service.GenerateMatch(boardId, HttpContext.User.Identity.Name, loser, tie);
+                response.Result = _service.GenerateMatch(boardId, HttpContext.User.Identity.Name, match.Loser, match.Tie);
+                response.Result.WinnerComment = match.WinnerComment;
             }
             catch (ServiceException ex)
             {

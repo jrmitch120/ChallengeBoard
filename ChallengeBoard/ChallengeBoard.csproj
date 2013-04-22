@@ -215,6 +215,10 @@
     <Compile Include="Migrations\201304152258388_LogoUrl.Designer.cs">
       <DependentUpon>201304152258388_LogoUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201304221729462_MatchComments.cs" />
+    <Compile Include="Migrations\201304221729462_MatchComments.Designer.cs">
+      <DependentUpon>201304221729462_MatchComments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
@@ -260,6 +264,7 @@
     <Content Include="Content\images\asc.gif" />
     <Content Include="Content\images\bg.gif" />
     <Content Include="Content\images\desc.gif" />
+    <Content Include="Content\images\glyphicons-halflings-grey.png" />
     <Content Include="Content\tableSorter.css" />
     <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\google-logo.png" />
@@ -346,6 +351,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\SmarterAsp.net.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery.tablesorter.sorters.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -374,19 +380,6 @@
     <Content Include="Scripts\wysiwyg\wysihtml5-0.3.0.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -443,6 +436,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201304152258388_LogoUrl.resx">
       <DependentUpon>201304152258388_LogoUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304221729462_MatchComments.resx">
+      <DependentUpon>201304221729462_MatchComments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

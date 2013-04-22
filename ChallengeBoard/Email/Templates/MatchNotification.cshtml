@@ -18,6 +18,13 @@
         If this is in err, head on over to reject the match so that it will not count.  You have <strong>@Model.AutoVerifies</strong> 
         hour(s) to reject this match.
     </p>
+    @if (!String.IsNullOrWhiteSpace(@Model.WinnerComment))
+    {
+    <p>
+        <b>@Model.WinnerName had the following comment:</b><br />
+        @Model.WinnerComment
+    </p>
+    }
     <p>
         Thanks,<br/>
         The Challenge Board

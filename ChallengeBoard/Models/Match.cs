@@ -20,6 +20,14 @@ namespace ChallengeBoard.Models
         [Display(Name = "Opponent")]
         public Competitor Loser { get; set; }
 
+        [Display(Name = "Comments")]
+        [MaxLength(140)]
+        public string WinnerComment { get; set; }
+
+        [Display(Name = "Comments")]
+        [MaxLength(140)]
+        public string LoserComment { get; set; }
+
         [Display(Name = "Reported On")]
         [DisplayFormat(DataFormatString = "{0:g}")]
         public DateTime Created { get; set; }

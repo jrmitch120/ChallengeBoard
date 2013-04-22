@@ -11,4 +11,6 @@ function MatchModel() {
     self.boardId = ko.observable(),
     self.matchId = ko.observable();
     self.tied = ko.observable();
+    self.winnerComment = ko.observable();
+    self.loserComment = ko.observable();
 };
