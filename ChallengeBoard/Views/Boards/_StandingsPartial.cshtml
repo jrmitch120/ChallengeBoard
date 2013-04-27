@@ -1,6 +1,8 @@
 ﻿@using System.Text
 @using NGravatar.Html
-@model IEnumerable<ChallengeBoard.Models.Competitor>
+@using ChallengeBoard.Infrastucture;
+@using ChallengeBoard.Models;
+@model Board
 @{
     var rank = 1;
 }
@@ -9,17 +11,17 @@
         <tr>
             <th class="centered">Rank</th>
             <th>@Html.DisplayNameFor(m => m.Name)</th>
-            <th class="centered">@Html.DisplayNameFor(m => m.GamesPlayed)</th>
-            <th class="centered">@Html.DisplayNameFor(m => m.Wins)</th>
-            <th class="centered">@Html.DisplayNameFor(m => m.Loses)</th>
-            <th class="centered">@Html.DisplayNameFor(m => m.Ties)</th>
-            <th class="centered">@Html.DisplayNameFor(m => m.Streak)</th>
-            <th class="centered">@Html.DisplayNameFor(m => m.WinPercentage)</th>
-            <th class="centered">@Html.DisplayNameFor(m => m.Rating)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.GamesPlayed)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Wins)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Loses)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Ties)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Streak)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.WinPercentage)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Rating)</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var competitor in Model.OrderByDescending(x => x.Rating)
+        @foreach (var competitor in Model.Competitors.OrderByDescending(x => x.Rating)
                                          .Where(competitor => competitor.Status == ChallengeBoard.Models.CompetitorStatus.Active))
         {
             <tr>
@@ -27,15 +29,15 @@
                 
                 <td data-title="@Html.DisplayNameFor(m => m.Name)">
                     @Html.Gravatar(competitor.Profile.EmailAddress, 20, null, NGravatar.Rating.PG, null)&nbsp;
-                    @competitor.Name
+                    @Html.ActionLink(@competitor.Name, "Profile", "Competitors", new { boardId = 4, competitorId = competitor.CompetitorId }, null)
                 </td>
-                <td data-title="@Html.DisplayNameFor(m => m.GamesPlayed)" class="centered">@competitor.GamesPlayed</td>
-                <td data-title="@Html.DisplayNameFor(m => m.Wins)" class="centered">@competitor.Wins</td>
-                <td data-title="@Html.DisplayNameFor(m => m.Loses)" class="centered">@competitor.Loses</td>
-                <td data-title="@Html.DisplayNameFor(m => m.Ties)" class="centered">@competitor.Ties</td>
-                <td data-title="@Html.DisplayNameFor(m => m.Streak)" class="centered">@competitor.Streak</td>
-                <td data-title="@Html.DisplayNameFor(m => m.WinPercentage)" class="centered">@competitor.WinPercentage</td>
-                <td data-title="@Html.DisplayNameFor(m => m.Rating)" class="centered">@competitor.Rating</td>
+                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.GamesPlayed)" class="centered">@competitor.GamesPlayed</td>
+                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Wins)" class="centered">@competitor.Wins</td>
+                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Loses)" class="centered">@competitor.Loses</td>
+                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Ties)" class="centered">@competitor.Ties</td>
+                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Streak)" class="centered">@competitor.Streak</td>
+                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.WinPercentage)" class="centered">@competitor.WinPercentage</td>
+                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Rating)" class="centered">@competitor.Rating</td>
             </tr>
             
             rank++;

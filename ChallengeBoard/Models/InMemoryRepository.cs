@@ -105,6 +105,13 @@ namespace ChallengeBoard.Models
                         x => x.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase)));
         }
 
+        public Competitor GetCompetitorById(int boardId, int competitorId)
+        {
+            return
+                (GetBoardByIdWithCompetitors(boardId)
+                    .Competitors.FirstOrDefault(x => x.CompetitorId.Equals(competitorId)));
+        }
+
         public IQueryable<Match> GetUnresolvedMatchesByBoardId(int id, bool includeProfiles = true)
         {
             return (Matches.Where(x => !x.Resolved.HasValue));

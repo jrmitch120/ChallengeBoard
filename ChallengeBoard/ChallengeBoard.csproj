@@ -420,6 +420,8 @@
     <Content Include="Views\Boards\CanNotDelete.cshtml" />
     <Content Include="Views\Account\Recovery.cshtml" />
     <Content Include="Views\Account\Reset.cshtml" />
+    <Content Include="Views\Competitors\Profile.cshtml" />
+    <Content Include="Views\Competitors\CompetitorNotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

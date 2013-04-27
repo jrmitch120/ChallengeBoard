@@ -42,13 +42,13 @@ function CompetitorStatusModel(boardId, competitosData) {
 
     self.setStatus = function (status, competitor) {
         competitor.status(status);
-
+        
         // Save competitor's status
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
             data: ko.toJSON(competitor),
-            url: '../competitors/edit/' + self.boardId,
+            url: '../competitors/' + self.boardId + '/edit/',
             success: function(data) {
                 if (data.Error) {
                     alert(data.Message);

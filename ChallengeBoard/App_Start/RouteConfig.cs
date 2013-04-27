@@ -26,14 +26,14 @@ namespace ChallengeBoard
 
             routes.MapRoute(
                 name: "MatchesRoute",
-                url: "Boards/Matches/{action}/{boardId}/{matchId}",
+                url: "Boards/Matches/{boardId}/{action}/{matchId}",
                 defaults: new { controller = "Matches", action = "List", boardId = 0, matchId = 0 }
             );
 
             routes.MapRoute(
                 name: "CompetitorRoute",
-                url: "Boards/Competitors/{action}/{boardId}/{competitorId}/{name}",
-                defaults: new { controller = "Competitors", action = "Edit", boardId = 0, competitorId = 0, name = string.Empty }
+                url: "Boards/Competitors/{boardId}/{action}/{competitorId}",
+                defaults: new { controller = "Competitors", action = "Profile", boardId = 0, competitorId = 0 }
             );
 
             routes.MapRoute(
