@@ -8,7 +8,17 @@ namespace ChallengeBoard.Models
     {
         public static bool IsOwner(this Board board, string name)
         {
-            return (board.Owner.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+            return (board.Owner.Profile.UserName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public static bool CanEdit(this Competitor competitor, Board board, string name)
+        {
+            return (board.IsOwner(name) || competitor.Is(name));
+        }
+
+        public static bool Is(this Competitor competitor, string name)
+        {
+            return (competitor.Profile.UserName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public static IEnumerable<Competitor> Active(this ICollection<Competitor> competitors)

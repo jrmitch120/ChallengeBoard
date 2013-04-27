@@ -83,6 +83,8 @@ namespace ChallengeBoard.Controllers
                 });
             }
 
+            TempData["StatusMessage"] = "Your match has been successfully reported.";
+
             return RedirectToAction("List", new { boardId });
         }
 

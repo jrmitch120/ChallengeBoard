@@ -6,7 +6,7 @@
 @Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name, "Standings"))
 @Html.Partial("_BoardNav", Model)
 <section id="Standings">
-    @Html.Partial("_StandingsPartial", Model.Competitors)
+    @Html.Partial("_StandingsPartial", Model)
 </section>
 @section Scripts {
     @Scripts.Render("~/bundles/components")

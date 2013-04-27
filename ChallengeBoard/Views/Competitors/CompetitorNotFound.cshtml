@@ -1,0 +1,11 @@
+﻿@model ChallengeBoard.Models.Board
+@{
+    ViewBag.Title = "Not Found";
+}
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader("Competitor Not Found"))
+<p>
+    Sorry, we can't find the person you're looking for.
+</p>
+<p>
+    @Html.ActionLink("Back to Board", "Details", "Boards", new { boardId = Model.BoardId }, null)
+</p>

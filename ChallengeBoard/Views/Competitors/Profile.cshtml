@@ -1,0 +1,16 @@
+﻿@model ChallengeBoard.Models.Competitor
+
+@{
+    ViewBag.Title = "Profile";
+}
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name, "Profile"))
+<div class="well">
+    Player profiles are coming soon.
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/knockout")
+    <script type="text/javascript">
+        $(function () {
+        });
+    </script>
+}

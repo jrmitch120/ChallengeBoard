@@ -16,12 +16,12 @@ namespace ChallengeBoard.Models
 
         public IQueryable<Board> Boards
         {
-            get { return (Db.Boards.Include(c => c.Owner)); }
+            get { return (Db.Boards.Include(c => c.Owner.Profile)); }
         }
 
         public IQueryable<Competitor> Competitors
         {
-            get { return (Db.Competitors); }
+            get { return (Db.Competitors.Include(c => c.Profile)); }
         }
 
         public IQueryable<Match> Matches
@@ -104,11 +104,18 @@ namespace ChallengeBoard.Models
                         x => x.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase)));
         }
 
+        public Competitor GetCompetitorById(int boardId, int competitorId)
+        {
+            return
+                (GetBoardByIdWithCompetitors(boardId)
+                    .Competitors.FirstOrDefault(x => x.CompetitorId.Equals(competitorId)));
+        }
+
         public IQueryable<Match> GetUnresolvedMatchesByBoardId(int id, bool includeProfiles = true)
         {
             var matches = Matches.Where(x => !x.Resolved.HasValue);
 
-            return includeProfiles ? (matches.Include(l => l.Winner.Profile).Include(w => w.Winner.Profile)) : (matches);
+            return includeProfiles ? (matches.Include(l => l.Loser.Profile).Include(w => w.Winner.Profile)) : (matches);
         }
 
         public Match GetMatchById(int id)
