@@ -19,7 +19,8 @@ namespace ChallengeBoard
             bundles.Add(new ScriptBundle("~/bundles/components").Include(
                         "~/Scripts/jquery.tablesorter*",
                         "~/Scripts/wysiwyg/wysihtml5-{version}.js",
-                        "~/Scripts/wysiwyg/bootstrap-wysihtml5.js"));
+                        "~/Scripts/wysiwyg/bootstrap-wysihtml5.js",
+                        "~/Scripts/ChallengeBoard/ignitors.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",

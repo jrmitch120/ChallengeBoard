@@ -1,16 +1,59 @@
-﻿@model ChallengeBoard.Models.Competitor
+﻿@using NGravatar.Html
+@model ChallengeBoard.ViewModels.ProfileViewModel
 
 @{
     ViewBag.Title = "Profile";
 }
-@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name, "Profile"))
-<div class="well">
-    Player profiles are coming soon.
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Competitor.Name, "Profile"))
+@Html.Partial("_BoardNav", new ChallengeBoard.Models.Board { BoardId = Model.BoardId })
+<div class="row">
+    <section >
+        <div class="span5">
+            <div class="well hide-overflow">
+                <div id="profileAvatar">
+                    @Html.Gravatar(Model.Competitor.Profile.EmailAddress, 155, null, NGravatar.Rating.PG, null)
+                    <div id="profileRating">@Html.DisplayFor(m => m.Competitor.Rating)</div>
+                    <div><small>@Html.DisplayNameFor(m => m.Competitor.Rating)</small></div>
+                </div>
+                <div class="span2">
+                    <table class="table">
+                        <tr>
+                            <td>@Html.DisplayNameFor(m => m.Competitor.MatchesPlayed):</td>
+                            <td>@Html.DisplayFor(m => m.Competitor.MatchesPlayed)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(m => m.Competitor.Wins):</td>
+                            <td>@Html.DisplayFor(m => m.Competitor.Wins)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(m => m.Competitor.Loses):</td>
+                            <td>@Html.DisplayFor(m => m.Competitor.Loses)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(m => m.Competitor.Ties):</td>
+                            <td>@Html.DisplayFor(m => m.Competitor.Ties)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(m => m.Competitor.Streak):</td>
+                            <td>@Html.DisplayFor(m => m.Competitor.Streak)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(m => m.Competitor.WinPercentage):</td>
+                            <td>@Html.DisplayFor(m => m.Competitor.WinPercentage)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="span7">
+        <section>
+            Comming Soon!  Bio's
+        </section>
+    </div>
 </div>
+<h2>Matches</h2>
+@Html.Partial("_MatchesPartial", Model.Matches)
 @section Scripts {
-    @Scripts.Render("~/bundles/knockout")
-    <script type="text/javascript">
-        $(function () {
-        });
-    </script>
+    @Scripts.Render("~/bundles/components")
 }

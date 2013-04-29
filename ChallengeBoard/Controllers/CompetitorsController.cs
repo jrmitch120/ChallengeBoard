@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using ChallengeBoard.Infrastucture;
 using ChallengeBoard.Models;
+using ChallengeBoard.ViewModels;
 
 namespace ChallengeBoard.Controllers
 {
@@ -20,7 +22,15 @@ namespace ChallengeBoard.Controllers
             if (competitor == null)
                 return View("CompetitorNotFound", new Board { BoardId = boardId });
 
-            return View(competitor);
+            var recentMatches = _repository.Matches.Where(m => (m.Verified || m.Rejected) &&
+                                                               (m.Winner.CompetitorId == competitorId ||
+                                                                m.Loser.CompetitorId == competitorId) &&
+                                                               m.Board.BoardId == boardId
+                )
+                                           .OrderByDescending(m => m.Resolved)
+                                           .Take(300);
+
+            return View(new ProfileViewModel {BoardId = boardId, Competitor = competitor, Matches = recentMatches});
         }
 
         //

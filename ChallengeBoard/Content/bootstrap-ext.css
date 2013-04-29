@@ -2,6 +2,19 @@
     padding-top: 65px;
 }
 
+/* Profiles */
+#profileAvatar {
+    text-align:center;
+    width: 50%;
+    float:left;
+}
+#profileRating {
+    color:#fff;
+    font-size: 25px;
+    margin-top:20px;
+    text-align:center;
+}
+
 .subhead {
     text-align: right;
 }
@@ -31,6 +44,11 @@
 
     .boardLogo {
         float: left !important;
+    }
+    #profileAvatar {
+        width: 100%;
+        float: none;
+        margin-bottom: 10px;
     }
 }
 
@@ -199,6 +217,10 @@ textarea.editor {
     -moz-transition: none;
     -o-transition: none;
     transition: none;
+}
+
+.hide-overflow {
+    overflow: hidden;
 }
 
 .table-nonfluid {
