@@ -278,7 +278,7 @@ legend + .control-group {
 .btn-login {
     color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    background -color: #fefefe;
+    background-color: #fefefe;
     background-image: -moz-linear-gradient(top, #fff, #ABABAB);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#ABABAB));
     background-image: -webkit-linear-gradient(top, #fff, #ABABAB);
