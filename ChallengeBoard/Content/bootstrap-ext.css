@@ -52,7 +52,11 @@
     }
 }
 
-@media (max-width: 480px) {    
+@media (max-width: 480px) { 
+    footer > div {
+        float: none !important;
+        text-align: center;
+    }   
     /* Force table to not be like tables anymore */
 	.no-more-tables table, 
 	.no-more-tables thead, 

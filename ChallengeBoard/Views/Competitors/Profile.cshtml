@@ -53,7 +53,17 @@
     </div>
 </div>
 <h2>Matches</h2>
-@Html.Partial("_MatchesPartial", Model.Matches)
+@if (Model.Matches.Any())
+{
+    @Html.Partial("_MatchesPartial", Model.Matches)
+}
+else
+{
+    <div class="well">
+        @Html.DisplayFor(m => m.Competitor.Name) has not participated in any matches yet.
+    </div>
+}
+
 @section Scripts {
     @Scripts.Render("~/bundles/components")
 }
