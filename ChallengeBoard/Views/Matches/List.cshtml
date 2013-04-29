@@ -126,9 +126,10 @@
                 matchResult.loserRatingDelta(this.getAttribute('data-loserRatingDelta'));
                 matchResult.matchId(this.getAttribute('data-matchId'));
                 matchResult.boardId(this.getAttribute('data-boardId'));
-                $('#myModal').modal();
-                return false;
 
+                $('#myModal').modal();
+
+                return false;
             });
 
             // Add table sorting.
@@ -140,8 +141,6 @@
                 sortList: [[4, 1]],
                 sortInitialOrder: 'desc'
             });
-
-            $("a[rel='popover']").popover().on('click', function (e) { e.preventDefault(); return true; });
         });
     </script>
 }

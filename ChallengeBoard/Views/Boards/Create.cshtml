@@ -88,12 +88,8 @@
     @Scripts.Render("~/bundles/components")
     <script type="text/javascript">
         $(function () {
-            $("[rel='popover']").popover();
             $('#DatePicker').datepicker().on('changeDate', function () {
                 $('#DatePicker').datepicker('hide');
-            });
-            $('#Description').wysihtml5({
-                "html": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
             });
         });
     </script>

@@ -243,6 +243,7 @@
     <Compile Include="ViewModels\CompetitorViewModel.cs" />
     <Compile Include="ViewModels\BoardListViewModel.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
+    <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\RecentMatchesViewModel.cs" />
     <Compile Include="Models\MatchBinder.cs" />
     <Compile Include="Models\IRepository.cs" />
@@ -351,6 +352,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\SmarterAsp.net.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\ChallengeBoard\ignitors.js" />
     <Content Include="Scripts\jquery.tablesorter.sorters.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -414,7 +416,7 @@
     <Content Include="Views\Shared\_HeaderPartial.cshtml" />
     <Content Include="Views\Shared\_BoardNav.cshtml" />
     <Content Include="Views\Boards\Standings.cshtml" />
-    <Content Include="Views\Matches\_MatchesPartial.cshtml" />
+    <Content Include="Views\Shared\_MatchesPartial.cshtml" />
     <Content Include="Views\Boards\Join.cshtml" />
     <Content Include="Views\Boards\Retire.cshtml" />
     <Content Include="Views\Boards\CanNotDelete.cshtml" />

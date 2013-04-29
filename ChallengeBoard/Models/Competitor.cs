@@ -43,8 +43,8 @@ namespace ChallengeBoard.Models
         [Display(Name = "Streak")]
         public int Streak { get; set; }
 
-        [Display(Name = "Games")]
-        public int GamesPlayed
+        [Display(Name = "Matches")]
+        public int MatchesPlayed
         {
             get { return (Wins + Loses + Ties); }
         }
@@ -53,7 +53,7 @@ namespace ChallengeBoard.Models
         [DisplayFormat(DataFormatString = "{0:0.0}")]
         public double WinPercentage
         {
-            get { return Wins == 0 ? 0 : (Math.Round((double) Wins/GamesPlayed*100, 1)); }
+            get { return Wins == 0 ? 0 : (Math.Round((double) Wins/MatchesPlayed*100, 1)); }
         }
 
         [Display(Name = "Rejections Received")]
