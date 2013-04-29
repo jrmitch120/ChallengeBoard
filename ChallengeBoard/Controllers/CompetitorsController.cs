@@ -17,10 +17,12 @@ namespace ChallengeBoard.Controllers
 
         public new ActionResult Profile(int boardId, int competitorId)
         {
-            var competitor = _repository.GetCompetitorById(boardId, competitorId);
+            var board = _repository.GetBoardByIdWithCompetitors(boardId);
+            var competitor = board.Competitors.FindCompetitor(competitorId);
+            //_repository.GetCompetitorById(boardId, competitorId);
 
             if (competitor == null)
-                return View("CompetitorNotFound", new Board { BoardId = boardId });
+                return View("CompetitorNotFound", board);
 
             var recentMatches = _repository.Matches.Where(m => (m.Verified || m.Rejected) &&
                                                                (m.Winner.CompetitorId == competitorId ||
@@ -30,7 +32,7 @@ namespace ChallengeBoard.Controllers
                                            .OrderByDescending(m => m.Resolved)
                                            .Take(300);
 
-            return View(new ProfileViewModel {BoardId = boardId, Competitor = competitor, Matches = recentMatches});
+            return View(new ProfileViewModel {Board = board, Competitor = competitor, Matches = recentMatches});
         }
 
         //

@@ -41,6 +41,11 @@ namespace ChallengeBoard.Models
             return (competitors.SingleOrDefault(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
         }
 
+        public static Competitor FindCompetitor(this IEnumerable<Competitor> competitors, int id)
+        {
+            return (competitors.SingleOrDefault(x => x.CompetitorId.Equals(id)));
+        }
+
         public static int CalculateUnverifiedRank(this Competitor competitor , IList<Match> matches)
         {
             return (competitor.Rating +

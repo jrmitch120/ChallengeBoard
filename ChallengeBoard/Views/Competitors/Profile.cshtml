@@ -5,7 +5,7 @@
     ViewBag.Title = "Profile";
 }
 @Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Competitor.Name, "Profile"))
-@Html.Partial("_BoardNav", new ChallengeBoard.Models.Board { BoardId = Model.BoardId })
+@Html.Partial("_BoardNav", Model.Board)
 <div class="row">
     <section >
         <div class="span5">
