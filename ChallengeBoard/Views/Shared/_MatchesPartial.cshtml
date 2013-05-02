@@ -2,11 +2,17 @@
 <table class="table table-striped table-bordered no-more-tables sortedTable">
     <thead>
         <tr>
-            <th class="span3">
+            <th class="span2">
                 @Html.DisplayNameFor(m => m.Winner)
             </th>
-            <th class="span3">
+            <th class="centered span1">
+                @Html.DisplayNameFor(m => m.WinnerEstimatedRating)
+            </th>
+            <th class="span2">
                 @Html.DisplayNameFor(m => m.Loser)
+            </th>
+            <th class="centered span1">
+                @Html.DisplayNameFor(m => m.LoserEstimatedRating)
             </th>
             <th class="span2">Match Result
             </th>
@@ -33,19 +39,39 @@
                     <span class="label label-success eloChange" >
                         @if(match.WinnerRatingDelta >= 0){@Html.Raw("+")}@Html.DisplayFor(modelItem => match.WinnerRatingDelta)
                     </span>
-                     - 
+                    - 
                     @Html.ActionLink(match.Winner.Name, "Profile", "Competitors", new { boardId = match.Board.BoardId, competitorId = match.Winner.CompetitorId }, null)
                     @if (!String.IsNullOrWhiteSpace(match.WinnerComment))
                     {
-                        <a href="#" rel="popover" data-toggle="popover" data-trigger="hover" data-placement="top" data-original-title="@match.Winner.Name's comments..." data-content="@match.WinnerComment"><i class="icon-comment icon-grey"></i></a>
+                        <a href="#" rel="popover" data-toggle="popover" data-container="body" data-trigger="hover" data-placement="top" data-original-title="@match.Winner.Name's comments..." data-content="@match.WinnerComment"><i class="icon-comment icon-grey"></i></a>
+                    }
+                </td>
+                <td class="centered" data-title="@Html.DisplayNameFor(m => m.WinnerEstimatedRating)">
+                    @if (match.WinnerEstimatedRating == 0)
+                    {
+                        @:N/A
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => match.WinnerEstimatedRating)
                     }
                 </td>
                 <td data-title="@Html.DisplayNameFor(m => m.Loser)"> 
                     <span class="label label-info eloChange">
                         @if(match.LoserRatingDelta >= 0){@Html.Raw("+")}@Html.DisplayFor(modelItem => match.LoserRatingDelta)
                     </span>
-                     - 
+                    - 
                     @Html.ActionLink(match.Loser.Name, "Profile", "Competitors", new { boardId = match.Board.BoardId, competitorId = match.Loser.CompetitorId }, null)
+                </td>
+                <td class="centered" data-title="@Html.DisplayNameFor(m => m.LoserEstimatedRating)">
+                    @if (match.LoserEstimatedRating == 0)
+                    {
+                        @:N/A
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => match.LoserEstimatedRating)
+                    }
                 </td>
                 <td data-title="Result">
                     @if (match.Rejected)
