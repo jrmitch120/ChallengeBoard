@@ -219,6 +219,10 @@
     <Compile Include="Migrations\201304221729462_MatchComments.Designer.cs">
       <DependentUpon>201304221729462_MatchComments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201305012246273_EstimatedRatings.cs" />
+    <Compile Include="Migrations\201305012246273_EstimatedRatings.Designer.cs">
+      <DependentUpon>201305012246273_EstimatedRatings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
@@ -338,9 +342,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
-    <Content Include="Scripts\bootstrap-toggle.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\_retired_bootstrap-toggle.js" />
+    <Content Include="Scripts\2.2.2.bootstrap.js" />
+    <Content Include="Scripts\2.2.2.bootstrap.min.js" />
     <Content Include="Email\Templates\MatchNotification.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -443,6 +447,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201304221729462_MatchComments.resx">
       <DependentUpon>201304221729462_MatchComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305012246273_EstimatedRatings.resx">
+      <DependentUpon>201305012246273_EstimatedRatings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

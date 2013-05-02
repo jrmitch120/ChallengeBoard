@@ -53,6 +53,7 @@
     </div>
 </div>
 <h2>Matches</h2>
+<div id="matchContainer">
 @if (Model.Matches.Any())
 {
     @Html.Partial("_MatchesPartial", Model.Matches)
@@ -63,7 +64,7 @@ else
         @Html.DisplayFor(m => m.Competitor.Name) has not participated in any matches yet.
     </div>
 }
-
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/components")
 }

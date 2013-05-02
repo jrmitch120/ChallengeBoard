@@ -27,7 +27,8 @@
             </div>
         }
         <p>
-            <small class="muted">* Pending match +/- calculations include unverified matches, and may change if matches are rejected.</small>
+            <small class="muted">* Pending match +/- and rating calculations include unverified matches.  They may change if matches are rejected.</small><br />
+            
         </p>
     </div>
     <div class="tab-pane" id="recent">
@@ -136,9 +137,9 @@
             $(".sortedTable").tablesorter({
                 headers: {
                     0: { sorter: 'eloChange' },
-                    1: { sorter: 'eloChange' }
+                    2: { sorter: 'eloChange' }
                 },
-                sortList: [[4, 1]],
+                sortList: [[6, 1]],
                 sortInitialOrder: 'desc'
             });
         });
