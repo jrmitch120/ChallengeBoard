@@ -18,7 +18,7 @@ namespace ChallengeBoard.Controllers
         public new ActionResult Profile(int boardId, int competitorId)
         {
             var board = _repository.GetBoardByIdWithCompetitors(boardId);
-            var competitor = board.Competitors.FindCompetitor(competitorId);
+            var competitor = board.Competitors.FindCompetitorById(competitorId);
             //_repository.GetCompetitorById(boardId, competitorId);
 
             if (competitor == null)

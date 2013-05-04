@@ -1,4 +1,5 @@
-﻿@model ChallengeBoard.ViewModels.RecentMatchesViewModel
+﻿@using ChallengeBoard.ViewModels;
+@model RecentMatchesViewModel
 @{
     ViewBag.Title = "Match Activity";
 }
@@ -12,13 +13,14 @@
 <ul class="nav nav-tabs">
     <li class="active"><a href="#pending" data-toggle="tab">Pending Matches</a></li>
     <li><a href="#recent" data-toggle="tab">Recent Matches</a></li>
+    <li><a href="#comments" data-toggle="tab">Comments View</a></li>
 </ul>
 <div class="tab-content">
     <div class="tab-pane active" id="pending">
         <h3>Pending Matches</h3>
         @if (Model.UnVerified.Any())
         {
-            @Html.Partial("_MatchesPartial", Model.UnVerified)
+            @Html.Partial("_MatchesPartial", new MatchesViewModel{ Matches = Model.UnVerified, Viewer = Model.Viewer })
         }
         else
         {
@@ -36,12 +38,28 @@
 
         @if (Model.Verified.Any())
         {
-            @Html.Partial("_MatchesPartial", Model.Verified)
+            @Html.Partial("_MatchesPartial", new MatchesViewModel{ Matches = Model.Verified, Viewer = Model.Viewer })
         }
         else
         {
             <div class="well">
                 No matches have been played on this Challenge Board yet.
+            </div>
+        }
+    </div>
+    <div class="tab-pane" id="comments">
+        <h3>Match Comments</h3>
+        @{
+            var commentedMatches = Model.Verified.Concat(Model.UnVerified)
+                                                 .Where(m => !String.IsNullOrWhiteSpace(m.WinnerComment))
+                                                 .OrderByDescending(m => m.Created).ToList();
+        }
+        @if (commentedMatches.Any())
+        {
+            @Html.Partial("_MatchCommentsPartial", commentedMatches)
+        } else {
+            <div class="well">
+                No matches have comments yet.
             </div>
         }
     </div>
@@ -139,7 +157,7 @@
                     0: { sorter: 'eloChange' },
                     2: { sorter: 'eloChange' }
                 },
-                sortList: [[6, 1]],
+                sortList: [[5, 1]],
                 sortInitialOrder: 'desc'
             });
         });

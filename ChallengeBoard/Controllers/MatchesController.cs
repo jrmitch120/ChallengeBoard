@@ -31,11 +31,16 @@ namespace ChallengeBoard.Controllers
             // Rejection message persisted across redirection.
             ViewBag.StatusMessage = TempData["StatusMessage"];
 
+            var userProfile = _repository.UserProfiles.FindProfile(User.Identity.Name);
+
             return View(new RecentMatchesViewModel
             {
                 Board = board,
+                Viewer = userProfile != null ? board.Competitors.FindCompetitorByProfileId(userProfile.UserId) : null,
+
                 UnVerified = _repository.Matches.Where(m => !m.Verified && !m.Rejected && m.Board.BoardId == boardId)
-                                        .OrderBy(m => m.VerificationDeadline),
+                                        .OrderBy(m => m.VerificationDeadline)
+                                        .Take(300), // Limit for now.  > 300 pending should be rare.  TODO load more on demand.
                 Verified =
                     _repository.Matches.Where(m => (m.Verified || m.Rejected) && m.Board.BoardId == boardId)
                                .OrderByDescending(m => m.Resolved)
@@ -119,7 +124,7 @@ namespace ChallengeBoard.Controllers
         //[AjaxOnly]
         public ActionResult Reject(int boardId, int matchId)
         {
-            var response = "The match has been rejected.  It will no longer count against you.";
+            var response = "The match has been rejected.  It will no longer be counted in the standings.";
 
             try
             {

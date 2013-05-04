@@ -155,6 +155,26 @@ namespace ChallengeBoardTests
     public class MatchRejectionTests
     {
         [Test]
+        public void AdminCanRejectAnything()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, new Mock<IMailService>().Object);
+            var match = repository.GetUnresolvedMatchesByBoardId(1).First();
+
+            Assert.DoesNotThrow(() => service.RejectMatch(match.Board.BoardId, 1, match.Board.Owner.Profile.UserName));
+        }
+
+        [Test]
+        public void LoserCanReject()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, new Mock<IMailService>().Object);
+            var match = repository.GetUnresolvedMatchesByBoardId(1).First();
+
+            Assert.DoesNotThrow(() => service.RejectMatch(match.Board.BoardId, 1, match.Loser.Profile.UserName));
+        }
+
+        [Test]
         public void ThrowsIfMatchNotFound()
         {
             var repository = Repository.CreatePopulatedRepository();
@@ -165,7 +185,7 @@ namespace ChallengeBoardTests
         }
 
         [Test]
-        public void ThrowsIfNotLoser()
+        public void ThrowsIfNotLoserOrAdmin()
         {
             var repository = Repository.CreatePopulatedRepository();
             var service = new MatchService(repository, null);

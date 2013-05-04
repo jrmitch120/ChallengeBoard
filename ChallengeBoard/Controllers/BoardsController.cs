@@ -155,7 +155,8 @@ namespace ChallengeBoard.Controllers
                 return View("Join", existingBoard);
             }
 
-            var competitor = existingBoard.Competitors.FindCompetitor(User.Identity.Name);
+            var userProfile = _repository.UserProfiles.FindProfile(User.Identity.Name);
+            var competitor = existingBoard.Competitors.FindCompetitorByProfileId(userProfile.UserId);
 
             if (competitor == null) // New
             {
@@ -163,7 +164,7 @@ namespace ChallengeBoard.Controllers
                 {
                     Name = User.Identity.Name,
                     Rating = existingBoard.StartingRating,
-                    Profile = _repository.UserProfiles.FindProfile(User.Identity.Name)
+                    Profile = userProfile
                 });
             }
             else if (competitor.Status == CompetitorStatus.Retired) // Retired

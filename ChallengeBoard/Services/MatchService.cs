@@ -51,8 +51,8 @@ namespace ChallengeBoard.Services
             if (DateTime.Now >= board.End)
                 throw (new ServiceException("This challenge board has ended."));
 
-            var winner = board.Competitors.Active().FindCompetitor(winnerName);
-            var loser = board.Competitors.Active().FindCompetitor(loserName);
+            var winner = board.Competitors.Active().FindCompetitorByName(winnerName);
+            var loser = board.Competitors.Active().FindCompetitorByName(loserName);
             
             if(winner == null)
                 throw (new ServiceException("You are not part of this challenge board."));
@@ -93,9 +93,12 @@ namespace ChallengeBoard.Services
         public void RejectMatch(int boardId, int matchId, string userName)
         {
             // Used to match against match Loser profile for verification of rejection authority.
-            var user = _repository.UserProfiles.FindProfile(userName);
+            var userProfile = _repository.UserProfiles.FindProfile(userName);
+            var board = _repository.GetBoardById(boardId);
 
-            if (user == null)
+            bool adminRejection = false;
+
+            if (userProfile == null)
                 throw new InvalidOperationException("Can not find your profile.");
             
             // All unresolved matches for this challenge board.
@@ -107,7 +110,9 @@ namespace ChallengeBoard.Services
             if (rejectedMatch == null)
                 throw new ServiceException("Can not find match.");
             
-            if (rejectedMatch.Loser.ProfileUserId != user.UserId)
+            if(board.Owner.ProfileUserId == userProfile.UserId) // Board owner can reject anything
+                adminRejection = true;
+            else if (rejectedMatch.Loser.ProfileUserId != userProfile.UserId)  // Loser can reject match
                 throw new ServiceException("You are not able to reject this match.");
 
             if(rejectedMatch.IsResolved)
@@ -115,8 +120,6 @@ namespace ChallengeBoard.Services
 
             if (DateTime.Now > rejectedMatch.VerificationDeadline)
                 throw new ServiceException("The deadline for rejecting this match has passed.");
-
-            var board = _repository.GetBoardById(boardId);
 
             rejectedMatch.Rejected = true;
             rejectedMatch.Resolved = DateTime.Now;
@@ -163,7 +166,7 @@ namespace ChallengeBoard.Services
                                    "Match Rejected", EmailType.MatchRejectionNotice,
                                    new MatchRejectionNotice
                                    {
-                                       RejectorName = rejectedMatch.Loser.Name,
+                                       RejectorName = adminRejection ? "the board administrator" : rejectedMatch.Loser.Name,
                                        RejectedName = rejectedMatch.Winner.Name,
                                        BoardName = board.Name,
                                        BoardOwnerName = board.Owner.Name

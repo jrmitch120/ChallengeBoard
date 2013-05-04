@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ChallengeBoard.Models.Match>
+@foreach (var match in Model)
+{
+    <div class="matchComment">
+        <div>
+            @Html.ActionLink(match.Winner.Name, "Profile", "Competitors", new {boardId = match.Board.BoardId, competitorId = match.Loser.CompetitorId}, null)
+            (@if (match.WinnerRatingDelta >= 0)
+                {
+                    @Html.Raw("+")
+                }@Html.DisplayFor(modelItem => match.WinnerRatingDelta))
+            @if (match.Tied)
+            {
+                @: tied
+            }
+            else
+            {
+                @: defeated
+            }
+            @Html.ActionLink(match.Loser.Name, "Profile", "Competitors", new {boardId = match.Board.BoardId, competitorId = match.Loser.CompetitorId}, null)
+            (@if (match.LoserRatingDelta >= 0)
+                {
+                    @Html.Raw("+")
+                }@Html.DisplayFor(modelItem => match.LoserRatingDelta))
+            on @Html.DisplayFor(modelItem => match.Created)
+        </div>
+        <div class="breakWord">
+            @Html.Raw(Html.DisplayFor(modelItem => match.WinnerComment).ToString().Replace("\n","<br/>"))
+        </div>
+    </div>
+}
