@@ -39,7 +39,7 @@ namespace ChallengeBoard.Controllers
                 Viewer = userProfile != null ? board.Competitors.FindCompetitorByProfileId(userProfile.UserId) : null,
 
                 UnVerified = _repository.Matches.Where(m => !m.Verified && !m.Rejected && m.Board.BoardId == boardId)
-                                        .OrderBy(m => m.VerificationDeadline)
+                                        .OrderByDescending(m => m.VerificationDeadline)
                                         .Take(300), // Limit for now.  > 300 pending should be rare.  TODO load more on demand.
                 Verified =
                     _repository.Matches.Where(m => (m.Verified || m.Rejected) && m.Board.BoardId == boardId)
