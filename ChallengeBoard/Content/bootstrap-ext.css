@@ -109,6 +109,10 @@
     float: left;
 }
 
+.breakWord {
+    word-wrap: break-word;
+}
+
 .eloChange {
     width:30px;
     text-align:center;
@@ -182,6 +186,12 @@ textarea.editor {
 }
 
 /* Match Rporting */
+.matchComment {
+    margin-bottom:15px;
+    border-left:5px solid #2F2F2F;
+    padding: 5px;
+}
+
 .matchVerification {
     width:40%;
     display:inline-block;

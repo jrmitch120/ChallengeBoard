@@ -247,6 +247,7 @@
     <Compile Include="ViewModels\CompetitorViewModel.cs" />
     <Compile Include="ViewModels\BoardListViewModel.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
+    <Compile Include="ViewModels\MatchesViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\RecentMatchesViewModel.cs" />
     <Compile Include="Models\MatchBinder.cs" />
@@ -342,6 +343,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\_retired_bootstrap-toggle.js" />
     <Content Include="Scripts\2.2.2.bootstrap.js" />
     <Content Include="Scripts\2.2.2.bootstrap.min.js" />
@@ -428,6 +431,7 @@
     <Content Include="Views\Account\Reset.cshtml" />
     <Content Include="Views\Competitors\Profile.cshtml" />
     <Content Include="Views\Competitors\CompetitorNotFound.cshtml" />
+    <Content Include="Views\Shared\_MatchCommentsPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

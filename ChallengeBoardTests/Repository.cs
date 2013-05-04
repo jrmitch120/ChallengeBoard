@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using ChallengeBoard.Models;
 
 namespace ChallengeBoardTests
@@ -9,6 +8,12 @@ namespace ChallengeBoardTests
         public static IRepository CreatePopulatedRepository()
         {
             var repository = new InMemoryRepository();
+
+            var competitorOwnerProfile = new UserProfile
+            {
+                UserId = 0,
+                UserName = "Board Owner"
+            };
 
             var competitorProfile1 = new UserProfile
             {
@@ -22,9 +27,17 @@ namespace ChallengeBoardTests
                 UserName = "User2"
             };
 
+            var boardOwner = new Competitor
+            {
+                Name = competitorOwnerProfile.UserName,
+                ProfileUserId = 0,
+                Profile = competitorOwnerProfile,
+                Rating = 1500,
+            };
+
             var competitor1 = new Competitor
             {
-                Name = "User1",
+                Name = competitorProfile1.UserName,
                 ProfileUserId = 1,
                 Profile = competitorProfile1,
                 Rating = 1500,
@@ -32,7 +45,7 @@ namespace ChallengeBoardTests
 
             var competitor2 = new Competitor
             {
-                Name = "User2",
+                Name = competitorProfile2.UserName,
                 ProfileUserId = 2,
                 Profile = competitorProfile2,
                 Rating = 1500,
@@ -46,10 +59,10 @@ namespace ChallengeBoardTests
                 Description = "Test Board",
                 End = DateTime.Now.AddDays(30),
                 Name = "Test Board",
-                Owner = new Competitor {Name = "User1"},
+                Owner = boardOwner,
                 Started = DateTime.Now,
                 StartingRating = 1500,
-                Competitors = new [] {competitor1, competitor2}
+                Competitors = new[] { boardOwner, competitor1, competitor2 }
             };
 
             // Unresolved match
@@ -123,11 +136,20 @@ namespace ChallengeBoardTests
 
             board.Matches = new[] { match1, match2, match3 };
 
+            // Boards
             repository.Add(board);
+            
+            // User Profiles
+            repository.Add(competitorOwnerProfile);
             repository.Add(competitorProfile1);
             repository.Add(competitorProfile2);
+            
+            // Competitors
+            repository.Add(boardOwner);
             repository.Add(competitor1);
             repository.Add(competitor2);
+            
+            // Matches
             repository.Add(match1);
             repository.Add(match2);
             repository.Add(match3);

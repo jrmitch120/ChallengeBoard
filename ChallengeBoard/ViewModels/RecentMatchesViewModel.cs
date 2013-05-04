@@ -10,6 +10,8 @@ namespace ChallengeBoard.ViewModels
         public IEnumerable<Match> Verified { get; set; }
         public IEnumerable<Match> UnVerified { get; set; }
 
+        public Competitor Viewer { get; set; }
+
         public RecentMatchesViewModel()
         {
         }

@@ -1,5 +1,6 @@
-﻿@using NGravatar.Html
-@model ChallengeBoard.ViewModels.ProfileViewModel
+﻿@using ChallengeBoard.ViewModels
+@using NGravatar.Html
+@model ProfileViewModel
 
 @{
     ViewBag.Title = "Profile";
@@ -56,7 +57,7 @@
 <div id="matchContainer">
 @if (Model.Matches.Any())
 {
-    @Html.Partial("_MatchesPartial", Model.Matches)
+    @Html.Partial("_MatchesPartial", new MatchesViewModel { Matches = Model.Matches })
 }
 else
 {

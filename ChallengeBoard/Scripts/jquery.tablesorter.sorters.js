@@ -7,7 +7,6 @@ $.tablesorter.addParser({
     },
     format: function (s, table, cell) {
         // format your data for normalization 
-        console.info($(cell).children("span").text());
         return $(cell).children("span").text();
     },
     // set type, either numeric or text 

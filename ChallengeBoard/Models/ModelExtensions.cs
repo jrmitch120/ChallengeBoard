@@ -36,14 +36,19 @@ namespace ChallengeBoard.Models
             return (competitors.Any(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
         }
 
-        public static Competitor FindCompetitor(this IEnumerable<Competitor> competitors, string name)
+        public static Competitor FindCompetitorByName(this IEnumerable<Competitor> competitors, string name)
         {
             return (competitors.SingleOrDefault(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
         }
 
-        public static Competitor FindCompetitor(this IEnumerable<Competitor> competitors, int id)
+        public static Competitor FindCompetitorById(this IEnumerable<Competitor> competitors, int id)
         {
             return (competitors.SingleOrDefault(x => x.CompetitorId.Equals(id)));
+        }
+
+        public static Competitor FindCompetitorByProfileId(this IEnumerable<Competitor> competitors, int id)
+        {
+            return (competitors.SingleOrDefault(x => x.ProfileUserId.Equals(id)));
         }
 
         public static int CalculateUnverifiedRank(this Competitor competitor , IList<Match> matches)
