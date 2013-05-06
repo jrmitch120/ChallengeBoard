@@ -176,7 +176,7 @@ namespace ChallengeBoard.Services
         public void SweepMatches()
         {
             //var matches = _repository.Matches.Where(m => !m.Verified && !m.Rejected);
-            var matches = _repository.Matches.Where(m => m.VerificationDeadline < DateTime.Now && !m.Verified && !m.Rejected);
+            var matches = _repository.Matches.Where(m => m.VerificationDeadline < DateTime.Now && !m.Resolved.HasValue);
 
             foreach (var match in matches)
                 VerifyMatch(match, false);

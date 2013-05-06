@@ -112,6 +112,11 @@ namespace ChallengeBoard.Models
                     .Competitors.FirstOrDefault(x => x.CompetitorId.Equals(competitorId)));
         }
 
+        public IQueryable<Match> GetResolvedMatchesByBoardId(int id, bool includeProfiles = true)
+        {
+            return (Matches.Where(x => x.Resolved.HasValue));
+        }
+
         public IQueryable<Match> GetUnresolvedMatchesByBoardId(int id, bool includeProfiles = true)
         {
             return (Matches.Where(x => !x.Resolved.HasValue));
