@@ -6,11 +6,13 @@ namespace ChallengeBoard.Models
 {
     public static class ModelExtensions
     {
+        // Board
         public static bool IsOwner(this Board board, string name)
         {
             return (board.Owner.Profile.UserName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
+        // Competitor
         public static bool CanEdit(this Competitor competitor, Board board, string name)
         {
             return (board.IsOwner(name) || competitor.Is(name));

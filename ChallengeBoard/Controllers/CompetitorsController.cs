@@ -19,16 +19,12 @@ namespace ChallengeBoard.Controllers
         {
             var board = _repository.GetBoardByIdWithCompetitors(boardId);
             var competitor = board.Competitors.FindCompetitorById(competitorId);
-            //_repository.GetCompetitorById(boardId, competitorId);
 
             if (competitor == null)
                 return View("CompetitorNotFound", board);
 
-            var recentMatches = _repository.Matches.Where(m => (m.Verified || m.Rejected) &&
-                                                               (m.Winner.CompetitorId == competitorId ||
-                                                                m.Loser.CompetitorId == competitorId) &&
-                                                               m.Board.BoardId == boardId
-                )
+            var recentMatches = _repository.GetResolvedMatchesByBoardId(boardId)
+                                           .InvolvesCompetitor(competitor)
                                            .OrderByDescending(m => m.Resolved)
                                            .Take(300);
 
