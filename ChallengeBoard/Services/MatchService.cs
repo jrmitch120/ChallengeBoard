@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ChallengeBoard.Email;
 using ChallengeBoard.Email.Models;
@@ -88,6 +89,45 @@ namespace ChallengeBoard.Services
             match.LoserEstimatedRating = unverifiedLoserRank + match.LoserRatingDelta;
 
             return (match);
+        }
+
+        public CompetitorStats CalculateCompetitorStats(Competitor competitor, ICollection<Match> matches)
+        {
+            var stats = new CompetitorStats();
+
+            foreach (var result in matches.Select(match => match.ResultForCompetitor(competitor)).Where(result => !result.Invalid))
+            {
+                PvpStats pvpStats;
+
+                if (stats.Pvp.ContainsKey(result.Opponent))
+                    pvpStats = stats.Pvp[result.Opponent];
+                else
+                {
+                    pvpStats = new PvpStats { Opponent = result.Opponent };
+                    stats.Pvp.Add(result.Opponent, pvpStats);
+                }
+
+                switch (result.Outcome)
+                {
+                    case MatchOutcome.Win:
+                        pvpStats.Wins++;
+                        break;
+                    case MatchOutcome.Lose:
+                        pvpStats.Loses++;
+                        break;
+                    case MatchOutcome.Tie:
+                        pvpStats.Ties++;
+                        break;
+                    default:
+                        continue;
+                }
+
+                pvpStats.EloNet += result.EloChange;
+
+                stats.Pvp[result.Opponent] = pvpStats; // Update the dictionary
+            }
+
+            return (stats);
         }
 
         public void RejectMatch(int boardId, int matchId, string userName)

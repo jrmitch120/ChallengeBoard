@@ -8,5 +8,6 @@ namespace ChallengeBoard.ViewModels
         public Board Board { get; set; }
         public Competitor Competitor { get; set; }
         public IEnumerable<Match> Matches { get; set; }
+        public CompetitorStats Stats { get; set; }
     }
 }

@@ -1,0 +1,43 @@
+﻿@model ChallengeBoard.ViewModels.PvpViewModel
+
+<table class="table table-striped table-bordered no-more-tables sortedTable">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().Opponent.Name)</th>
+            <th class="centered">@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().MatchesPlayed)</th>
+            <th class="centered">@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().Wins)</th>
+            <th class="centered">@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().Loses)</th>
+            <th class="centered">@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().Ties)</th>
+            <th class="centered">@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().WinPercentage)</th>
+            <th class="centered">@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().EloNet)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pvp in Model.Stats.Pvp.Values)
+        {
+            <tr>
+                <td data-title="@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().Opponent.Name)">
+                    @Html.ActionLink(pvp.Opponent.Name, "Profile", "Competitors", new { boardId = Model.BoardId, competitorId = pvp.Opponent.CompetitorId }, null)
+                </td>
+            
+                <td data-title="@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().MatchesPlayed)" class="centered">
+                    @Html.DisplayFor(modelItem => pvp.MatchesPlayed)
+                </td>
+                <td data-title="@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().Wins)" class="centered"
+                    >@Html.DisplayFor(modelItem => pvp.Wins)</td>
+                <td data-title="@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().Loses)" class="centered">
+                    @Html.DisplayFor(modelItem => pvp.Loses)
+                </td>
+                <td data-title="@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().Ties)" class="centered">
+                    @Html.DisplayFor(modelItem => pvp.Ties)
+                </td>
+                <td data-title="@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().WinPercentage)" class="centered">
+                    @Html.DisplayFor(modelItem => pvp.WinPercentage)
+                </td>
+                <td data-title="@Html.DisplayNameFor(m => Model.Stats.Pvp.Values.First().EloNet)" class="centered">
+                    @if(pvp.EloNet >= 0){@Html.Raw("+")}@Html.DisplayFor(modelItem => pvp.EloNet)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

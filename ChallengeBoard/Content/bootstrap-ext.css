@@ -113,6 +113,11 @@
     word-wrap: break-word;
 }
 
+i.collapser {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
 .eloChange {
     width:30px;
     text-align:center;

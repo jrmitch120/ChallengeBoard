@@ -17,9 +17,15 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane active" id="pending">
-        <h3>Pending Matches</h3>
+        <h3>Pending Matches 
+            @if (Model.UnVerified.Any())
+            {
+                @:(@Model.UnVerified.Count())
+            }
+        </h3>
         @if (Model.UnVerified.Any())
         {
+            
             @Html.Partial("_MatchesPartial", new MatchesViewModel{ Matches = Model.UnVerified, Viewer = Model.Viewer })
         }
         else
