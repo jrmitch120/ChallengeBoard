@@ -224,6 +224,7 @@
       <DependentUpon>201305012246273_EstimatedRatings.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Stats.cs" />
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
     <Compile Include="Models\ModelExtensions.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="ViewModels\CompetitorViewModel.cs" />
     <Compile Include="ViewModels\BoardListViewModel.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
+    <Compile Include="ViewModels\PvpViewModel.cs" />
     <Compile Include="ViewModels\MatchesViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\RecentMatchesViewModel.cs" />
@@ -432,6 +434,7 @@
     <Content Include="Views\Competitors\Profile.cshtml" />
     <Content Include="Views\Competitors\CompetitorNotFound.cshtml" />
     <Content Include="Views\Shared\_MatchCommentsPartial.cshtml" />
+    <Content Include="Views\Competitors\_PvpPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

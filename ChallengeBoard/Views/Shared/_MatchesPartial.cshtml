@@ -3,24 +3,24 @@
 <table class="table table-striped table-bordered no-more-tables sortedTable">
     <thead>
         <tr>
-            <th class="span2">
+            <th>
                 @Html.DisplayNameFor(Model.Matches, m => m.Winner)
             </th>
-            <th class="centered span1">
+            <th class="centered">
                 @Html.DisplayNameFor(Model.Matches, m => m.WinnerEstimatedRating)
             </th>
-            <th class="span2">
+            <th>
                 @Html.DisplayNameFor(Model.Matches, m => m.Loser)
             </th>
-            <th class="centered span1">
+            <th class="centered">
                 @Html.DisplayNameFor(Model.Matches, m => m.LoserEstimatedRating)
             </th>
-            <th class="span2">Match Result
+            <th class="">Match Result
             </th>
-            <th class="centered span2">
+            <th class="centered">
                 @Html.DisplayNameFor(Model.Matches, m => m.Created)
             </th>
-            <th class="centered span2">
+            <th class="centered">
                 @if (Model.Matches.Any(m => m.IsResolved))
                 {
                     @:Resolved On
@@ -37,7 +37,7 @@
         {
             <tr>
                 <td data-title="@Html.DisplayNameFor(Model.Matches, m => m.Winner)">
-                    <span class="label label-success eloChange" >
+                    <span class="label label-success eloChange">
                         @if(match.WinnerRatingDelta >= 0){@Html.Raw("+")}@Html.DisplayFor(modelItem => match.WinnerRatingDelta)
                     </span>
                     - 

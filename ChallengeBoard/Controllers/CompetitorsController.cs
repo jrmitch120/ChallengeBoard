@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using ChallengeBoard.Infrastucture;
 using ChallengeBoard.Models;
+using ChallengeBoard.Services;
 using ChallengeBoard.ViewModels;
 
 namespace ChallengeBoard.Controllers
@@ -9,10 +10,12 @@ namespace ChallengeBoard.Controllers
     public class CompetitorsController : Controller
     {
         private readonly IRepository _repository;
+        private readonly IMatchService _matchService;
 
-        public CompetitorsController(IRepository repository)
+        public CompetitorsController(IRepository repository, IMatchService matchService)
         {
             _repository = repository;
+            _matchService = matchService;
         }
 
         public new ActionResult Profile(int boardId, int competitorId)
@@ -23,12 +26,20 @@ namespace ChallengeBoard.Controllers
             if (competitor == null)
                 return View("CompetitorNotFound", board);
 
-            var recentMatches = _repository.GetResolvedMatchesByBoardId(boardId)
+            var matches = _repository.GetResolvedMatchesByBoardId(boardId)
                                            .InvolvesCompetitor(competitor)
-                                           .OrderByDescending(m => m.Resolved)
-                                           .Take(300);
+                                           .OrderByDescending(m => m.Resolved);
 
-            return View(new ProfileViewModel {Board = board, Competitor = competitor, Matches = recentMatches});
+            var stats = _matchService.CalculateCompetitorStats(competitor, matches.ToList());
+
+            return
+                View(new ProfileViewModel
+                {
+                    Board = board,
+                    Competitor = competitor,
+                    Matches = matches.Take(300),
+                    Stats = stats
+                });
         }
 
         //

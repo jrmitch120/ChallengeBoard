@@ -61,5 +61,50 @@ namespace ChallengeBoard.Models
                     matches.Where(x => x.Winner.ProfileUserId == competitor.ProfileUserId && !x.IsResolved)
                            .Sum(x => x.WinnerRatingDelta));
         }
+
+        // Match
+        public static MatchResults ResultForCompetitor(this Match match, Competitor competitor)
+        {
+            var result = new MatchResults();
+            
+            if (match.Winner.CompetitorId != competitor.CompetitorId && match.Loser.CompetitorId != competitor.CompetitorId)
+                result.Outcome = MatchOutcome.NotInvolved;
+            else if (competitor.CompetitorId == match.Winner.CompetitorId)
+            {
+                result.Outcome = MatchOutcome.Win;
+                result.EloChange = match.WinnerRatingDelta;
+                result.Opponent = match.Loser;
+            }
+            else
+            {
+                result.Outcome = MatchOutcome.Lose;
+                result.EloChange = match.LoserRatingDelta;
+                result.Opponent = match.Winner;
+            }
+
+            if (match.Tied)
+                result.Outcome = MatchOutcome.Tie;
+
+            if (match.Rejected)
+                result.Invalid = true;
+
+            return (result);
+        }
+    }
+
+    public class MatchResults
+    {
+        public MatchOutcome Outcome { get; set; }
+        public Competitor Opponent { get; set; }
+        public int EloChange { get; set; }
+        public bool Invalid { get; set; }
+    }
+
+    public enum MatchOutcome
+    {
+        Win = 0,
+        Lose,
+        Tie,
+        NotInvolved
     }
 }

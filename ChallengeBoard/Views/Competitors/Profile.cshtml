@@ -53,11 +53,30 @@
         </section>
     </div>
 </div>
-<h2>Matches</h2>
-<div id="matchContainer">
+<h2>Matches 
+    
+    <i id="matchCollapser" data-toggle="collapse" data-target="#matchContainer" class="icon-minus-sign icon-white collapser"></i>
+    
+</h2>
+<div id="matchContainer" class="in">
+    @if (Model.Matches.Any())
+    {
+        @Html.Partial("_MatchesPartial", new MatchesViewModel { Matches = Model.Matches })
+    }
+    else
+    {
+        <div class="well">
+            @Html.DisplayFor(m => m.Competitor.Name) has not participated in any matches yet.
+        </div>
+    }
+</div>
+<h2>Head to Head 
+    <i id="pvpCollasper" data-toggle="collapse" data-target="#pvpContainer" class="icon-minus-sign icon-white collapser"></i>
+</h2>
+<div id="pvpContainer" class="in">
 @if (Model.Matches.Any())
 {
-    @Html.Partial("_MatchesPartial", new MatchesViewModel { Matches = Model.Matches })
+    @Html.Partial("_PvpPartial", new PvpViewModel { BoardId = Model.Board.BoardId, Stats = Model.Stats })
 }
 else
 {
@@ -68,4 +87,24 @@ else
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/components")
+    
+    <script type="text/javascript">
+        $(function () {
+            $('#matchContainer').on('show', function () {
+                $('#matchCollapser').removeClass('icon-plus-sign').addClass('icon-minus-sign');
+            });
+            
+            $('#matchContainer').on('hide', function () {
+                $('#matchCollapser').removeClass('icon-minus-sign').addClass('icon-plus-sign');
+            });
+            
+            $('#pvpContainer').on('show', function () {
+                $('#pvpCollasper').removeClass('icon-plus-sign').addClass('icon-minus-sign');
+            });
+
+            $('#pvpContainer').on('hide', function () {
+                $('#pvpCollasper').removeClass('icon-minus-sign').addClass('icon-plus-sign');
+            });
+        });
+    </script>
 }
