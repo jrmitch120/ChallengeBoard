@@ -95,7 +95,9 @@ namespace ChallengeBoard.Services
         {
             var stats = new CompetitorStats();
 
-            foreach (var result in matches.Select(match => match.ResultForCompetitor(competitor)).Where(result => !result.Invalid))
+            foreach (var result in matches.Select(match => match.ResultForCompetitor(competitor))
+                                                                .Where(result => !result.Invalid)
+                                                                .OrderBy(m => m.Opponent.Name))
             {
                 PvpStats pvpStats;
 
