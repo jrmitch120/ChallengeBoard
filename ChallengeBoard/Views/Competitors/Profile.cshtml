@@ -74,14 +74,14 @@
     <i id="pvpCollasper" data-toggle="collapse" data-target="#pvpContainer" class="icon-minus-sign icon-white collapser"></i>
 </h2>
 <div id="pvpContainer" class="in">
-@if (Model.Matches.Any())
+@if (Model.Stats.Pvp.Any())
 {
     @Html.Partial("_PvpPartial", new PvpViewModel { BoardId = Model.Board.BoardId, Stats = Model.Stats })
 }
 else
 {
     <div class="well">
-        @Html.DisplayFor(m => m.Competitor.Name) has not participated in any matches yet.
+        There are currently no head to head stats for @Html.DisplayFor(m => m.Competitor.Name).
     </div>
 }
 </div>

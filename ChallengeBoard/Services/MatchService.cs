@@ -93,23 +93,23 @@ namespace ChallengeBoard.Services
 
         public CompetitorStats CalculateCompetitorStats(Competitor competitor, ICollection<Match> matches)
         {
-            var stats = new CompetitorStats();
+            var statsByOpponent = new Dictionary<Competitor, PvpStats>();
 
-            foreach (var result in matches.Select(match => match.ResultForCompetitor(competitor))
+            foreach (var match in matches.Select(match => match.ResultForCompetitor(competitor))
                                                                 .Where(result => !result.Invalid)
                                                                 .OrderBy(m => m.Opponent.Name))
             {
                 PvpStats pvpStats;
 
-                if (stats.Pvp.ContainsKey(result.Opponent))
-                    pvpStats = stats.Pvp[result.Opponent];
+                if (statsByOpponent.ContainsKey(match.Opponent))
+                    pvpStats = statsByOpponent[match.Opponent];
                 else
                 {
-                    pvpStats = new PvpStats { Opponent = result.Opponent };
-                    stats.Pvp.Add(result.Opponent, pvpStats);
+                    pvpStats = new PvpStats { Opponent = match.Opponent };
+                    statsByOpponent.Add(match.Opponent, pvpStats);
                 }
 
-                switch (result.Outcome)
+                switch (match.Outcome)
                 {
                     case MatchOutcome.Win:
                         pvpStats.Wins++;
@@ -124,12 +124,16 @@ namespace ChallengeBoard.Services
                         continue;
                 }
 
-                pvpStats.EloNet += result.EloChange;
+                pvpStats.EloNet += match.EloChange;
 
-                stats.Pvp[result.Opponent] = pvpStats; // Update the dictionary
+                statsByOpponent[match.Opponent] = pvpStats; // Update the dictionary
             }
 
-            return (stats);
+            // Flatten dictionary and send it back
+            var finalStats = new CompetitorStats();
+            finalStats.Pvp.AddRange(statsByOpponent.Values.ToList());
+
+            return (finalStats);
         }
 
         public void RejectMatch(int boardId, int matchId, string userName)

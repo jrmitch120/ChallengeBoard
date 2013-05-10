@@ -8,11 +8,12 @@ namespace ChallengeBoard.Models
     [NotMapped]
     public class CompetitorStats
     {
-        public readonly IDictionary<Competitor, PvpStats> Pvp;
+        public readonly ICollection<PvpStats> Pvp;// IDictionary<Competitor, PvpStats> Pvp;
 
         public CompetitorStats()
         {
-            Pvp = new Dictionary<Competitor, PvpStats>();
+            // TODO Summed match PVP Stat calcs
+            Pvp = new List<PvpStats>();
         }
     }
 
