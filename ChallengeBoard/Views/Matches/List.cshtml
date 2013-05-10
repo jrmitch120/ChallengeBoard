@@ -112,8 +112,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn" type="submit" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button id="Reject" class="btn btn-primary disabled">Reject Match</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button id="Reject" type="submit" class="btn btn-primary disabled" disabled="disabled">Reject Match</button>
         </div>
     }
 </div>
@@ -136,7 +136,7 @@
                     $('#Reject').attr('disabled', 'disabled');
                 }
             });
-
+            
             // When hidding the modal, reset the rejection confirmation box.
             $('#myModal').on('hidden', function() {
                 $('#ConfirmReject').val('');

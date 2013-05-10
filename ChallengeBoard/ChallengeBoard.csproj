@@ -200,6 +200,7 @@
     <Compile Include="Email\Models\IEmailModel.cs" />
     <Compile Include="Email\Models\MatchNotification.cs" />
     <Compile Include="Email\SmtpPostmaster.cs" />
+    <Compile Include="Infrastucture\CollectionExtensions.cs" />
     <Compile Include="Infrastucture\NumberExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
