@@ -267,7 +267,10 @@ namespace ChallengeBoardTests
             var service = new MatchService(repository, null);
 
             var match = repository.GetUnresolvedMatchesByBoardId(1).OrderBy(x => x.VerificationDeadline).First();
+            
             service.ConfirmMatch(1, match.MatchId, match.Loser.Name);
+            service.ProcessManualVerifications(1);
+            
             match = repository.GetMatchById(match.MatchId);
 
             Assert.That(match.IsResolved, Is.True);
@@ -280,7 +283,10 @@ namespace ChallengeBoardTests
             var service = new MatchService(repository, null);
 
             var match = repository.GetUnresolvedMatchesByBoardId(1).OrderByDescending(x => x.VerificationDeadline).First();
+            
             service.ConfirmMatch(1, match.MatchId, match.Loser.Name);
+            service.ProcessManualVerifications(1);
+            
             match = repository.GetMatchById(match.MatchId);
 
             Assert.That(match.IsResolved, Is.False);
