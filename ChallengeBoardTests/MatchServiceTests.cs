@@ -203,7 +203,87 @@ namespace ChallengeBoardTests
             var match = repository.Matches.First(x => x.Board.BoardId == 1 && x.Resolved.HasValue);
             Assert.Throws<ServiceException>(() => service.RejectMatch(match.Board.BoardId, match.MatchId, match.Loser.Name));
         }
+    }
 
-        // Todo, continue
+    [TestFixture]
+    public class MatchConfirmationTests
+    {
+        [Test]
+        public void AdminCanConfirm()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+
+            var match = repository.GetUnresolvedMatchesByBoardId(1).First();
+
+            Assert.DoesNotThrow(
+                () => service.ConfirmMatch(match.Board.BoardId, 1, match.Board.Owner.Profile.UserName));
+        }
+
+        [Test]
+        public void LoserCanConfirm()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+            var match = repository.GetUnresolvedMatchesByBoardId(1).First();
+
+            Assert.DoesNotThrow(() => service.ConfirmMatch(match.Board.BoardId, 1, match.Loser.Profile.UserName));
+        }
+
+        [Test]
+        public void ThrowsIfNotLoserOrAdmin()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+
+            var match = repository.GetUnresolvedMatchesByBoardId(1).First();
+            Assert.Throws<ServiceException>(() => service.ConfirmMatch(match.Board.BoardId, match.MatchId, match.Winner.Name));
+        }
+
+        [Test]
+        public void ThrowsIfMatchNotFound()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+            var match = repository.GetUnresolvedMatchesByBoardId(1).First();
+
+            Assert.Throws<ServiceException>(() => service.RejectMatch(match.Board.BoardId, 9999, match.Loser.Name));
+        }
+
+        [Test]
+        public void ThrowsIfResolved()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+
+            var match = repository.GetResolvedMatchesByBoardId(1).First();
+            Assert.Throws<ServiceException>(() => service.ConfirmMatch(match.Board.BoardId, match.MatchId, match.Loser.Name));
+        }
+
+        [Test]
+        public void AutoVerifiesIfAble()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+
+            var match = repository.GetUnresolvedMatchesByBoardId(1).OrderBy(x => x.VerificationDeadline).First();
+            service.ConfirmMatch(1, match.MatchId, match.Loser.Name);
+            match = repository.GetMatchById(match.MatchId);
+
+            Assert.That(match.IsResolved, Is.True);
+        }
+
+        [Test]
+        public void DoesNotAutoVerifyIfUnable()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+            var service = new MatchService(repository, null);
+
+            var match = repository.GetUnresolvedMatchesByBoardId(1).OrderByDescending(x => x.VerificationDeadline).First();
+            service.ConfirmMatch(1, match.MatchId, match.Loser.Name);
+            match = repository.GetMatchById(match.MatchId);
+
+            Assert.That(match.IsResolved, Is.False);
+        }
     }
 }

@@ -43,6 +43,10 @@ namespace ChallengeBoard.Models
         [Display(Name = "Resolved On")]
         public DateTime? Resolved { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:g}")]
+        [Display(Name = "Opponent Verified")]
+        public DateTime? ManuallyVerified { get; set; }
+
         public bool Tied { get; set; }
         public bool Verified { get; set; }
         public bool Rejected { get; set; }

@@ -90,6 +90,21 @@ else
     
     <script type="text/javascript">
         $(function () {
+            // Matches
+            $(".sortedTable:eq(0)").tablesorter({
+                headers: {
+                    0: { sorter: 'eloChange' },
+                    2: { sorter: 'eloChange' }
+                },
+                sortList: [[5, 1]],
+                sortInitialOrder: 'desc'
+            });
+            
+            // Head To Head
+            $(".sortedTable:eq(1)").tablesorter({
+                sortList: [[6, 1]],
+                sortInitialOrder: 'desc'
+            });
             $('#matchContainer').on('show', function () {
                 $('#matchCollapser').removeClass('icon-plus-sign').addClass('icon-minus-sign');
             });

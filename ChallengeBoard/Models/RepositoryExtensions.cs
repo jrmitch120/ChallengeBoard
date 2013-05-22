@@ -19,5 +19,16 @@ namespace ChallengeBoard.Models
                     x =>
                     x.Winner.CompetitorId == competitor.CompetitorId || x.Loser.CompetitorId == competitor.CompetitorId));
         }
+
+        public static IQueryable<Match> InvolvesEither(this IQueryable<Match> matches, Competitor competitor1, Competitor competitor2)
+        {
+            return
+                (matches.Where(
+                    x =>
+                    x.Winner.CompetitorId == competitor1.CompetitorId ||
+                    x.Loser.CompetitorId == competitor1.CompetitorId  ||
+                    x.Winner.CompetitorId == competitor2.CompetitorId ||
+                    x.Loser.CompetitorId == competitor2.CompetitorId));
+        }
     }
 }

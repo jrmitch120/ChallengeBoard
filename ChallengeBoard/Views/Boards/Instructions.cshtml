@@ -6,36 +6,72 @@
 @Html.Partial("_BoardNav", Model)
 <div class="well">
     <section id="Instructions">
+        <a id="welcome"></a>
+        <h3>Welcome</h3>
         <p>
             You have successfully joined @Model.Name.  The starting rating for this challenge board is <strong>@Model.StartingRating</strong>.  
             You can improve your rating by playing matches with your fellow players.
         </p>
+        <h3>Ranking Calculations</h3>
         <p>
-            Match winners are responsible for reporting the outcome of their match.  Once reported, the loser will be notified 
-            and have <strong>@Model.AutoVerification</strong> hours to reject the match result.  If no action is taken prior to the 
-            deadline, the match result will become perminant and the participants' ratings will be adjusted.
+            The challenge board uses a standard <a href="http://en.wikipedia.org/wiki/Elo_rating_system" target="_blank">Elo</a> 
+            ranking system.  Elo was developed by Arpad Elo for use in competitive chess associations.  Over time variations of it 
+            have become staple algorithms in ladder based competitions.
         </p>
-        <h3>Where to next?</h3>
+        <p>
+            We use a 3 tier K-Factor that breaks out in the following levels:
+        </p>
         <ul>
-            <li>
-                @Html.ActionLink("The Challenge Board", "Details", new { id = Model.BoardId }) -
-                Here you'll find various information about your challenge board.  The owner of the board may 
-                also post rules or announcements here.
-            </li> 
-            <li>
-                @Html.ActionLink("Standings", "Standings", new { id = Model.BoardId }) -
-                Find out how you stack up against the competition.
-            </li> 
-            <li>
-                @Html.ActionLink("Match History", "List", "Matches", new { boardId = Model.BoardId }, null) - 
-                Here you can view recent and outstanding matches.  
-                Matches that you have lost can also be rejected here.
-            </li> 
-            <li>
-                @Html.ActionLink("Report a Match", "Create", "Matches", new { boardId = Model.BoardId }, null) - 
-                Have you played a match?  Here is where you should go to report it.
-            </li> 
+            <li>32 KFactor - Starting Rating to Starting Rating * 1.3125</li>
+            <li>24 KFactor - Starting Rating * 1.3125 to Starting Rating * 1.5</li>
+            <li>16 KFactor - Over Starting Rating * 1.5</li>
         </ul>
+        <p>
+            The main take away from this should be that as your rank gets higher, your KFactor decreases.  The effect of this is 
+            that you will lose less rating in losses the higher you are up on the ladder.
+        </p>
+        <h3>Match Submission</h3>
+        <p>
+            Match winners are responsible for reporting the outcome of their match to the board.  To 
+            @Html.ActionLink("report a match", "Create", "Matches", new { boardId = Model.BoardId }, null), 
+            fill out the requested information and validate the match.  If everything checks out, you'll 
+            be prompted with a final confirmation and estimated ranking changes.  Once a match is submitted, it enters 
+            the match approval process.
+        </p>
+        <a id="approval"></a>
+        <h3>Match Approval Process</h3>
+        <p>
+            Once a match is reported, the loser will be notified via email 
+            and have <strong>@Model.AutoVerification</strong> hour(s) to finalize the match result.  This is done by visiting the 
+            @Html.ActionLink("match activity", "List", "Matches", new { boardId = Model.BoardId }, null) section, locating the 
+            match in question, and clicking the verification link.  From there, you will have two options:
+        </p>
+        <ol>
+            <li>
+                <strong>Verify</strong> - Verifying a match will mark the result as accepted by the loser.  If there aren't 
+                any matches requiring finalization for either player, the the results will be posted immediately.  If 
+                there are outstanding matches, the verified match will be held in queue until the other matches are finalized.
+            </li>
+            <li>
+                <strong>Reject</strong> - Rejecting a match should be used if a match was reported incorrectly.  Matches that are 
+                rejected will no longer count for or against either participant.  The reporter will be given a report strike.  These 
+                strikes can be seen by the league organizer and do not serve any other purpose.
+            </li>
+        </ol>
+        <p>
+            Finalizing matches brings the standings up to date more quickly than waiting for them to auto-verify.  You should try to 
+            finalize your matches as quickly as possible.
+        </p>
+        <p>
+            If no action is taken prior to the auto-verification deadline, the match result will verify automatically.  
+            Again, the results will become permanent and the participants' ratings will be adjusted.
+        </p>
+        <h3>Player Profiles</h3>
+        <p>
+            You can view individual player profiles by clicking on their name in the standings.  There you will find various useful 
+            statistics such as wins, losses, ranking, etc.  Recent matches and head to head statistics are also found here.  To view 
+            your own profile by clicking the options drop-down and selecting "your profile".
+        </p>
     </section>
 </div>
 @section Scripts {

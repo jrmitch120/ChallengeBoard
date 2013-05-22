@@ -82,10 +82,10 @@ namespace ChallengeBoardTests
             var match2 = new Match
             {
                 Board = board,
-                Created = DateTime.Now,
+                Created = DateTime.Now.AddHours(-1),
                 Loser = competitor1,
                 Winner = competitor2,
-                VerificationDeadline = DateTime.Now.AddHours(board.AutoVerification),
+                VerificationDeadline = DateTime.Now.AddHours(board.AutoVerification-1),
                 MatchId = 2,
                 LoserRatingDelta = -10,
                 WinnerRatingDelta = 10
@@ -95,10 +95,10 @@ namespace ChallengeBoardTests
             var match3 = new Match
             {
                 Board = board,
-                Created = DateTime.Now,
+                Created = DateTime.Now.AddHours(-2),
                 Loser = competitor2,
                 Winner = competitor1,
-                VerificationDeadline = DateTime.Now.AddHours(board.AutoVerification),
+                VerificationDeadline = DateTime.Now.AddHours(board.AutoVerification-2),
                 MatchId = 3,
                 LoserRatingDelta = -10,
                 WinnerRatingDelta = 10
