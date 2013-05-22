@@ -20,6 +20,35 @@ namespace ChallengeBoard.Services
             _mailService = mailService;
         }
 
+        public void ConfirmMatch(int boardId, int matchId, string userName)
+        {
+            // Used to match against match Loser profile for verification of rejection authority.
+            var userProfile = _repository.UserProfiles.FindProfile(userName);
+            var board = _repository.GetBoardById(boardId);
+
+            if (userProfile == null)
+                throw new InvalidOperationException("Can not find your profile.");
+
+            var confirmedMatch = _repository.GetMatchById(matchId);
+
+            if (confirmedMatch == null)
+                throw new ServiceException("Can not find match.");
+
+            // Loser or Admin can approve
+            if (confirmedMatch.Loser.ProfileUserId != userProfile.UserId && !board.IsOwner(userName))  
+                throw new ServiceException("You are not able to approve this match.");
+
+            if (confirmedMatch.ManuallyVerified.HasValue)
+                throw new ServiceException("Your match verification has been upheld.");
+
+            if (confirmedMatch.IsResolved)
+                throw new ServiceException("This match has already been resolved.");
+
+            confirmedMatch.ManuallyVerified = DateTime.Now;
+            
+            _repository.CommitChanges();
+        }
+
         public Match CreateMatch(int boardId, string winnerName, string loserName, string winnerComment = "", bool tie = false)
         {
             var match = GenerateMatch(boardId, winnerName, loserName, tie);
@@ -131,9 +160,33 @@ namespace ChallengeBoard.Services
 
             // Flatten dictionary and send it back
             var finalStats = new CompetitorStats();
-            finalStats.Pvp.AddRange(statsByOpponent.Values.ToList());
+            finalStats.Pvp.AddRange(statsByOpponent.Values.ToList().OrderByDescending(x=>x.EloNet));
 
             return (finalStats);
+        }
+
+        public void ProcessManualVerifications(int boardId)
+        {
+            // All unresolved matches for this challenge board.
+            var unresolvedMatches = _repository.GetUnresolvedMatchesByBoardId(boardId);
+
+            var competitorIds = new HashSet<int>();
+
+            foreach (var match in unresolvedMatches.OrderBy(x => x.VerificationDeadline))
+            {
+                if (!match.ManuallyVerified.HasValue)
+                {
+                    // These guys have matches that haven't been manually verified.  From this point, we
+                    // can not verify any matches in which they are part of
+                    competitorIds.Add(match.Winner.CompetitorId);
+                    competitorIds.Add(match.Loser.CompetitorId);
+                }
+                else if (!competitorIds.Contains(match.Winner.CompetitorId) &&
+                         !competitorIds.Contains(match.Loser.CompetitorId))
+                    VerifyMatch(match, false);
+            }
+
+            _repository.CommitChanges();
         }
 
         public void RejectMatch(int boardId, int matchId, string userName)
@@ -228,6 +281,16 @@ namespace ChallengeBoard.Services
                 VerifyMatch(match, false);
 
             _repository.CommitChanges();
+
+            // Get all boards that have outstanding manual verifications
+            var boardIds =
+                _repository.Matches.Where(m => m.ManuallyVerified.HasValue && !m.Resolved.HasValue)
+                           .Select(x => x.Board.BoardId)
+                           .Distinct()
+                           .ToList();
+            
+            foreach (var boardId in boardIds)
+                ProcessManualVerifications(boardId);
         }
 
         public void VerifyMatch(int matchId)

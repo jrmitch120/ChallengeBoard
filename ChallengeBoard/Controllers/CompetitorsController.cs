@@ -28,7 +28,7 @@ namespace ChallengeBoard.Controllers
 
             var matches = _repository.GetResolvedMatchesByBoardId(boardId)
                                            .InvolvesCompetitor(competitor)
-                                           .OrderByDescending(m => m.Resolved);
+                                           .OrderByDescending(m => m.Created);
 
             var stats = _matchService.CalculateCompetitorStats(competitor, matches.ToList());
 

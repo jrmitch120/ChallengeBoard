@@ -65,6 +65,10 @@
                     </span>
                     - 
                     @Html.ActionLink(match.Loser.Name, "Profile", "Competitors", new { boardId = match.Board.BoardId, competitorId = match.Loser.CompetitorId }, null)
+                    @if (match.ManuallyVerified.HasValue)
+                    {
+                        @: <a href="#" rel="tooltip" data-toggle="tooltip" title="Verified by @match.Loser.Name"><i class="icon-star icon-grey"></i></a>
+                    }
                 </td>
                 <td class="centered" data-title="@Html.DisplayNameFor(Model.Matches, m => m.LoserEstimatedRating)">
                     @if (match.LoserEstimatedRating == 0)
@@ -92,7 +96,7 @@
                         @: Reporter wins.
                     }
                 </td>
-                <td class="centered"  data-title="@Html.DisplayNameFor(Model.Matches, m => m.Created)">
+                <td class="centered" data-title="@Html.DisplayNameFor(Model.Matches, m => m.Created)">
                     @Html.DisplayFor(modelItem => match.Created)
                 </td>
             
@@ -122,8 +126,8 @@
                             }
                         }
                         @if (Model.Viewer != null &&
-                                ( match.Loser.ProfileUserId.Equals(Model.Viewer.ProfileUserId) || // Loser able to reject
-                                  match.Board.Owner.ProfileUserId.Equals(Model.Viewer.ProfileUserId) // Board owner able to reject
+                                (match.Loser.ProfileUserId.Equals(Model.Viewer.ProfileUserId) || // Loser able to finalize
+                                 match.Board.Owner.ProfileUserId.Equals(Model.Viewer.ProfileUserId) // Board owner able to finalize
                                 )
                             )
                         {
@@ -132,7 +136,7 @@
                                     @Html.ActionLink(remaining, "Validate", new { id = match.Board.BoardId, matchId = match.MatchId },
                                                      new
                                                      {
-                                                         @class = "validate", title = "Reject Match", 
+                                                         @class = "validate", title = "Finalize Match", 
                                                          data_winner = match.Winner.Name, 
                                                          data_winnerRatingDelta = match.WinnerRatingDelta,
                                                          data_loser = match.Loser.Name, 

@@ -224,6 +224,10 @@
     <Compile Include="Migrations\201305012246273_EstimatedRatings.Designer.cs">
       <DependentUpon>201305012246273_EstimatedRatings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201305211557006_ManuallyVerified.cs" />
+    <Compile Include="Migrations\201305211557006_ManuallyVerified.Designer.cs">
+      <DependentUpon>201305211557006_ManuallyVerified.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Stats.cs" />
     <Compile Include="Models\InMemoryRepository.cs" />
@@ -458,6 +462,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305012246273_EstimatedRatings.resx">
       <DependentUpon>201305012246273_EstimatedRatings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305211557006_ManuallyVerified.resx">
+      <DependentUpon>201305211557006_ManuallyVerified.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

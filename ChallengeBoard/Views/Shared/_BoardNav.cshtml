@@ -3,7 +3,9 @@
 @using ChallengeBoard.Models
 <!-- <ul id="matchNav" data-spy="affix" data-offset-top="100" class="nav nav-pills embedded"> -->
 @{
-    var alreadyJoined = Model.Competitors.Active().ContainsCompetitor(User.Identity.Name);   
+    var competitor = Model.Competitors.Active().FindCompetitorByUserName(User.Identity.Name);
+    var alreadyJoined = competitor != null;
+    
 }
 <div class="embedded">
     <div class="pull-left">
@@ -26,6 +28,10 @@
                         Options<b class="caret"></b>
                     </a>
                     <ul id="options" class="dropdown-menu pull-right">
+                        <li>
+                            @Html.ActionLink("Your Profile", "Profile", "Competitors", new {boardId = Model.BoardId, competitorId = competitor.CompetitorId}, null)
+                        </li>
+                        <li class="divider"></li>
                         @if (Model.Owner.Name.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase))
                         {
                             <li>

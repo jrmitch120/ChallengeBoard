@@ -7,8 +7,9 @@
 @Html.Partial("_BoardNav", Model.Board)
 <div class="well">
     Below you will find pending and recent matches.  Pending matches have not had their verification period expire 
-    and are not counted in the standings yet.  These match results are still able to be rejected until the verification 
-    period is up.  Recent matches are official and are reflected in the standings. 
+    and are not counted in the standings yet.  Recent matches are official and are reflected in the standings.  
+    For more information, read up on the @Html.ActionLink("match approval process", "Instructions", "Boards", null,
+                 null, "approval",new { id = Model.Board.BoardId }, null).
 </div>
 <ul class="nav nav-tabs">
     <li class="active"><a href="#pending" data-toggle="tab">Pending Matches</a></li>
@@ -72,11 +73,11 @@
 </div>
 
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    @using (Html.BeginForm("Reject", "Matches", null, FormMethod.Post, new { id = "RejectForm" }))
+    @using (Html.BeginForm("Finalize", "Matches", null, FormMethod.Post, new { id = "FinalizeForm" }))
     {
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">You are about to reject the following match</h3>
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3 id="myModalLabel">You are about to decide the following match</h3>
         </div>
         <div class="modal-body">
             <input id="boardId" name="boardId" type="hidden" data-bind="value: boardId">
@@ -106,14 +107,14 @@
                 </p>
             </div>
             <div class="centered-text well well-small">
-                <h3 class="lead">Type "reject" to confirm rejection of this match.
+                <h3 class="lead">Type "verify" or "reject" to finalize this match.
                 </h3>
-                @Html.TextBox("ConfirmReject", "", new { maxlength = 6, @class = "danger", autocomplete = "off" })
+                @Html.TextBox("FinalizationRequest", "", new { maxlength = 6, @class = "danger", autocomplete = "off" })
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button id="Reject" type="submit" class="btn btn-primary disabled" disabled="disabled">Reject Match</button>
+            <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+            <button id="Finalize" type="submit" class="btn btn-primary disabled" disabled="disabled">Finalize Match</button>
         </div>
     }
 </div>
@@ -126,20 +127,29 @@
             var matchResult = new MatchModel();
             ko.applyBindings(matchResult);
 
-            // Force them to type "REJECT" before enabling the reject button.
-            $('#ConfirmReject').keyup(function() {
+            // Force them to type "VERIFY" or "REJECT" before enabling the finalize button.
+            $('#FinalizationRequest').keyup(function() {
                 if ($(this).val().toLowerCase() == "reject") {
-                    $('#Reject').removeClass('disabled');
-                    $('#Reject').removeAttr('disabled');
+                    $('#Finalize').removeClass('disabled');
+                    $('#Finalize').removeAttr('disabled');
+                } else if ($(this).val().toLowerCase() == "verify") {
+                    $('#Finalize').removeClass('disabled');
+                    $('#Finalize').removeAttr('disabled');
                 } else {
-                    $('#Reject').addClass('disabled');
-                    $('#Reject').attr('disabled', 'disabled');
+                    $('#Finalize').addClass('disabled');
+                    $('#Finalize').attr('disabled', 'disabled');
                 }
             });
             
-            // When hidding the modal, reset the rejection confirmation box.
+            // Accidental submission insurance
+            $('#FinalizeForm').submit(function () {
+                return $('#Finalize').attr('disabled') == undefined;
+            });
+
+            // When hidding the modal, reset the confirmation box.
             $('#myModal').on('hidden', function() {
-                $('#ConfirmReject').val('');
+                $('#FinalizationRequest').val('');
+                $('#Finalize').attr('disabled', 'disabled');
             });
 
             // User wants to reject a match.  Set the ViewModel and pop the modal

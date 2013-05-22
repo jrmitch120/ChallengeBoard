@@ -153,7 +153,7 @@ i.collapser {
   margin-top: 10px;
 }
 
-/* White icons with optional class, or on hover/active states of certain elements */
+/* Grey icons with optional class, or on hover/active states of certain elements */
 .icon-grey,
 .nav-pills > .active > a > [class^="icon-"],
 .nav-pills > .active > a > [class*=" icon-"],
@@ -285,6 +285,15 @@ textarea.editor {
     margin-bottom: 0;
 }
 
+a.tool {
+    border-bottom: 1px dashed #fff;
+}
+
+a.tool:hover {
+    border-bottom: 1px dashed #fff;
+    text-decoration: none;
+}
+
 /* Remove the exess padding from a control group that's immidiately proceeded by a <legend> */
 legend + .control-group {
     margin-top: 0px;
@@ -325,6 +334,10 @@ html {
 body {
     background-attachment:fixed;
     height: 100%;
+}
+
+ol li {
+    padding: 10px;
 }
 
 #wrap {

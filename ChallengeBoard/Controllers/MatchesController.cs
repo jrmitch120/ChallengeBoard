@@ -43,7 +43,7 @@ namespace ChallengeBoard.Controllers
                                         .Take(300), // Limit for now.  > 300 pending should be rare.  TODO load more on demand.
 
                 Verified = _repository.GetResolvedMatchesByBoardId(boardId)
-                                      .OrderByDescending(m => m.Resolved)
+                                      .OrderByDescending(m => m.Created)
                                       .Take(50)
             });
         }
@@ -129,6 +129,39 @@ namespace ChallengeBoard.Controllers
             try
             {
                 _service.RejectMatch(boardId, matchId, HttpContext.User.Identity.Name);
+            }
+            catch (ServiceException ex)
+            {
+                response = ex.Message;
+            }
+
+            // We're doing a redirect, so stuff the rejection response into TempData.
+            TempData["StatusMessage"] = response;
+
+            return RedirectToAction("List", new { boardId });
+        }
+
+        // POST: /Matches/Finalize/1
+        [HttpPost]
+        [Authorize]
+        public ActionResult Finalize(int boardId, int matchId, string finalizationRequest)
+        {
+            string response;
+
+            try
+            {
+                if (finalizationRequest.Equals("verify", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    response = "Your match has been marked as verified.  It will enter the approval queue and " +
+                               "be processed as soon as there are no pending matches for either competitor in front of it.  " +
+                               "The approval queue is processed aproximatly every 30 seconds.";
+                    _service.ConfirmMatch(boardId, matchId, HttpContext.User.Identity.Name);
+                }
+                else
+                {
+                    response = "The match has been rejected.  It will no longer be counted in the standings.";
+                    _service.RejectMatch(boardId, matchId, HttpContext.User.Identity.Name);
+                }
             }
             catch (ServiceException ex)
             {
