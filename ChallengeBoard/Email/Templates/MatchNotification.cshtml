@@ -13,10 +13,10 @@
         Hello @Model.LoserName,
     </p>
     <p>
-        We're just dropping you a line to let you know that <strong>@Model.WinnerName</strong> has reported a match with you on the 
-        <strong>@Model.BoardName</strong> challenge board.  If this is accurate, there isn't anything you have to do.  
-        If this is in err, head on over to reject the match so that it will not count.  You have <strong>@Model.AutoVerifies</strong> 
-        hour(s) to reject this match.
+        We're dropping you a line to let you know that <strong>@Model.WinnerName</strong> has reported a match with you on the 
+        <strong>@Model.BoardName</strong> challenge board.  If this is accurate, you may want to approve the match so that the result 
+        is made official as soon as possible.  If this is in err, you will want to reject the match so that it will not count.  
+        You have <strong>@Model.AutoVerifies</strong> hour(s) to reject or verify this match before it automatically becomes official.
     </p>
     @if (!String.IsNullOrWhiteSpace(@Model.WinnerComment))
     {
