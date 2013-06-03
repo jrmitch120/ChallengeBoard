@@ -333,6 +333,10 @@ namespace ChallengeBoard.Controllers
             if (existingBoard == null)
                 return View("BoardNotFound");
 
+            // Unranked players get 0 rating.
+            existingBoard.Competitors.Where(c => c.MatchesPlayed == 0).ToList().ForEach(c => c.Rating = 0);
+            existingBoard.Competitors = existingBoard.Competitors.OrderByDescending(c => c.Rating).ToList();
+
             return View("Standings", existingBoard);
         }
     }
