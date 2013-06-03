@@ -3,7 +3,7 @@
 namespace ChallengeBoard.Scoring
 {
     [ScoringSystem("Elo","Standard Elo scoring system")]
-    public class StandardElo : IScoringSystem
+    public class StandardElo
     {
         // Rating Disparity. The higher is F, the easier it is to gain points (or to lose them)
         private const int F = 400;

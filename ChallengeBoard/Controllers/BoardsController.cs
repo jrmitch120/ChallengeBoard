@@ -58,6 +58,8 @@ namespace ChallengeBoard.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            ViewBag.StatusMessage = TempData["StatusMessage"];
+
             var board = _repository.GetBoardByIdWithCompetitors(id);
 
             if (board == null)
@@ -211,6 +213,8 @@ namespace ChallengeBoard.Controllers
                 if (!board.IsOwner(User.Identity.Name))
                     return View("InvalidOwner", board);
 
+
+                //TODO: YUCK!!!!  Changing initial rating..
                 if (userBoard.AutoVerification != board.AutoVerification)
                 {
                     userBoard.Matches = _repository.GetUnresolvedMatchesByBoardId(userBoard.BoardId).ToList();
@@ -220,6 +224,8 @@ namespace ChallengeBoard.Controllers
                 UpdateModel(board);
 
                 _repository.CommitChanges();
+
+                TempData["StatusMessage"] = "Your changes have been saved.";
 
                 return RedirectToAction("Details", new { id = userBoard.BoardId });
             }

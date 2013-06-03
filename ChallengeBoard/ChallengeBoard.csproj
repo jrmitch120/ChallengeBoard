@@ -243,7 +243,6 @@
     <Compile Include="Models\Competitor.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Scoring\ScoringResult.cs" />
-    <Compile Include="Scoring\IScoringSystem.cs" />
     <Compile Include="Scoring\KFactor.cs" />
     <Compile Include="Scoring\ScoringSystemAttribute.cs" />
     <Compile Include="Services\BoardService.cs" />

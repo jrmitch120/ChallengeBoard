@@ -108,7 +108,7 @@ namespace ChallengeBoard.Services
             var unverifiedLoserRank = loser.CalculateUnverifiedRank(unresolvedMatches);
 
             // Run scoring calculation
-            IScoringSystem system = new StandardElo();
+            var system = new StandardElo();
             var eloResult = system.Calculate(board.StartingRating, unverifiedWinnerRank, unverifiedLoserRank, tie);
 
             match.WinnerRatingDelta = eloResult.WinnerDelta.RoundToWhole();
@@ -232,7 +232,7 @@ namespace ChallengeBoard.Services
                     x => new {x.MatchId, x.Created})
                                  .Where(x => x.Created >= rejectedMatch.Created && x.MatchId != rejectedMatch.MatchId);
 
-            IScoringSystem system = new StandardElo();
+            var system = new StandardElo();
             
             foreach (var match in matchList)
             {
