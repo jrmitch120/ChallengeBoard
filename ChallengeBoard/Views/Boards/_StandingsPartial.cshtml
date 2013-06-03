@@ -22,7 +22,7 @@
     </thead>
     <tbody>
         @foreach (var competitor in Model.Competitors.OrderByDescending(x => x.Rating)
-                                         .Where(competitor => competitor.Status == ChallengeBoard.Models.CompetitorStatus.Active))
+                                         .Where(competitor => competitor.Status == CompetitorStatus.Active))
         {
             <tr>
                 <td data-title="Rank" class="centered">@rank</td>
@@ -37,7 +37,16 @@
                 <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Ties)" class="centered">@Html.DisplayFor(modelItem => competitor.Ties)</td>
                 <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Streak)" class="centered">@Html.DisplayFor(modelItem => competitor.Streak)</td>
                 <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.WinPercentage)" class="centered">@Html.DisplayFor(modelItem => competitor.WinPercentage)</td>
-                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Rating)" class="centered">@Html.DisplayFor(modelItem => competitor.Rating)</td>
+                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Rating)" class="centered">
+                    @if (competitor.MatchesPlayed == 0)
+                    {
+                        @:-
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => competitor.Rating)
+                    }
+                </td>
             </tr>
             
             rank++;

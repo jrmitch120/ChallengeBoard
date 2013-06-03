@@ -13,7 +13,17 @@
             <div class="well hide-overflow">
                 <div id="profileAvatar">
                     @Html.Gravatar(Model.Competitor.Profile.EmailAddress, 155, null, NGravatar.Rating.PG, null)
-                    <div id="profileRating">@Html.DisplayFor(m => m.Competitor.Rating)</div>
+                    <div id="profileRating">
+                        @if (Model.Competitor.MatchesPlayed == 0)
+                        {
+                            @:N/A
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.Competitor.Rating)
+                        }
+                        
+                    </div>
                     <div><small>@Html.DisplayNameFor(m => m.Competitor.Rating)</small></div>
                 </div>
                 <div class="span2">
