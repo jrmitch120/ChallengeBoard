@@ -115,20 +115,19 @@ else
                 sortList: [[6, 1]],
                 sortInitialOrder: 'desc'
             });
-            $('#matchContainer').on('show', function () {
-                $('#matchCollapser').removeClass('icon-plus-sign').addClass('icon-minus-sign');
-            });
-            
-            $('#matchContainer').on('hide', function () {
-                $('#matchCollapser').removeClass('icon-minus-sign').addClass('icon-plus-sign');
-            });
-            
-            $('#pvpContainer').on('show', function () {
-                $('#pvpCollasper').removeClass('icon-plus-sign').addClass('icon-minus-sign');
-            });
 
-            $('#pvpContainer').on('hide', function () {
-                $('#pvpCollasper').removeClass('icon-minus-sign').addClass('icon-plus-sign');
+            $('#matchCollapser').on('click', function () {
+                if ($('#matchCollapser').hasClass('icon-plus-sign'))
+                    $('#matchCollapser').removeClass('icon-plus-sign').addClass('icon-minus-sign');
+                else
+                    $('#matchCollapser').removeClass('icon-minus-sign').addClass('icon-plus-sign');
+            });
+            
+            $('#pvpCollasper').on('click', function () {
+                if ($('#pvpCollasper').hasClass('icon-plus-sign'))
+                    $('#pvpCollasper').removeClass('icon-plus-sign').addClass('icon-minus-sign');
+                else
+                    $('#pvpCollasper').removeClass('icon-minus-sign').addClass('icon-plus-sign');
             });
         });
     </script>
