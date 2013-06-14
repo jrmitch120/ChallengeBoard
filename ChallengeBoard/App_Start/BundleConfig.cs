@@ -25,6 +25,7 @@ namespace ChallengeBoard
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*",
+                        "~/Scripts/ChallengeBoard/validation.unobtrusive.js",
                         "~/Scripts/boostrapvalidation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(

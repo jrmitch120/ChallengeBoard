@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using ChallengeBoard.Models.Validation;
 
 namespace ChallengeBoard.Models
 {
@@ -29,7 +30,7 @@ namespace ChallengeBoard.Models
         public string Password { get; set; }
 
         [Display(Name = "Created")]
-        [DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:M/d/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
 
         [Display(Name = "Starting Rating")]
@@ -40,13 +41,16 @@ namespace ChallengeBoard.Models
         [Range(1, 336)] // 2 Week upper limit
         public int AutoVerification { get; set; }
 
-        [Display(Name = "Ends")]
-        [DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
-        [CustomValidation(typeof(Board), "ValidateEndDate")]
+        [Display(Name = "Ends On")]
+        [DisplayFormat(DataFormatString = "{0:M/d/yyyy}", ApplyFormatInEditMode = true)]
+        //[CustomValidation(typeof(Board), "ValidateEndDate")]
+        [DateWithinYear(ErrorMessage="Your board must end within a year.")]
         public DateTime End { get; set; }
 
-        [Display(Name = "Started")]
-        [DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Starts On")]
+        [DisplayFormat(DataFormatString = "{0:M/d/yyyy}", ApplyFormatInEditMode = true)]
+        [DateBefore("End", ErrorMessage = "You must start the board before you end it.")]
+        [DateWithinYear(ErrorMessage = "Your board must start within a year.")]
         public DateTime Started { get; set; }
 
         [Display(Name = "Logo (image url)")]
@@ -70,6 +74,7 @@ namespace ChallengeBoard.Models
             StartingRating = 1500;
             AutoVerification = 72;
             Created = DateTime.Now;
+            Started = DateTime.Now.AddDays(7);
             End = DateTime.Now.AddMonths(1);
         }
     }

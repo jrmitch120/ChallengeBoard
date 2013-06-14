@@ -86,6 +86,19 @@ namespace ChallengeBoardTests
 
             Assert.That(repository.Matches.Count(), Is.EqualTo(matchCount + 1));
         }
+
+        [Test]
+        public void ThrowsIfBoardNotStarted()
+        {
+            var repository = Repository.CreatePopulatedRepository();
+
+            var service = new MatchService(repository, new Mock<IMailService>().Object);
+
+            var board = repository.GetBoardById(1);
+            board.Started = DateTime.Now.AddDays(5);
+            
+            Assert.Throws<ServiceException>(() => service.CreateMatch(1, "User1", "User2"));
+        }
     }
 
     [TestFixture]

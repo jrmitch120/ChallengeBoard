@@ -97,7 +97,6 @@ namespace ChallengeBoard.Controllers
                 _repository.CommitChanges();
 
                 board.Created = DateTime.Now;
-                board.Started = DateTime.Now;
                 board.Owner = owner;
                 board.Competitors.Add(owner);
 
