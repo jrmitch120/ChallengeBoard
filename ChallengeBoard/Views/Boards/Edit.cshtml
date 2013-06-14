@@ -49,6 +49,20 @@
                             @Html.ValidationMessageFor(m => m.Password)
                         </div>
                     </div>
+                    if (DateTime.Now <= Model.Started)
+                    {
+                         <div class="control-group">
+                             @Html.LabelFor(m => m.Started, new {@class = "control-label"})
+
+                             <div class="controls">
+                                 <div class="input-append date" id="DatePicker1" data-date="@Model.Started.ToShortDateString()" data-date-format="m/d/yyyy">
+                                     @Html.TextBox("Started", Model.Started.ToShortDateString(), new {@class = "input-small", maxlength = 10})
+                                     <span class="add-on"><i class="icon-calendar"></i></span>
+                                 </div>
+                                 @Html.ValidationMessageFor(m => m.Started)
+                             </div>
+                         </div>
+                    }
                     <div class="control-group">
                         @Html.LabelFor(m => m.End, new { @class = "control-label" })
                         <div class="controls">
@@ -166,8 +180,8 @@
         $(function() {
             ko.applyBindings(new CompetitorStatusModel(@Model.BoardId, @data));
 
-            $('#DatePicker').datepicker().on('changeDate', function() {
-                $('#DatePicker').datepicker('hide');
+            $('.date').datepicker().on('changeDate', function (e) {
+                $(e.target).datepicker('hide');
             });
         });
     </script>

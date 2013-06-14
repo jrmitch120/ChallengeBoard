@@ -78,6 +78,9 @@ namespace ChallengeBoard.Services
 
             if(board == null)
                 throw (new ServiceException("Can not find challenge board."));
+
+            if (DateTime.Now < board.Started)
+                throw (new ServiceException("This challenge board start on " + board.Started.ToShortDateString() + "."));
             if (DateTime.Now >= board.End)
                 throw (new ServiceException("This challenge board has ended."));
 

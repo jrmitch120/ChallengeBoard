@@ -233,6 +233,8 @@
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
     <Compile Include="Models\ModelExtensions.cs" />
+    <Compile Include="Models\Validation\DateBefore.cs" />
+    <Compile Include="Models\Validation\DateWithinYear.cs" />
     <Compile Include="Scoring\StandardElo.cs" />
     <Compile Include="Infrastucture\HtmlSanitizer.cs" />
     <Compile Include="Infrastucture\PageHeader.cs" />
@@ -351,6 +353,7 @@
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\ChallengeBoard\validation.unobtrusive.js" />
     <Content Include="Scripts\_retired_bootstrap-toggle.js" />
     <Content Include="Scripts\2.2.2.bootstrap.js" />
     <Content Include="Scripts\2.2.2.bootstrap.min.js" />
