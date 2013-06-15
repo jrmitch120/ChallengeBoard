@@ -130,5 +130,9 @@ namespace ChallengeBoard.Models
         public void CommitChanges()
         {
         }
+
+        public void CommitChanges(bool disableValidation)
+        {
+        }
     }
 }

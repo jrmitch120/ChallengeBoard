@@ -211,6 +211,11 @@ textarea.editor {
     text-align:center
 }   
 
+.centered {
+     margin-left: auto;
+     margin-right: auto;
+}
+
 .arrow-up {
     position: relative;
     bottom: 12px;
