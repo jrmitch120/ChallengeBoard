@@ -326,6 +326,8 @@ namespace ChallengeBoard.Controllers
 
         public ActionResult Standings(int id = 0, int page = 1)
         {
+            if (page < 1) page = 1;
+
             var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
             if (existingBoard == null)
@@ -333,13 +335,11 @@ namespace ChallengeBoard.Controllers
 
             // Unranked players get 0 rating.
             existingBoard.Competitors.Where(c => c.MatchesPlayed == 0).ToList().ForEach(c => c.Rating = 0);
-            // ^- we don't want to do this.  Perhaps change starting rating to 0 and then assign the board 
-            // default rating when they play a match.
 
             return View("Standings", new StandingsViewModel
             {
                 Board = existingBoard,
-                Standings = existingBoard.Competitors.OrderByDescending(c => c.Rating).ToPagedList(page, 100)
+                Standings = existingBoard.Competitors.Active().OrderByDescending(c => c.Rating).ToPagedList(page, PageLimits.Standings)
             });
         }
     }
