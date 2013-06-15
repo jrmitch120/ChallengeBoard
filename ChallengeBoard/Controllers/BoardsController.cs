@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using PagedList;
 using ChallengeBoard.Infrastucture;
 using ChallengeBoard.Models;
 using ChallengeBoard.Services;
@@ -212,17 +213,15 @@ namespace ChallengeBoard.Controllers
                 if (!board.IsOwner(User.Identity.Name))
                     return View("InvalidOwner", board);
 
-
-                //TODO: YUCK!!!!  Changing initial rating..
                 if (userBoard.AutoVerification != board.AutoVerification)
                 {
                     userBoard.Matches = _repository.GetUnresolvedMatchesByBoardId(userBoard.BoardId).ToList();
                     _boardService.AdjustMatchDeadlines(userBoard);
                 }
 
-                UpdateModel(board);
+                TryUpdateModel(board);
 
-                _repository.CommitChanges();
+                _repository.CommitChanges(true);
 
                 TempData["StatusMessage"] = "Your changes have been saved.";
 
@@ -325,7 +324,7 @@ namespace ChallengeBoard.Controllers
         //
         // Get: /Boards/Standings/5
 
-        public ActionResult Standings(int id = 0)
+        public ActionResult Standings(int id = 0, int page = 1)
         {
             var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
@@ -334,9 +333,14 @@ namespace ChallengeBoard.Controllers
 
             // Unranked players get 0 rating.
             existingBoard.Competitors.Where(c => c.MatchesPlayed == 0).ToList().ForEach(c => c.Rating = 0);
-            existingBoard.Competitors = existingBoard.Competitors.OrderByDescending(c => c.Rating).ToList();
+            // ^- we don't want to do this.  Perhaps change starting rating to 0 and then assign the board 
+            // default rating when they play a match.
 
-            return View("Standings", existingBoard);
+            return View("Standings", new StandingsViewModel
+            {
+                Board = existingBoard,
+                Standings = existingBoard.Competitors.OrderByDescending(c => c.Rating).ToPagedList(page, 100)
+            });
         }
     }
 }

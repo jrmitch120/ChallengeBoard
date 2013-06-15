@@ -49,7 +49,7 @@
                             @Html.ValidationMessageFor(m => m.Password)
                         </div>
                     </div>
-                    if (DateTime.Now <= Model.Started)
+                    if (DateTime.Now <= Model.Started) // Can not change start date after the board has started.
                     {
                          <div class="control-group">
                              @Html.LabelFor(m => m.Started, new {@class = "control-label"})
@@ -73,13 +73,16 @@
                             @Html.ValidationMessageFor(m => m.End)
                         </div>
                     </div>
-                    <div class="control-group">
-                        @Html.LabelFor(m => m.StartingRating, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.TextBoxFor(m => m.StartingRating, new { @class = "input-mini",  maxlength = 4 })
-                            @Html.ValidationMessageFor(m => m.StartingRating)
+                    if (DateTime.Now <= Model.Started) // Can not change starting rating after the board has started.
+                    {
+                        <div class="control-group">
+                            @Html.LabelFor(m => m.StartingRating, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.StartingRating, new {@class = "input-mini", maxlength = 4})
+                                @Html.ValidationMessageFor(m => m.StartingRating)
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="control-group">
                         @Html.LabelFor(m => m.AutoVerification, new { @class = "control-label" })
 

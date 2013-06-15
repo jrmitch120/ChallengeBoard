@@ -132,8 +132,16 @@ namespace ChallengeBoard.Models
 
         public void CommitChanges()
         {
+            CommitChanges(false);
+        }
+
+        public void CommitChanges(bool disableValidation)
+        {
             try
             {
+                if(disableValidation)
+                    Db.Configuration.ValidateOnSaveEnabled = false;
+
                 Db.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)

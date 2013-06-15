@@ -2,7 +2,8 @@
 @using NGravatar.Html
 @using ChallengeBoard.Infrastucture;
 @using ChallengeBoard.Models;
-@model Board
+@using PagedList.Mvc
+@model ChallengeBoard.ViewModels.StandingsViewModel
 @{
     var rank = 1;
 }
@@ -10,34 +11,34 @@
     <thead>
         <tr>
             <th class="centered">Rank</th>
-            <th>@Html.DisplayNameFor(m => m.Name)</th>
-            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.MatchesPlayed)</th>
-            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Wins)</th>
-            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Loses)</th>
-            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Ties)</th>
-            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Streak)</th>
-            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.WinPercentage)</th>
-            <th class="centered">@Html.DisplayNameFor(Model.Competitors, m => m.Rating)</th>
+            <th class="span4">@Html.DisplayNameFor(Model.Standings, m => m.Name)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Standings, m => m.MatchesPlayed)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Standings, m => m.Wins)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Standings, m => m.Loses)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Standings, m => m.Ties)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Standings, m => m.Streak)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Standings, m => m.WinPercentage)</th>
+            <th class="centered">@Html.DisplayNameFor(Model.Standings, m => m.Rating)</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var competitor in Model.Competitors.OrderByDescending(x => x.Rating)
+        @foreach (var competitor in Model.Standings.OrderByDescending(x => x.Rating)
                                          .Where(competitor => competitor.Status == CompetitorStatus.Active))
         {
             <tr>
                 <td data-title="Rank" class="centered">@rank</td>
                 
-                <td data-title="@Html.DisplayNameFor(m => m.Name)">
+                <td data-title="@Html.DisplayNameFor(Model.Standings, m => m.Name)">
                     @Html.Gravatar(competitor.Profile.EmailAddress, 20, null, NGravatar.Rating.PG, null)&nbsp;
-                    @Html.ActionLink(@competitor.Name, "Profile", "Competitors", new { boardId = Model.BoardId, competitorId = competitor.CompetitorId }, null)
+                    @Html.ActionLink(@competitor.Name, "Profile", "Competitors", new { boardId = Model.Board.BoardId, competitorId = competitor.CompetitorId }, null)
                 </td>
-                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.MatchesPlayed)" class="centered">@Html.DisplayFor(modelItem => competitor.MatchesPlayed)</td>
-                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Wins)" class="centered">@Html.DisplayFor(modelItem => competitor.Wins)</td>
-                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Loses)" class="centered">@Html.DisplayFor(modelItem => competitor.Loses)</td>
-                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Ties)" class="centered">@Html.DisplayFor(modelItem => competitor.Ties)</td>
-                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Streak)" class="centered">@Html.DisplayFor(modelItem => competitor.Streak)</td>
-                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.WinPercentage)" class="centered">@Html.DisplayFor(modelItem => competitor.WinPercentage)</td>
-                <td data-title="@Html.DisplayNameFor(Model.Competitors, m => m.Rating)" class="centered">
+                <td data-title="@Html.DisplayNameFor(Model.Standings, m => m.MatchesPlayed)" class="centered">@Html.DisplayFor(modelItem => competitor.MatchesPlayed)</td>
+                <td data-title="@Html.DisplayNameFor(Model.Standings, m => m.Wins)" class="centered">@Html.DisplayFor(modelItem => competitor.Wins)</td>
+                <td data-title="@Html.DisplayNameFor(Model.Standings, m => m.Loses)" class="centered">@Html.DisplayFor(modelItem => competitor.Loses)</td>
+                <td data-title="@Html.DisplayNameFor(Model.Standings, m => m.Ties)" class="centered">@Html.DisplayFor(modelItem => competitor.Ties)</td>
+                <td data-title="@Html.DisplayNameFor(Model.Standings, m => m.Streak)" class="centered">@Html.DisplayFor(modelItem => competitor.Streak)</td>
+                <td data-title="@Html.DisplayNameFor(Model.Standings, m => m.WinPercentage)" class="centered">@Html.DisplayFor(modelItem => competitor.WinPercentage)</td>
+                <td data-title="@Html.DisplayNameFor(Model.Standings, m => m.Rating)" class="centered">
                     @if (competitor.MatchesPlayed == 0)
                     {
                         @:-
@@ -53,7 +54,11 @@
         }
     </tbody>
 </table>
-
+@if(Model.Standings.PageCount > 1) {
+    <div class="centered-text">
+        @Html.PagedListPager( Model.Standings, page => Url.Action("Standings", new { page }) )
+    </div>
+}
 @functions{
 
     public HtmlString MatchResult(string player, bool tie)

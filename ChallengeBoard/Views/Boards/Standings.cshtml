@@ -1,10 +1,10 @@
-﻿@model ChallengeBoard.Models.Board
+﻿@model ChallengeBoard.ViewModels.StandingsViewModel
 
 @{
     ViewBag.Title = "Standings";
 }
-@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Name, "Standings"))
-@Html.Partial("_BoardNav", Model)
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Board.Name, "Standings"))
+@Html.Partial("_BoardNav", Model.Board)
 <section id="Standings">
     @Html.Partial("_StandingsPartial", Model)
 </section>

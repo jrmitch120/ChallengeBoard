@@ -6,6 +6,7 @@ namespace ChallengeBoard.Models
     public interface IRepository : IDisposable
     {
         void CommitChanges();
+        void CommitChanges(bool disableValidation);
         
         Board GetBoardById(int id);
         Match GetMatchById(int id);

@@ -60,6 +60,12 @@
     <Reference Include="NGravatar">
       <HintPath>..\packages\NGravatar.0.3.2\lib\net40\NGravatar.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.16.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.3.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="RazorEngine">
       <HintPath>..\packages\RazorEngine.3.2.0\lib\net40\RazorEngine.dll</HintPath>
     </Reference>
@@ -254,6 +260,7 @@
     <Compile Include="ViewModels\CompetitorViewModel.cs" />
     <Compile Include="ViewModels\BoardListViewModel.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
+    <Compile Include="ViewModels\StandingsViewModel.cs" />
     <Compile Include="ViewModels\PvpViewModel.cs" />
     <Compile Include="ViewModels\MatchesViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
@@ -279,6 +286,7 @@
     <Content Include="Content\images\bg.gif" />
     <Content Include="Content\images\desc.gif" />
     <Content Include="Content\images\glyphicons-halflings-grey.png" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\tableSorter.css" />
     <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\google-logo.png" />

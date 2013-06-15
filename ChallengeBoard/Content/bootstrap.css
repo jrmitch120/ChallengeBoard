@@ -4158,7 +4158,8 @@ input[type="submit"].btn.btn-mini {
 }
 .pagination ul > .active > a,
 .pagination ul > .active > span {
-  color: #adafae;
+  /*color: #adafae;*/
+  color: #000000;
   cursor: default;
 }
 .pagination ul > .disabled > span,
