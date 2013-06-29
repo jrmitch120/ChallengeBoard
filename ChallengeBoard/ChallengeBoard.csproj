@@ -195,6 +195,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\CompetitorsController.cs" />
+    <Compile Include="Controllers\DiscussionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Email\EmailContact.cs" />
@@ -234,7 +235,12 @@
     <Compile Include="Migrations\201305211557006_ManuallyVerified.Designer.cs">
       <DependentUpon>201305211557006_ManuallyVerified.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306191923193_Posts.cs" />
+    <Compile Include="Migrations\201306191923193_Posts.Designer.cs">
+      <DependentUpon>201306191923193_Posts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Stats.cs" />
     <Compile Include="Models\InMemoryRepository.cs" />
     <Compile Include="Models\RepositoryExtensions.cs" />
@@ -260,7 +266,10 @@
     <Compile Include="ViewModels\CompetitorViewModel.cs" />
     <Compile Include="ViewModels\BoardListViewModel.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
+    <Compile Include="ViewModels\DiscussionViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelExtensions.cs" />
     <Compile Include="ViewModels\PageLimits.cs" />
+    <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\StandingsViewModel.cs" />
     <Compile Include="ViewModels\PvpViewModel.cs" />
     <Compile Include="ViewModels\MatchesViewModel.cs" />
@@ -363,6 +372,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ChallengeBoard\validation.unobtrusive.js" />
+    <Content Include="Scripts\KnockoutModels\postModels.js" />
     <Content Include="Scripts\_retired_bootstrap-toggle.js" />
     <Content Include="Scripts\2.2.2.bootstrap.js" />
     <Content Include="Scripts\2.2.2.bootstrap.min.js" />
@@ -451,6 +461,7 @@
     <Content Include="Views\Competitors\CompetitorNotFound.cshtml" />
     <Content Include="Views\Shared\_MatchCommentsPartial.cshtml" />
     <Content Include="Views\Competitors\_PvpPartial.cshtml" />
+    <Content Include="Views\Discussion\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -476,6 +487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305211557006_ManuallyVerified.resx">
       <DependentUpon>201305211557006_ManuallyVerified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306191923193_Posts.resx">
+      <DependentUpon>201306191923193_Posts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

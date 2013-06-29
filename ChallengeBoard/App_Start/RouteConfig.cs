@@ -37,6 +37,12 @@ namespace ChallengeBoard
             );
 
             routes.MapRoute(
+                name: "DiscussionRoute",
+                url: "Boards/Discussion/{boardId}/{action}/{postId}",
+                defaults: new { controller = "Discussion", action = "Index", boardId = 0, postId = 0 }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

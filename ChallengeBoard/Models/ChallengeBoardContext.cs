@@ -52,6 +52,7 @@ namespace ChallengeBoard.Models
         public DbSet<Match> Matches { get; set; }
         public DbSet<Competitor> Competitors { get; set; }
         public DbSet<Board> Boards { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
         // MVC Authentication
         public DbSet<UserProfile> UserProfiles { get; set; }
