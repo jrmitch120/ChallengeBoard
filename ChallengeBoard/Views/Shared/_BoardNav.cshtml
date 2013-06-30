@@ -12,10 +12,9 @@
         <ul class="nav nav-pills">
             @Html.MenuLink("Standings", "Standings", "Boards", new { id = Model.BoardId }, null)
             @Html.MenuLink("Information", "Details", "Boards", new { id = Model.BoardId }, null)
+            @Html.MenuLink("Discussion", "Index", "Discussion", new { boardId = Model.BoardId }, null)
             @Html.MenuLink("Match Activity", "List", "Matches", new { boardId = Model.BoardId }, null)
             @Html.MenuLink("Report a Match", "Create", "Matches", new { boardId = Model.BoardId }, null)
-            @Html.MenuLink("Discussion", "Index", "Discussion", new { boardId = Model.BoardId }, null)
-            @Html.MenuLink("Instructions", "Instructions", "Boards", new { id = Model.BoardId }, null)
         </ul>
     </div>
     <div class="pull-right">
@@ -27,6 +26,9 @@
                         Options<b class="caret"></b>
                     </a>
                     <ul id="options" class="dropdown-menu pull-right">
+                        <li>
+                            @Html.ActionLink("Instructions", "Instructions", "Boards", new {id = Model.BoardId}, null)
+                        </li>
                         <li>
                             @Html.ActionLink("Your Profile", "Profile", "Competitors", new {boardId = Model.BoardId, competitorId = competitor.CompetitorId}, null)
                         </li>

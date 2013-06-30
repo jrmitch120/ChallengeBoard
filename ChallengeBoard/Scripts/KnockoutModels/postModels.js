@@ -14,6 +14,8 @@ function PostModel(data) {
     self.edited = ko.observable(data.Edited);
     
     self.editing = ko.observable(false);
+    self.deleteRequested = ko.observable(false);
+    
     self.originalBody = ko.observable();
 
     self.setLinebreakBody = function() {

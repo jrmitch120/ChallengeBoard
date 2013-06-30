@@ -33,9 +33,14 @@ namespace ChallengeBoard.Controllers
             {
                 var postCount = _repository.Posts.Count(p => p.Board.BoardId == boardId);
 
-                page = postCount / PageLimits.Discussion;
-                if (postCount % PageLimits.Discussion != 0)
-                    page++;
+                if (postCount == 0)
+                    page = 1;
+                else
+                {
+                    page = postCount/PageLimits.Discussion;
+                    if (postCount%PageLimits.Discussion != 0)
+                        page++;
+                }
             }
 
             var pagedPosts = _repository.Posts.Where(p => p.Board.BoardId == boardId)

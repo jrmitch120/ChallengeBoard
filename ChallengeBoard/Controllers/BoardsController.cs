@@ -115,7 +115,7 @@ namespace ChallengeBoard.Controllers
         [Authorize]
         public ActionResult Instructions(int id = 0)
         {
-            var existingBoard = _repository.GetBoardById(id);
+            var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
 
             if (existingBoard == null)
                 return View("BoardNotFound");

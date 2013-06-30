@@ -372,6 +372,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ChallengeBoard\validation.unobtrusive.js" />
+    <Content Include="Scripts\knockout-2.2.1.debug.js" />
+    <Content Include="Scripts\knockout-2.2.1.js" />
     <Content Include="Scripts\KnockoutModels\postModels.js" />
     <Content Include="Scripts\_retired_bootstrap-toggle.js" />
     <Content Include="Scripts\2.2.2.bootstrap.js" />

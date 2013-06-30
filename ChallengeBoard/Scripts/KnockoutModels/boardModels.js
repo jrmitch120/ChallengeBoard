@@ -63,11 +63,16 @@ function CompetitorStatusModel(boardId, competitosData) {
 /***************************************************************************************************************
 * DiscussionModel - A model for listing and creating posts
 ***************************************************************************************************************/
-function DiscussionModel(boardId, viewer, postData) {
+function DiscussionModel(boardId, viewer, postData, lastPage) {
     var self = this;
 
     self.boardId = boardId;
-
+    
+    // If we're on the last page, new posts will be tacked onto the "posts" collection.
+    // Otherwise they will be tacked onto the "newPosts" collection, which is visually 
+    // seperated from the main collection.
+    self.lastPage = lastPage;
+    
     self.newPost =
         new PostModel(
             {
@@ -81,7 +86,9 @@ function DiscussionModel(boardId, viewer, postData) {
             });
     
     self.viewer = new CompetitorModel(viewer);
+    
     self.posts = ko.observableArray();
+    self.newPosts = ko.observableArray();
 
     for (var index in postData) {
         self.posts.push(new PostModel(postData[index]));
@@ -103,7 +110,11 @@ function DiscussionModel(boardId, viewer, postData) {
                     alert(data.Message);
                 else {
                     self.newPost.body('');
-                    self.posts.push(new PostModel(data.Result));
+                    
+                    if(lastPage) // Last page?  Tack onto the existing posts.  Otherwise the "newPosts" collection
+                        self.posts.push(new PostModel(data.Result));
+                    else
+                        self.newPosts.push(new PostModel(data.Result));
                     
                     var aPost = $('#post-' + data.Result.PostId);
                     var aHeader = $('.navbar-fixed-top:first');
@@ -178,7 +189,8 @@ function DiscussionModel(boardId, viewer, postData) {
                     alert(data.Message);
                 else {
                     $('#post-' + post.postId()).slideUp('fast', function () {
-                        self.posts.remove(post);
+                        if (self.posts.remove(post).length == 0) 
+                            self.newPosts.remove(post);
                     });
                 }
             },
