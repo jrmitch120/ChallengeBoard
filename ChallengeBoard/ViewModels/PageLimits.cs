@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ChallengeBoard.ViewModels
+﻿namespace ChallengeBoard.ViewModels
 {
     public static class PageLimits
     {
         public const int Standings = 250;
+        public const int Discussion = 20;
     }
 }

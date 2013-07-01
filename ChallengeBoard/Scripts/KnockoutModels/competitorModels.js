@@ -6,6 +6,7 @@ function CompetitorModel(data) {
 
     self.statusOptions = ko.observable(data.Name + "<b class=\"caret\"></b>");
     self.name = data.Name;
+    self.competitorId = data.CompetitorId;
     self.joined = data.Joined;
     self.matchesPlayed = data.MatchesPlayed;
     self.rejectionsReceived = data.RejectionsReceived;

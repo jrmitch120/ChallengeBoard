@@ -98,6 +98,12 @@ namespace ChallengeBoard.Models
 
             return (result);
         }
+
+        // Post
+        public static bool IsOwner(this Post post, string name)
+        {
+            return (post.Owner.Profile.UserName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+        }
     }
 
     public class MatchResults

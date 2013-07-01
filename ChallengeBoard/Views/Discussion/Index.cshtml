@@ -1,0 +1,85 @@
+﻿@using ChallengeBoard.Infrastucture;
+@using PagedList.Mvc
+@model ChallengeBoard.ViewModels.DiscussionViewModel
+
+@{
+    ViewBag.Title = "Discussion";
+}
+@Html.Partial("_HeaderPartial", new PageHeader(Model.Board.Name, "Discussion"))
+@Html.Partial("_BoardNav", Model.Board)
+<div data-bind="template: { name: 'posts-template', foreach: posts }">
+</div>
+@if(Model.Posts.PageCount > 1) {
+    <div class="centered-text">
+        @Html.PagedListPager( Model.Posts, page => Url.Action(string.Empty, new { page }) )
+    </div>
+}
+<div data-bind="template: { name: 'posts-template', foreach: newPosts }">
+</div>
+<form class="form-horizontal">
+    <hr/>
+    <h2>New Post</h2>
+    <hr/>
+    <div class="span10 offset1">
+            @Html.TextArea("postEditor", null, new { data_bind="value:newPost.body", @class="postEditor" })
+            <br /><br />
+            <button id="post" data-bind="click: $root.createPost" class="btn btn-primary">Post it</button>
+    </div>
+</form>
+
+@{var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();}
+@section Scripts {
+    @Scripts.Render("~/bundles/components")
+    @Scripts.Render("~/bundles/knockout")
+    <script type="text/html" id="posts-template">
+        <div data-bind="attr: { id: 'post-' + postId() }">
+            <div class="pull-left span1 hidden-phone">
+                <img data-bind="attr: { src: gravatarLink(), alt: postedBy(), title: postedBy() }" class="radius2" />
+            </div>
+            <div class="pull-left span10 well postContainer">
+                <div class="arrow-well hidden-phone"></div>
+                <div class="postTitle">
+                    Posted by <a data-bind="text: postedBy, attr: { href: '../competitors/' + $root.boardId + '/profile/' + postedById() }"></a> on <span data-bind="    text: created"></span>    
+                    <span data-bind="attr:{ id: 'post-' + postId() + '-msg'}" class="postStatus pull-right"></span>
+                </div>  
+                <div data-bind="visible: !editing(), html: body" class="postDisplay"></div>
+                <div data-bind="if: postedById() == $root.viewer.competitorId, visible: editing()">
+                    <textarea data-bind="value: body, attr:{ id: 'editPost-' + postId() }" class="postEditor"></textarea>
+                </div>
+                <div data-bind="if: edited() != ''">
+                    <div class="postEdited">
+                        Edited: <span data-bind="text: edited()"></span>
+                    </div>
+                </div>
+                <div data-bind="if: postedById() == $root.viewer.competitorId">
+                    <div data-bind="visible: !editing()">&nbsp;
+                        <button data-bind="click: $root.editPost" class="btn btn-primary btn-mini pull-right">Edit</button>
+                    </div>
+                    <div data-bind="visible: editing()">
+                        <button data-bind="click: function () { deleteRequested(true) }, visible: !deleteRequested()" class="btn btn-primary btn-mini">Delete</button>
+                        <button data-bind="click: $root.deletePost, visible: deleteRequested()" class="btn btn-primary btn-mini">Confirm Delete</button>
+                        <button data-bind="click: function () { deleteRequested(false) }, visible: deleteRequested()" class="btn btn-primary btn-mini">Cancel Delete</button>
+                        <div class="pull-right">
+                            <button class="btn btn-primary btn-mini" data-bind="click: $root.savePost">Save</button>  
+                            <button class="btn btn-primary btn-mini" data-bind="click: $root.cancelPost">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            var discussionModel =
+                new window.DiscussionModel(
+                    @Model.Board.BoardId,
+                    @Html.Raw(serializer.Serialize(@Model.Viewer)),
+                    @Html.Raw(serializer.Serialize(Model.Posts)),
+                    @Model.Posts.IsLastPage.ToString().ToLower()
+                );
+
+            ko.applyBindings(discussionModel);
+        });
+    </script>
+}

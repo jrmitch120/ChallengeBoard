@@ -9,9 +9,12 @@ namespace ChallengeBoard.ViewModels
         [Display(Name = "Name")]
         public string Name { get; set; }
 
+        public int CompetitorId { get; set; }
+
         public CompetitorViewModel(Competitor competitor)
         {
             Name = competitor.Name;
+            CompetitorId = competitor.CompetitorId;
         }
     }
 }

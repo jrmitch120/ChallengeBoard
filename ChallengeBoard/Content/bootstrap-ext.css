@@ -190,6 +190,13 @@ textarea.editor {
     height: 500px;
 }
 
+textarea.postEditor {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height:200px;
+}
+
 /* Match Rporting */
 .matchComment {
     margin-bottom:15px;
@@ -216,6 +223,17 @@ textarea.editor {
      margin-right: auto;
 }
 
+.arrow-left {
+    position: absolute;
+    top: 10px;
+    left: -10px;
+	width: 0; 
+	height: 0; 
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent; 
+	border-right:10px solid #131517; 
+    
+}
 .arrow-up {
     position: relative;
     bottom: 12px;
@@ -236,6 +254,62 @@ textarea.editor {
 	border-top: 8px solid #0099cc;
 }
 
+.arrow-well:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: -20px;
+    width: 0;
+    height: 0;
+    border-color: transparent #131517 transparent transparent;
+    border-style: solid;
+    border-width: 10px;
+}
+
+.arrow-well:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 9px;
+    left: -23px;
+    width: 0;
+    height: 0;
+    border-color: transparent #030303 transparent transparent;
+    border-style: solid;
+    border-width: 11px;
+}
+
+.postContainer {
+    position: relative;
+}
+
+.postDisplay {
+    white-space: pre-wrap;
+}
+
+.postEdited {
+    border-left: 5px #0099cc solid;
+    margin: 10px 0 10px 0;
+    padding: 0 0 0 5px;
+    font-size: 12px;
+    line-height: 12px;
+    color: #fff;
+}
+
+.postStatus {
+    display: none;
+    color: #33B5E5;
+    text-transform: uppercase;
+    /*font-weight: bold;*/
+}
+
+.postTitle {
+    color: #ecedee;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #222222;
+}
+
 .progress .bar {
     -webkit-transition: none;
     -moz-transition: none;
@@ -243,6 +317,11 @@ textarea.editor {
     transition: none;
 }
 
+.radius2 {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
 .hide-overflow {
     overflow: hidden;
 }

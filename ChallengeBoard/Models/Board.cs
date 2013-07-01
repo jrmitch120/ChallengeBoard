@@ -15,6 +15,7 @@ namespace ChallengeBoard.Models
 
         public ICollection<Competitor> Competitors { get; set; }
         public ICollection<Match> Matches { get; set; }
+        public ICollection<Post> Posts { get; set; }
 
         [Required]
         [MaxLength(45)]

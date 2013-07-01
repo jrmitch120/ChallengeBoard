@@ -8,6 +8,7 @@ namespace ChallengeBoard.Models
         private readonly ICollection<Board> _boards;
         private readonly ICollection<Competitor> _competitors;
         private readonly ICollection<Match> _matches;
+        private readonly ICollection<Post> _posts;
         private readonly ICollection<UserProfile> _profiles;
 
         public InMemoryRepository()
@@ -15,6 +16,7 @@ namespace ChallengeBoard.Models
             _boards = new List<Board>();
             _competitors = new List<Competitor>();
             _matches = new List<Match>();
+            _posts = new List<Post>();
             _profiles = new List<UserProfile>();
         }
 
@@ -31,6 +33,11 @@ namespace ChallengeBoard.Models
         public IQueryable<Match> Matches
         {
             get { return (_matches.AsQueryable()); }
+        }
+
+        public IQueryable<Post> Posts
+        {
+            get { return (_posts.AsQueryable()); }
         }
 
         public IQueryable<UserProfile> UserProfiles
@@ -54,6 +61,11 @@ namespace ChallengeBoard.Models
             _matches.Add(match);
         }
 
+        public void Add(Post post)
+        {
+            _posts.Add(post);
+        }
+
         public void Add(UserProfile profile)
         {
             _profiles.Add(profile);
@@ -72,6 +84,11 @@ namespace ChallengeBoard.Models
         public void Delete(Match match)
         {
             _matches.Remove(match);
+        }
+
+        public void Delete(Post post)
+        {
+            _posts.Remove(post);
         }
 
         public void Dispose()
@@ -105,11 +122,23 @@ namespace ChallengeBoard.Models
                         x => x.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase)));
         }
 
-        public Competitor GetCompetitorById(int boardId, int competitorId)
+        public Competitor GetCompetitorById(int id)
         {
-            return
-                (GetBoardByIdWithCompetitors(boardId)
-                    .Competitors.FirstOrDefault(x => x.CompetitorId.Equals(competitorId)));
+            return (Competitors.FirstOrDefault(x => x.CompetitorId.Equals(id)));
+        }
+
+        public Competitor GetCompetitorByUserName(int boardId, string userName)
+        {
+            var profile =
+                UserProfiles.FirstOrDefault(
+                    x => x.UserName.Equals(userName, System.StringComparison.InvariantCultureIgnoreCase));
+
+            return(Competitors.FirstOrDefault(x=> profile != null && x.ProfileUserId.Equals(profile.UserId)));
+        }
+
+        public Post GetPostById(int postId)
+        {
+            return (Posts.FirstOrDefault(p=> postId == p.PostId));
         }
 
         public IQueryable<Match> GetResolvedMatchesByBoardId(int id, bool includeProfiles = true)

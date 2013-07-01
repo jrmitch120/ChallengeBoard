@@ -29,6 +29,11 @@ namespace ChallengeBoard.Models
             get { return (Db.Matches.Include(c => c.Winner).Include(c => c.Loser)); }
         }
 
+        public IQueryable<Post> Posts
+        {
+            get { return (Db.Posts.Include(c => c.Owner.Profile)); }
+        }
+
         public IQueryable<UserProfile> UserProfiles
         {
             get { return (Db.UserProfiles); }
@@ -50,6 +55,11 @@ namespace ChallengeBoard.Models
             Db.Matches.Add(match);
         }
 
+        public void Add(Post post)
+        {
+            Db.Posts.Add(post);
+        }
+
         public void Add(UserProfile profile)
         {
             Db.UserProfiles.Add(profile);
@@ -68,6 +78,11 @@ namespace ChallengeBoard.Models
         public void Delete(Match match)
         {
             Db.Matches.Remove(match);
+        }
+
+        public void Delete(Post post)
+        {
+            Db.Posts.Remove(post);
         }
 
         public void Dispose()
@@ -104,11 +119,25 @@ namespace ChallengeBoard.Models
                         x => x.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase)));
         }
 
-        public Competitor GetCompetitorById(int boardId, int competitorId)
+        public Competitor GetCompetitorById(int id)
         {
+            return(Competitors.FirstOrDefault(x => x.CompetitorId.Equals(id)));
+        }
+
+        public Competitor GetCompetitorByUserName(int boardId, string userName)
+        {
+            var profile =
+                UserProfiles.FirstOrDefault(
+                    x => x.UserName.Equals(userName, System.StringComparison.InvariantCultureIgnoreCase));
+
             return
                 (GetBoardByIdWithCompetitors(boardId)
-                    .Competitors.FirstOrDefault(x => x.CompetitorId.Equals(competitorId)));
+                    .Competitors.FirstOrDefault(x => profile != null && x.ProfileUserId.Equals(profile.UserId)));
+        }
+
+        public Post GetPostById(int postId)
+        {
+            return (Posts.FirstOrDefault(p => p.PostId == postId));
         }
 
         public IQueryable<Match> GetResolvedMatchesByBoardId(int boardId, bool includeProfiles = true)

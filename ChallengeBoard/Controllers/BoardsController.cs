@@ -186,12 +186,14 @@ namespace ChallengeBoard.Controllers
         public ActionResult Edit(int id = 0)
         {
             var board = _repository.GetBoardByIdWithCompetitors(id);
-
+            
             if (board == null)
                 return View("BoardNotFound");
 
             if (!board.IsOwner(User.Identity.Name))
                 return View("InvalidOwner", board);
+
+            board.Competitors.ToList().ForEach(c => c.Profile.EmailAddress = string.Empty);
 
             return View(board);
         }
