@@ -387,7 +387,6 @@
     <Content Include="Email\Templates\PasswordRecovery.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Properties\PublishProfiles\SmarterAsp.net.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\ChallengeBoard\ignitors.js" />
     <Content Include="Scripts\jquery.tablesorter.sorters.js" />

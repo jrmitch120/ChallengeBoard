@@ -13,7 +13,11 @@ namespace ChallengeBoard.ViewModels
         public DiscussionViewModel(Board board, IPagedList<PostViewModel> posts, Competitor viewer)
         {
             Board = board;
-            Viewer = new CompetitorViewModel(viewer);
+
+            Viewer = viewer != null && viewer.Status == CompetitorStatus.Active
+                         ? new CompetitorViewModel(viewer)
+                         : new CompetitorViewModel();
+
             Posts = posts;
         }
     }

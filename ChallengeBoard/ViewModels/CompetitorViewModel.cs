@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using ChallengeBoard.Models;
 
 namespace ChallengeBoard.ViewModels
@@ -10,6 +9,8 @@ namespace ChallengeBoard.ViewModels
         public string Name { get; set; }
 
         public int CompetitorId { get; set; }
+
+        public CompetitorViewModel() {}
 
         public CompetitorViewModel(Competitor competitor)
         {

@@ -301,9 +301,9 @@ namespace ChallengeBoard.Controllers
         [Authorize]
         public ActionResult RetireConfirmed(int id)
         {
-            var existingBoard = _repository.GetBoardByIdWithCompetitors(id);
+            var existingBoard = _repository.GetBoardById(id);
 
-            var competitor = existingBoard.Competitors.Active().FirstOrDefault(x => x.Name == User.Identity.Name);
+            var competitor = _repository.GetCompetitorByUserName(id, User.Identity.Name);
 
             if (competitor == null)
                 return RedirectToAction("Index");
