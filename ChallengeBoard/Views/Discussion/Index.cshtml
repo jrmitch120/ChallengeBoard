@@ -7,15 +7,21 @@
 }
 @Html.Partial("_HeaderPartial", new PageHeader(Model.Board.Name, "Discussion"))
 @Html.Partial("_BoardNav", Model.Board)
-<div data-bind="template: { name: 'posts-template', foreach: posts }">
-</div>
+
+@if (Model.Viewer.CompetitorId == 0)
+{
+    <div class="well">You need to be part of this challenge board to participate in discussion.</div>
+    return;
+}
+
+<div data-bind="template: { name: 'posts-template', foreach: posts }"></div>
 @if(Model.Posts.PageCount > 1) {
     <div class="centered-text">
         @Html.PagedListPager( Model.Posts, page => Url.Action(string.Empty, new { page }) )
     </div>
 }
-<div data-bind="template: { name: 'posts-template', foreach: newPosts }">
-</div>
+
+<div data-bind="template: { name: 'posts-template', foreach: newPosts }"></div>
 <form class="form-horizontal">
     <hr/>
     <h2>New Post</h2>
