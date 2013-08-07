@@ -80,7 +80,7 @@
             var discussionModel =
                 new window.DiscussionModel(
                     @Model.Board.BoardId,
-                    @Html.Raw(serializer.Serialize(@Model.Viewer)),
+                    @Html.Raw(serializer.Serialize(Model.Viewer)),
                     @Html.Raw(serializer.Serialize(Model.Posts)),
                     @Model.Posts.IsLastPage.ToString().ToLower()
                 );

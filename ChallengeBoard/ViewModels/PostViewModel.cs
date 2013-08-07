@@ -27,7 +27,7 @@ namespace ChallengeBoard.ViewModels
             OwnerId = post.Owner.CompetitorId;
             OwnerName = post.Owner.Name;
             GravatarLink = g.GetImageSource(post.Owner.Profile.EmailAddress);
-            Body = HtmlSanitizer.Sanitizer(post.Body, new Regex("^(br|a)$"), HtmlSanitizer.ForbiddenTags).Html;
+            Body = HtmlSanitizer.Sanitizer(post.Body, new Regex("^(br|a)$"), HtmlSanitizer.ForbiddenTags).Val;
             Created = String.Format("{0:g}", post.Created);
             Edited = String.Format("{0:g}", post.Edited);
         }
