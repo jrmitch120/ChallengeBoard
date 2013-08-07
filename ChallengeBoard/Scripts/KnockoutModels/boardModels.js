@@ -140,7 +140,7 @@ function DiscussionModel(boardId, viewer, postData, lastPage) {
     
     self.editPost = function (post) {
         post.originalBody(post.body());
-        post.setLinebreakBody();
+        post.setEditBody();
         post.editing(true);
         $('#editPost-' + post.postId()).focus();
         /* Half ass way to get the cursor to the end of the textarea.  
@@ -154,8 +154,8 @@ function DiscussionModel(boardId, viewer, postData, lastPage) {
     };
     
     self.savePost = function (post) {
-        post.setHtmlBody();
         post.editing(false);
+        post.setHtmlBody();
         
         $.ajax({
             type: 'POST',

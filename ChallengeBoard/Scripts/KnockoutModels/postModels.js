@@ -9,7 +9,9 @@ function PostModel(data) {
     self.postedBy = ko.observable(data.OwnerName),
     self.postedById = ko.observable(data.OwnerId),
     self.gravatarLink = ko.observable(data.GravatarLink),
+
     self.body = ko.observable(data.Body),
+    
     self.created = ko.observable(data.Created),
     self.edited = ko.observable(data.Edited);
     
@@ -17,12 +19,19 @@ function PostModel(data) {
     self.deleteRequested = ko.observable(false);
     
     self.originalBody = ko.observable();
-
-    self.setLinebreakBody = function() {
+    
+    // Switch to edit mode.  Replace <br> and <a>
+    self.setEditBody = function() {
         self.body(self.body().replace(/<br\s*[\/]?>/gi, '\n'));
+        self.body(self.body().replace(/<a[^>]*>(.*?)<\/a>/ig, '$1'));
     };
 
-    self.setHtmlBody = function() {
+    // Switch to HTML mode.  Replace line breaks and hotlink URLS
+    self.setHtmlBody = function () {
+        // Remove all tags.  More of a user interface nicety than a requirement.
+        self.body(self.body().replace(/<([A-Z][A-Z0-9]*)[^>]*>(.*?)<\/\1>/ig, "$2"));
+        
         self.body(self.body().replace(/\n/g, '<br />'));
-    };
+        self.body(self.body().replace(/\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]/ig, '<a href="$&" target="_blank">$&</a>'));
+    };   
 };
