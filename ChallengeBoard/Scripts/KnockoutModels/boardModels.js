@@ -142,7 +142,11 @@ function DiscussionModel(boardId, viewer, postData, lastPage) {
         post.originalBody(post.body());
         post.setEditBody();
         post.editing(true);
-        $('#editPost-' + post.postId()).focus();
+
+        var postEditor = $('#editPost-' + post.postId());
+
+        postEditor.trigger('autosize.resize');
+        postEditor.focus();
         /* Half ass way to get the cursor to the end of the textarea.  
             var val = post.body();
             post.body('');
