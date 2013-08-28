@@ -21,14 +21,15 @@ namespace ChallengeBoard.Controllers
 
         //
         // GET: /Discussion/
-        public ActionResult Index(int boardId, int ?page)
+        public ActionResult Index(int boardId, int? page)
         {
             var board = _repository.GetBoardById(boardId);
             var viewer = _repository.GetCompetitorByUserName(boardId, User.Identity.Name);
+            var featured = true;
 
             if (board == null)
                 return View("BoardNotFound");
-            
+
             if (!page.HasValue)
             {
                 var postCount = _repository.Posts.Count(p => p.Board.BoardId == boardId);
@@ -37,16 +38,23 @@ namespace ChallengeBoard.Controllers
                     page = 1;
                 else
                 {
-                    page = postCount/PageLimits.Discussion;
-                    if (postCount%PageLimits.Discussion != 0)
+                    page = postCount / PageLimits.Discussion;
+                    if (postCount % PageLimits.Discussion != 0)
                         page++;
                 }
             }
+            else
+                featured = false;
 
             var pagedPosts = _repository.Posts.Where(p => p.Board.BoardId == boardId)
-                                       .OrderBy(p => p.Created).ToPagedList(page.Value, PageLimits.Discussion);
+                                        .OrderBy(p => p.Created)
+                                        .ToPagedList(page.Value, PageLimits.Discussion);
 
-            return View(new DiscussionViewModel(board, pagedPosts.MapToViewModel(p => new PostViewModel(p)), viewer));
+            var focusPostId = featured ? pagedPosts.Max(p => p.PostId) : -1;
+
+            return
+                View(new DiscussionViewModel(board, pagedPosts.MapToViewModel(p => new PostViewModel(p)), focusPostId,
+                                             viewer));
         }
 
         [HttpPost]

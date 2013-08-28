@@ -304,6 +304,12 @@ textarea.postEditor {
     /*font-weight: bold;*/
 }
 
+.postTag {
+    padding-top: 62px; 
+    margin-top: -62px; 
+    display:table-caption;
+}
+
 .postTitle {
     color: #ecedee;
     margin-bottom: 10px;

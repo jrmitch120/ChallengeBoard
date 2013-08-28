@@ -116,10 +116,7 @@ function DiscussionModel(boardId, viewer, postData, lastPage) {
                     else
                         self.newPosts.push(new PostModel(data.Result));
                     
-                    var aPost = $('#post-' + data.Result.PostId);
-                    var aHeader = $('.navbar-fixed-top:first');
-
-                    $('html,body').animate({ scrollTop: aPost.offset().top - aHeader.height() }, 'slow');
+                    self.scrollToPost(data.Result.PostId, 'slow');
                 }
             },
             error: function () {
@@ -210,5 +207,12 @@ function DiscussionModel(boardId, viewer, postData, lastPage) {
 
     self.flashMessage = function (element, message) {
         element.html(message).fadeIn('fast').delay(500).fadeOut('fast');
+    };
+
+    self.scrollToPost = function(postId, speed) {
+        var aPost = $('#post-' + postId);
+        var aHeader = $('.navbar-fixed-top:first');
+
+        $('html,body').animate({ scrollTop: aPost.offset().top - aHeader.height() - 10 }, speed);
     };
 }
