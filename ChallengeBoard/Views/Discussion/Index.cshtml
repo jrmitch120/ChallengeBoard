@@ -38,6 +38,7 @@
     @Scripts.Render("~/bundles/components")
     @Scripts.Render("~/bundles/knockout")
     <script type="text/html" id="posts-template">
+        <a data-bind="attr: { id: postId()}" class="postTag"></a>
         <div data-bind="attr: { id: 'post-' + postId() }">
             <div class="pull-left span1 hidden-phone">
                 <img data-bind="attr: { src: gravatarLink(), alt: postedBy(), title: postedBy() }" class="radius2" />
@@ -87,7 +88,12 @@
 
             ko.applyBindings(discussionModel);
 
-            $('textarea').autosize();   
+            var focusPostId = '@Model.FocusPostId';
+            
+            if (focusPostId >= 0 && location.hash == '')
+                location.hash = '#' + focusPostId;
+
+            $('textarea').autosize();
         });
     </script>
 }

@@ -411,7 +411,7 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
-    <Content Include="Scripts\KnockoutModels\BindingHandlers.js" />
+    <Content Include="Scripts\KnockoutModels\bindingHandlers.js" />
     <Content Include="Scripts\KnockoutModels\boardModels.js" />
     <Content Include="Scripts\KnockoutModels\competitorModels.js" />
     <Content Include="Scripts\KnockoutModels\matchModels.js" />
