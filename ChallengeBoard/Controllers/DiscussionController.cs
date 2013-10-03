@@ -50,7 +50,7 @@ namespace ChallengeBoard.Controllers
                                         .OrderBy(p => p.Created)
                                         .ToPagedList(page.Value, PageLimits.Discussion);
 
-            var focusPostId = featured ? pagedPosts.Max(p => p.PostId) : -1;
+            var focusPostId = featured && pagedPosts.Any() ? pagedPosts.Max(p => p.PostId) : -1;
 
             return
                 View(new DiscussionViewModel(board, pagedPosts.MapToViewModel(p => new PostViewModel(p)), focusPostId,
