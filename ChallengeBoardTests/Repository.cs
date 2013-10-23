@@ -13,6 +13,7 @@ namespace ChallengeBoardTests
             {
                 UserId = 0,
                 UserName = "Board Owner"
+                
             };
 
             var competitorProfile1 = new UserProfile
@@ -33,6 +34,7 @@ namespace ChallengeBoardTests
                 ProfileUserId = 0,
                 Profile = competitorOwnerProfile,
                 Rating = 1500,
+                LastViewedPostId = 0
             };
 
             var competitor1 = new Competitor
@@ -41,6 +43,7 @@ namespace ChallengeBoardTests
                 ProfileUserId = 1,
                 Profile = competitorProfile1,
                 Rating = 1500,
+                LastViewedPostId = 0
             };
 
             var competitor2 = new Competitor
@@ -134,6 +137,30 @@ namespace ChallengeBoardTests
                 Rejected = true
             };
 
+            var post1 = new Post
+            {
+                Board = board,
+                Created = DateTime.Now,
+                Owner = competitor1,
+                PostId = 1
+            };
+
+            var post2 = new Post
+            {
+                Board = board,
+                Created = DateTime.Now,
+                Owner = competitor2,
+                PostId = 2
+            };
+
+            var post3 = new Post
+            {
+                Board = board,
+                Created = DateTime.Now,
+                Owner = competitor2,
+                PostId = 3
+            };
+
             board.Matches = new[] { match1, match2, match3 };
 
             // Boards
@@ -155,6 +182,11 @@ namespace ChallengeBoardTests
             repository.Add(match3);
             repository.Add(match4);
             repository.Add(match5);
+
+            // Posts
+            repository.Add(post1);
+            repository.Add(post2);
+            repository.Add(post3);
 
             return (repository);
         }

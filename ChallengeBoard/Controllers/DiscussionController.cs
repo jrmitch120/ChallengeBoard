@@ -33,24 +33,31 @@ namespace ChallengeBoard.Controllers
             if (!page.HasValue)
             {
                 var postCount = _repository.Posts.Count(p => p.Board.BoardId == boardId);
+                var unreadCount = _repository.Posts.Count(p => p.Board.BoardId == boardId && p.PostId > viewer.LastViewedPostId);
+                var readCount = postCount - unreadCount;
 
-                if (postCount == 0)
-                    page = 1;
-                else
-                {
-                    page = postCount / PageLimits.Discussion;
-                    if (postCount % PageLimits.Discussion != 0)
-                        page++;
-                }
+                page = readCount == 0 ? 1 : 1 + (readCount/PageLimits.Discussion);
             }
             else
                 featured = false;
 
+            // Get our paged posts
             var pagedPosts = _repository.Posts.Where(p => p.Board.BoardId == boardId)
                                         .OrderBy(p => p.Created)
                                         .ToPagedList(page.Value, PageLimits.Discussion);
+            
+            // Set our focus post id
+            var focusPostId = featured && pagedPosts.Any()
+                                  ? pagedPosts.Where(p => p.PostId > viewer.LastViewedPostId).Min(p => (int?)p.PostId) ??
+                                    viewer.LastViewedPostId
+                                  : -1;
 
-            var focusPostId = featured && pagedPosts.Any() ? pagedPosts.Max(p => p.PostId) : -1;
+            // Update our last viewed post if it's more recent than what's being viewed
+            if (pagedPosts.Any() && viewer.LastViewedPostId < pagedPosts.Max(p => p.PostId))
+            {
+                viewer.LastViewedPostId = pagedPosts.Max(p => p.PostId);
+                _repository.CommitChanges();
+            }
 
             return
                 View(new DiscussionViewModel(board, pagedPosts.MapToViewModel(p => new PostViewModel(p)), focusPostId,
@@ -72,6 +79,9 @@ namespace ChallengeBoard.Controllers
                 newPost.Body = post.Body;
 
                 _repository.Add(newPost);
+                _repository.CommitChanges();
+
+                newPost.Owner.LastViewedPostId = newPost.PostId;
                 _repository.CommitChanges();
 
                 response.Result = new PostViewModel(newPost);

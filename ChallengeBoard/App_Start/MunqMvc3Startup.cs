@@ -1,6 +1,7 @@
 using System.Configuration;
 using System.Web.Mvc;
 using ChallengeBoard.Email;
+using ChallengeBoard.Infrastucture;
 using ChallengeBoard.Models;
 using ChallengeBoard.Services;
 using Munq.MVC3;
@@ -16,7 +17,7 @@ namespace ChallengeBoard.App_Start {
 			var ioc = MunqDependencyResolver.Container;
 
             //ioc.UsesDefaultLifetimeManagerOf(new Munq.LifetimeManagers.RequestLifetime());
-            // Munq.Configuration.ConfigurationLoader.FindAndRegisterDependencies(ioc); // Optional
+            //Munq.Configuration.ConfigurationLoader.FindAndRegisterDependencies(ioc); // Optional
 			// ioc.Register<IMyRepository, MyRepository>();
 			// ...
 

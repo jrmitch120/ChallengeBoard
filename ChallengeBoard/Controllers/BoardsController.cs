@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
@@ -10,13 +11,38 @@ using ChallengeBoard.ViewModels;
 
 namespace ChallengeBoard.Controllers
 {
+    [MetaRequest("id")]
     public class BoardsController : Controller
     {
         private readonly IRepository _repository;
         private readonly IBoardService _boardService;
 
+        
+//        public class MunqActionInvoker : ControllerActionInvoker
+//        {
+            
+
+//            public MunqActionInvoker()
+//            {
+                
+                
+//            }
+
+//            protected override FilterInfo GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
+//            {
+//                var info = base.GetFilters(controllerContext, actionDescriptor);
+
+////                foreach (var filter in info.ActionFilters)
+////                    Munq.MVC3.MunqDependencyResolver.Container.
+
+//                return info;
+//            }
+//        }
+
         public BoardsController(IRepository repository, IBoardService boardService)
         {
+           //this.ActionInvoker = new MunqActionInvoker();
+
             _repository = repository;
             _boardService = boardService;
         }

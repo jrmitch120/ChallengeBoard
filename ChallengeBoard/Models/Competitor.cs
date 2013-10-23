@@ -17,6 +17,8 @@ namespace ChallengeBoard.Models
         public UserProfile Profile { get; set; }
         public int ProfileUserId { get; set; }
 
+        public int LastViewedPostId { get; set; }
+
         // TODO: Allow them to customize this on a board by board basis
         [Display(Name = "Name")]
         public string Name { get; set; }

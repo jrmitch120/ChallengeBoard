@@ -1,20 +1,27 @@
 ﻿@model Board
 @using ChallengeBoard.Infrastucture
 @using ChallengeBoard.Models
-<!-- <ul id="matchNav" data-spy="affix" data-offset-top="100" class="nav nav-pills embedded"> -->
+
 @{
     var competitor = Model.Competitors.Active().FindCompetitorByUserName(User.Identity.Name);
     var alreadyJoined = competitor != null;
-    
 }
 <div class="embedded">
     <div class="pull-left">
         <ul class="nav nav-pills">
             @Html.MenuLink("Standings", "Standings", "Boards", new { id = Model.BoardId }, null)
             @Html.MenuLink("Information", "Details", "Boards", new { id = Model.BoardId }, null)
-            @Html.MenuLink("Discussion", "Index", "Discussion", new { boardId = Model.BoardId }, null)
             @Html.MenuLink("Match Activity", "List", "Matches", new { boardId = Model.BoardId }, null)
             @Html.MenuLink("Report a Match", "Create", "Matches", new { boardId = Model.BoardId }, null)
+            <li @(ViewContext.RouteData.Values["controller"].ToString().ToLower() == "discussion" ? "class=active" : "")>
+                <a href="@Url.Action("Index","Discussion",new { boardId = Model.BoardId })">
+                    Discussion
+                    @if (SessionManager.Current.DiscussionMeta != null && SessionManager.Current.DiscussionMeta.NewPosts)
+                    {
+                        <sup>(<strong>@SessionManager.Current.DiscussionMeta.NumberOfNewPosts</strong>)</sup>
+                    }
+                </a>
+            </li>
         </ul>
     </div>
     <div class="pull-right">
