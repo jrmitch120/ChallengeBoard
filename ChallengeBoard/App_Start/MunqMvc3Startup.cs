@@ -1,7 +1,6 @@
 using System.Configuration;
 using System.Web.Mvc;
 using ChallengeBoard.Email;
-using ChallengeBoard.Infrastucture;
 using ChallengeBoard.Models;
 using ChallengeBoard.Services;
 using Munq.MVC3;

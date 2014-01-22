@@ -17,32 +17,8 @@ namespace ChallengeBoard.Controllers
         private readonly IRepository _repository;
         private readonly IBoardService _boardService;
 
-        
-//        public class MunqActionInvoker : ControllerActionInvoker
-//        {
-            
-
-//            public MunqActionInvoker()
-//            {
-                
-                
-//            }
-
-//            protected override FilterInfo GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
-//            {
-//                var info = base.GetFilters(controllerContext, actionDescriptor);
-
-////                foreach (var filter in info.ActionFilters)
-////                    Munq.MVC3.MunqDependencyResolver.Container.
-
-//                return info;
-//            }
-//        }
-
         public BoardsController(IRepository repository, IBoardService boardService)
         {
-           //this.ActionInvoker = new MunqActionInvoker();
-
             _repository = repository;
             _boardService = boardService;
         }

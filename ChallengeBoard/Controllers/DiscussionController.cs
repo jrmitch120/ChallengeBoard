@@ -25,29 +25,34 @@ namespace ChallengeBoard.Controllers
         {
             var board = _repository.GetBoardById(boardId);
             var viewer = _repository.GetCompetitorByUserName(boardId, User.Identity.Name);
-            var featured = true;
+
+            var jumpToLastRead = true;
 
             if (board == null)
                 return View("BoardNotFound");
 
+            if(viewer == null)
+                return View(new DiscussionViewModel(board, null, 0, null));
+
             if (!page.HasValue)
             {
                 var postCount = _repository.Posts.Count(p => p.Board.BoardId == boardId);
-                var unreadCount = _repository.Posts.Count(p => p.Board.BoardId == boardId && p.PostId > viewer.LastViewedPostId);
+                var unreadCount =
+                    _repository.Posts.Count(p => p.Board.BoardId == boardId && p.PostId > viewer.LastViewedPostId);
                 var readCount = postCount - unreadCount;
 
                 page = readCount == 0 ? 1 : 1 + (readCount/PageLimits.Discussion);
             }
             else
-                featured = false;
-
+                jumpToLastRead = false;
+            
             // Get our paged posts
             var pagedPosts = _repository.Posts.Where(p => p.Board.BoardId == boardId)
                                         .OrderBy(p => p.Created)
                                         .ToPagedList(page.Value, PageLimits.Discussion);
             
             // Set our focus post id
-            var focusPostId = featured && pagedPosts.Any()
+            var focusPostId = jumpToLastRead && pagedPosts.Any()
                                   ? pagedPosts.Where(p => p.PostId > viewer.LastViewedPostId).Min(p => (int?)p.PostId) ??
                                     viewer.LastViewedPostId
                                   : -1;
