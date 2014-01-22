@@ -10,9 +10,9 @@ Requirements
 
 - ASP.NET 4.5
 - .NET 4.0
-- SQL Server (you optionally can swap in a different provider)
+- SQL Server 
 
-At this time, I don't believe that mono supports the asyc pipeline that ASP.NET 4.5 requires.
+- Recaptcha keys: http://www.google.com/recaptcha.  Recently I've needed to add protection against spammers, so Polite Recatpcha is now being used.  You can develop on localhost, but moving to production will require a set of keys.
 
 Other Info
 ==========
