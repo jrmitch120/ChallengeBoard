@@ -9,6 +9,7 @@ using ChallengeBoard.Email;
 using ChallengeBoard.Services;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
+using PoliteCaptcha;
 using WebMatrix.WebData;
 using ChallengeBoard.Filters;
 using ChallengeBoard.Email.Models;
@@ -86,6 +87,7 @@ namespace ChallengeBoard.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ValidateSpamPrevention]
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)

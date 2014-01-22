@@ -8,7 +8,15 @@
         <ul>
             @foreach (var modelError in Model.SelectMany(keyValuePair => keyValuePair.Value.Errors))
             {
-                <li>@modelError.ErrorMessage</li>
+                if (modelError.ErrorMessage != string.Empty)
+                {
+                    <li>@modelError.ErrorMessage</li>
+                }
+            }
+
+            @if (Model.ContainsKey("PoliteCaptcha") && Model["PoliteCaptcha"].Errors.Count > 0)
+            {
+                <li>You must pass a captcha check.</li>
             }
         </ul>
     </div>

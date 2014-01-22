@@ -1,4 +1,5 @@
-﻿@model ChallengeBoard.Models.RegisterModel
+﻿@using PoliteCaptcha
+@model ChallengeBoard.Models.RegisterModel
 @{
     ViewBag.Title = "Register";
 }
@@ -14,32 +15,35 @@
                 <fieldset>
                     <legend>Create a site account</legend>
                     <div class="control-group">
-                        @Html.LabelFor(m => m.UserName)
+                        @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
                         <div class="controls">
                             @Html.TextBoxFor(m => m.UserName)
                             @Html.ValidationMessageFor(m => m.UserName)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(m => m.EmailAddress)
+                        @Html.LabelFor(m => m.EmailAddress, new { @class = "control-label" })
                         <div class="controls">
                             @Html.TextBoxFor(m => m.EmailAddress)
                             @Html.ValidationMessageFor(m => m.EmailAddress)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(m => m.Password)
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
                         <div class="controls">
                             @Html.PasswordFor(m => m.Password)
                             @Html.ValidationMessageFor(m => m.Password)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(m => m.ConfirmPassword)
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
                         <div class="controls">
                             @Html.PasswordFor(m => m.ConfirmPassword)
                             @Html.ValidationMessageFor(m => m.ConfirmPassword)
                         </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.SpamPreventionFields()
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Register</button>
@@ -56,4 +60,5 @@
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Html.SpamPreventionScript()
 }

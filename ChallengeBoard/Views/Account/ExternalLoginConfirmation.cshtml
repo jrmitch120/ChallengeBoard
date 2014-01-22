@@ -3,39 +3,44 @@
     ViewBag.Title = "Register";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Associate your @ViewBag.ProviderDisplayName account.</h2>
-</hgroup>
+@Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader("Associate your " + @ViewBag.ProviderDisplayName + " account."))
+    
+<div class="span12">
+    <div class="well">
+        @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Partial("_ValidationSummary", ViewData.ModelState)
 
-@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
-    @Html.Partial("_ValidationSummary", ViewData.ModelState)
+            <fieldset>
+                <p>
+                    You've successfully authenticated with <strong>@ViewBag.ProviderDisplayName</strong>.
+                    Please enter a user name for this site below and click the Confirm button to finish
+                    logging in.
+                </p>
+                <div class="control-group">
+                    @Html.LabelFor(m => m.UserName)
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(m => m.Email)
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Email)
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.ExternalLoginData)
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
 
-    <fieldset>
-        <legend>Association Form</legend>
-        <p>
-            You've successfully authenticated with <strong>@ViewBag.ProviderDisplayName</strong>.
-            Please enter a user name for this site below and click the Confirm button to finish
-            logging in.
-        </p>
-        <ol>
-            <li class="name">
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li class="name">
-                @Html.LabelFor(m => m.Email)
-                @Html.TextBoxFor(m => m.Email)
-                @Html.ValidationMessageFor(m => m.Email)
-            </li>
-        </ol>
-        @Html.HiddenFor(m => m.ExternalLoginData)
-        <button type="submit">Register</button>
-    </fieldset>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
