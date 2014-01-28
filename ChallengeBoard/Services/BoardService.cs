@@ -1,8 +1,4 @@
-using System;
 using System.Linq;
-using ChallengeBoard.Email;
-using ChallengeBoard.Infrastucture;
-using ChallengeBoard.Scoring;
 using ChallengeBoard.Models;
 
 namespace ChallengeBoard.Services

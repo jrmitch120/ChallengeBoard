@@ -11,7 +11,7 @@ using ChallengeBoard.ViewModels;
 
 namespace ChallengeBoard.Controllers
 {
-    [MetaRequest("id")]
+    //[MetaRequest("id")] Somethins is screwed up with the context here.  Getting stale data.
     public class BoardsController : Controller
     {
         private readonly IRepository _repository;

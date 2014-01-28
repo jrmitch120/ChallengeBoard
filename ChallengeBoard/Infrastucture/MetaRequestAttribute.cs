@@ -26,6 +26,8 @@ namespace ChallengeBoard.Infrastucture
                 var id = (int)filterContext.ActionParameters[_boardIdParameter];
                 SessionManager.Current.DiscussionMeta = _boardService.GetDiscussionMeta(id, HttpContext.Current.User.Identity.Name);
             }
+
+            base.OnActionExecuting(filterContext);
         }
     }
 }
