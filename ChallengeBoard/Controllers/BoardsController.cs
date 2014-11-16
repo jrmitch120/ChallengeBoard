@@ -48,10 +48,10 @@ namespace ChallengeBoard.Controllers
                              ? _repository.GetBoardsForCompetitor(User.Identity.Name)
                              : _repository.Boards.Where(x => x.End > DateTime.Now);
 
-            boards =
-                boards.Where(x => x.Name.ToLower().Contains(search.ToLower().Trim()))
-                      .OrderByDescending(x => x.End)
-                      .Take(100);
+            // If no search query is provided, select all
+            if(String.IsNullOrWhiteSpace(search) == false)
+                boards = boards.Where(x => x.Name.ToLower().Contains(search.ToLower().Trim()));
+            boards = boards.OrderByDescending(x => x.End).Take(100);
 
             return (Json(new BoardListViewModel(boards), JsonRequestBehavior.AllowGet));
         }
