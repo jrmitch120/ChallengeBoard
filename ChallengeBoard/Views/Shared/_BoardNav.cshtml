@@ -10,6 +10,7 @@
     <div class="pull-left">
         <ul class="nav nav-pills">
             @Html.MenuLink("Standings", "Standings", "Boards", new { id = Model.BoardId }, null)
+            @Html.MenuLink("Provisional Standings", "ProvisionalStandings", "Boards", new { id = Model.BoardId }, null)
             @Html.MenuLink("Information", "Details", "Boards", new { id = Model.BoardId }, null)
             @Html.MenuLink("Match Activity", "List", "Matches", new { boardId = Model.BoardId }, null)
             @Html.MenuLink("Report a Match", "Create", "Matches", new { boardId = Model.BoardId }, null)
