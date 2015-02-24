@@ -56,7 +56,7 @@
 </table>
 @if(Model.Standings.PageCount > 1) {
     <div class="centered-text">
-        @Html.PagedListPager( Model.Standings, page => Url.Action("Standings", new { page }) )
+        @Html.PagedListPager( Model.Standings, page => Url.Action("Standings", new { page, unofficial = Model.Unofficial}) )
     </div>
 }
 @functions{

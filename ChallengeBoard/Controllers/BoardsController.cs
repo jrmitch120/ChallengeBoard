@@ -48,10 +48,10 @@ namespace ChallengeBoard.Controllers
                              ? _repository.GetBoardsForCompetitor(User.Identity.Name)
                              : _repository.Boards.Where(x => x.End > DateTime.Now);
 
-            boards =
-                boards.Where(x => x.Name.ToLower().Contains(search.ToLower().Trim()))
-                      .OrderByDescending(x => x.End)
-                      .Take(100);
+            // If no search query is provided, select all
+            if(String.IsNullOrWhiteSpace(search) == false)
+                boards = boards.Where(x => x.Name.ToLower().Contains(search.ToLower().Trim()));
+            boards = boards.OrderByDescending(x => x.End).Take(100);
 
             return (Json(new BoardListViewModel(boards), JsonRequestBehavior.AllowGet));
         }
@@ -328,7 +328,7 @@ namespace ChallengeBoard.Controllers
         //
         // Get: /Boards/Standings/5
 
-        public ActionResult Standings(int id = 0, int page = 1)
+        public ActionResult Standings(int id = 0, int page = 1, bool unofficial = false)
         {
             if (page < 1) page = 1;
 
@@ -337,13 +337,63 @@ namespace ChallengeBoard.Controllers
             if (existingBoard == null)
                 return View("BoardNotFound");
 
+            if (unofficial)
+            {
+                // All unresolved matches for this challenge board.
+                var unresolvedMatches = _repository.GetUnresolvedMatchesByBoardId(id);
+
+                var deltas = new Dictionary<int, Dictionary<string, int>>();
+
+                // Traverse the pending queue in order and build competitor deltas dictionary
+                foreach (var match in unresolvedMatches.OrderBy(x => x.VerificationDeadline))
+                {
+                    if (!deltas.ContainsKey(match.Winner.CompetitorId))
+                        deltas.Add(match.Winner.CompetitorId, new Dictionary<string, int>{{"rating", 0},{"wins", 0},{"loses", 0},{"ties", 0},{"streak", 0}});
+
+                    if (!deltas.ContainsKey(match.Loser.CompetitorId))
+                        deltas.Add(match.Loser.CompetitorId, new Dictionary<string, int>{{"rating", 0},{"wins", 0},{"loses", 0},{"ties", 0},{"streak", 0}});
+
+                    deltas[match.Winner.CompetitorId]["rating"] += match.WinnerRatingDelta;
+                    deltas[match.Loser.CompetitorId]["rating"] += match.LoserRatingDelta;
+
+                    if (match.Tied)
+                    {
+                        deltas[match.Winner.CompetitorId]["ties"] += 1;
+                        deltas[match.Loser.CompetitorId]["ties"] += 1;
+                        deltas[match.Winner.CompetitorId]["streak"] = 0;
+                    }
+                    else
+                    {
+                        deltas[match.Loser.CompetitorId]["loses"] += 1;
+                        deltas[match.Loser.CompetitorId]["streak"] = 0;
+
+                        deltas[match.Winner.CompetitorId]["wins"] += 1;
+                        deltas[match.Winner.CompetitorId]["streak"] += 1;
+                    }
+                }
+
+                // Traverse existingBoard.Competitors and apply deltas gathered in the dictionary
+                foreach (var competitor in existingBoard.Competitors)
+                {
+                    if (deltas.ContainsKey(competitor.CompetitorId))
+                    {
+                        competitor.Rating += deltas[competitor.CompetitorId]["rating"];
+                        competitor.Wins += deltas[competitor.CompetitorId]["wins"];
+                        competitor.Loses += deltas[competitor.CompetitorId]["loses"];
+                        competitor.Ties += deltas[competitor.CompetitorId]["ties"];
+                        competitor.Streak += deltas[competitor.CompetitorId]["streak"];
+                    }
+                }
+            }
+
             // Unranked players get 0 rating.
             existingBoard.Competitors.Where(c => c.MatchesPlayed == 0).ToList().ForEach(c => c.Rating = 0);
 
             return View("Standings", new StandingsViewModel
             {
                 Board = existingBoard,
-                Standings = existingBoard.Competitors.Active().OrderByDescending(c => c.Rating).ToPagedList(page, PageLimits.Standings)
+                Standings = existingBoard.Competitors.Active().OrderByDescending(c => c.Rating).ToPagedList(page, PageLimits.Standings),
+                Unofficial = unofficial
             });
         }
     }

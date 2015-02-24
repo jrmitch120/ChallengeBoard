@@ -5,8 +5,24 @@
 }
 @Html.Partial("_HeaderPartial", new ChallengeBoard.Infrastucture.PageHeader(Model.Board.Name, "Standings"))
 @Html.Partial("_BoardNav", Model.Board)
+
+<div class="well">
+    <div class="btn-group pull-right" role="group">
+        @{
+            var officialClass = Model.Unofficial ? "btn btn-primary" : "btn btn-primary active";
+            var unofficialClass = Model.Unofficial ? "btn btn-primary active" : "btn btn-primary";
+        }
+        @Html.ActionLink("Official Standings", "Standings", "Boards", null, null, null, new {id = Model.Board.BoardId}, new {@class = officialClass})
+        @Html.ActionLink("Unofficial Standings", "Standings", "Boards", null, null, null, new {id = Model.Board.BoardId, unofficial = true}, new {@class = unofficialClass})
+    </div>
+    <b>Official standings</b> reflect all approved matches. <b>Unofficial standings</b> reflect approved and pending matches.
+    They can give you a good idea where players actually stand at a given point in time.
+</div>
+
+
 <section id="Standings">
     @Html.Partial("_StandingsPartial", Model)
+
 </section>
 @section Scripts {
     @Scripts.Render("~/bundles/components")
