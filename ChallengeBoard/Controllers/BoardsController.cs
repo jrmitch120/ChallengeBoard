@@ -328,7 +328,7 @@ namespace ChallengeBoard.Controllers
         //
         // Get: /Boards/Standings/5
 
-        public ActionResult Standings(int id = 0, int page = 1, bool official = true)
+        public ActionResult Standings(int id = 0, int page = 1, bool unofficial = false)
         {
             if (page < 1) page = 1;
 
@@ -337,7 +337,7 @@ namespace ChallengeBoard.Controllers
             if (existingBoard == null)
                 return View("BoardNotFound");
 
-            if (!official)
+            if (unofficial)
             {
                 // All unresolved matches for this challenge board.
                 var unresolvedMatches = _repository.GetUnresolvedMatchesByBoardId(id);
@@ -392,17 +392,9 @@ namespace ChallengeBoard.Controllers
             return View("Standings", new StandingsViewModel
             {
                 Board = existingBoard,
-                Standings = existingBoard.Competitors.Active().OrderByDescending(c => c.Rating).ToPagedList(page, PageLimits.Standings)
+                Standings = existingBoard.Competitors.Active().OrderByDescending(c => c.Rating).ToPagedList(page, PageLimits.Standings),
+                Unofficial = unofficial
             });
         }
-
-        //
-        // Get: /Boards/ProvisionalStandings/5
-
-        public ActionResult ProvisionalStandings(int id = 0, int page = 1)
-        {
-            return Standings(id, page, false);
-        }
-
     }
 }

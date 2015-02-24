@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ChallengeBoard.Models;
+﻿using ChallengeBoard.Models;
 using PagedList;
 
 namespace ChallengeBoard.ViewModels
@@ -9,5 +7,6 @@ namespace ChallengeBoard.ViewModels
     {
         public Board Board { get; set; }
         public IPagedList<Competitor> Standings { get; set; }
+        public bool Unofficial { get; set; }
     }
 }
