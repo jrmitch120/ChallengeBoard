@@ -348,10 +348,10 @@ namespace ChallengeBoard.Controllers
                 foreach (var match in unresolvedMatches.OrderBy(x => x.VerificationDeadline))
                 {
                     if (!deltas.ContainsKey(match.Winner.CompetitorId))
-                        deltas.Add(match.Winner.CompetitorId, new Dictionary<string, int>{{"rating", 0},{"wins", 0},{"loses", 0},{"ties", 0},{"streak", 0}});
+                        deltas.Add(match.Winner.CompetitorId, new Dictionary<string, int>{{"rating", 0},{"wins", 0},{"loses", 0},{"ties", 0},{"streak", match.Winner.Streak}});
 
                     if (!deltas.ContainsKey(match.Loser.CompetitorId))
-                        deltas.Add(match.Loser.CompetitorId, new Dictionary<string, int>{{"rating", 0},{"wins", 0},{"loses", 0},{"ties", 0},{"streak", 0}});
+                        deltas.Add(match.Loser.CompetitorId, new Dictionary<string, int>{{"rating", 0},{"wins", 0},{"loses", 0},{"ties", 0},{"streak", match.Loser.Streak}});
 
                     deltas[match.Winner.CompetitorId]["rating"] += match.WinnerRatingDelta;
                     deltas[match.Loser.CompetitorId]["rating"] += match.LoserRatingDelta;
@@ -381,7 +381,7 @@ namespace ChallengeBoard.Controllers
                         competitor.Wins += deltas[competitor.CompetitorId]["wins"];
                         competitor.Loses += deltas[competitor.CompetitorId]["loses"];
                         competitor.Ties += deltas[competitor.CompetitorId]["ties"];
-                        competitor.Streak += deltas[competitor.CompetitorId]["streak"];
+                        competitor.Streak = deltas[competitor.CompetitorId]["streak"];
                     }
                 }
             }
