@@ -181,8 +181,8 @@ i.collapser {
 input.danger {
     color: #b94a48 !important;
     text-transform: uppercase;
+    text-align: center;
     font-weight: bold;
-    width: 3.7em;
 }
 
 textarea.editor {

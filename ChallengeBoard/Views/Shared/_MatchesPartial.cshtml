@@ -127,22 +127,26 @@
                         }
                         @if (Model.Viewer != null &&
                                 (match.Loser.ProfileUserId.Equals(Model.Viewer.ProfileUserId) || // Loser able to finalize
+                                 match.Winner.ProfileUserId.Equals(Model.Viewer.ProfileUserId) || // Winner able to withdraw
                                  match.Board.Owner.ProfileUserId.Equals(Model.Viewer.ProfileUserId) // Board owner able to finalize
                                 )
                             )
                         {
-                            <ul class="nav nav-pills">
+                            var action = match.Winner.ProfileUserId.Equals(Model.Viewer.ProfileUserId) ? "Withdraw" : "Finalize";
+                            
+                        <ul class="nav nav-pills">
                                 <li>
                                     @Html.ActionLink(remaining, "Validate", new { id = match.Board.BoardId, matchId = match.MatchId },
                                                      new
                                                      {
-                                                         @class = "validate", title = "Finalize Match", 
+                                                         @class = "validate", title = action + " Match", 
                                                          data_winner = match.Winner.Name, 
                                                          data_winnerRatingDelta = match.WinnerRatingDelta,
                                                          data_loser = match.Loser.Name, 
                                                          data_loserRatingDelta = match.LoserRatingDelta,
                                                          data_matchId = match.MatchId, 
-                                                         data_boardId = match.Board.BoardId
+                                                         data_boardId = match.Board.BoardId,
+                                                         data_action = match.Winner.ProfileUserId.Equals(Model.Viewer.ProfileUserId) ? "Withdraw" : "Finalize"
                                                      })
                                 </li>
                             </ul>

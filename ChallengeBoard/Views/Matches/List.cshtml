@@ -107,14 +107,15 @@
                 </p>
             </div>
             <div class="centered-text well well-small">
-                <h3 class="lead">Type "verify" or "reject" to finalize this match.
-                </h3>
-                @Html.TextBox("FinalizationRequest", "", new { maxlength = 6, @class = "danger", autocomplete = "off" })
+                <h3 class="lead" data-bind="text: actionDescription"></h3>
+                <div class="controls">
+                    @Html.TextBox("FinalizationRequest", "", new { data_bind = "value: confirmation, valueUpdate: 'keyup'", maxlength = 8, @class = "danger input-small", autocomplete = "off" })
+                </div>
             </div>
         </div>
         <div class="modal-footer">
             <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-            <button id="Finalize" type="submit" class="btn btn-primary disabled" disabled="disabled">Finalize Match</button>
+            <button id="Finalize" type="submit" class="btn btn-primary" data-bind="enable: actionConfirmed">Finalize Match</button>
         </div>
     }
 </div>
@@ -127,29 +128,9 @@
             var matchResult = new MatchModel();
             ko.applyBindings(matchResult);
 
-            // Force them to type "VERIFY" or "REJECT" before enabling the finalize button.
-            $('#FinalizationRequest').keyup(function() {
-                if ($(this).val().toLowerCase() == "reject") {
-                    $('#Finalize').removeClass('disabled');
-                    $('#Finalize').removeAttr('disabled');
-                } else if ($(this).val().toLowerCase() == "verify") {
-                    $('#Finalize').removeClass('disabled');
-                    $('#Finalize').removeAttr('disabled');
-                } else {
-                    $('#Finalize').addClass('disabled');
-                    $('#Finalize').attr('disabled', 'disabled');
-                }
-            });
-            
             // Accidental submission insurance
             $('#FinalizeForm').submit(function () {
                 return $('#Finalize').attr('disabled') == undefined;
-            });
-
-            // When hidding the modal, reset the confirmation box.
-            $('#myModal').on('hidden', function() {
-                $('#FinalizationRequest').val('');
-                $('#Finalize').attr('disabled', 'disabled');
             });
 
             // User wants to reject a match.  Set the ViewModel and pop the modal
@@ -161,6 +142,8 @@
                 matchResult.loserRatingDelta(this.getAttribute('data-loserRatingDelta'));
                 matchResult.matchId(this.getAttribute('data-matchId'));
                 matchResult.boardId(this.getAttribute('data-boardId'));
+                matchResult.action(this.getAttribute('data-action'));
+                matchResult.confirmation('');
 
                 $('#myModal').modal();
 
