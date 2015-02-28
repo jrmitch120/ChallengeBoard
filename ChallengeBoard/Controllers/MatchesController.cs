@@ -124,7 +124,7 @@ namespace ChallengeBoard.Controllers
         //[AjaxOnly]
         public ActionResult Reject(int boardId, int matchId)
         {
-            var response = "The match has been rejected.  It will no longer be counted in the standings.";
+            var response = "The match has been invalidated .  It will no longer be counted in the standings.";
 
             try
             {
@@ -159,7 +159,7 @@ namespace ChallengeBoard.Controllers
                 }
                 else
                 {
-                    response = "The match has been rejected.  It will no longer be counted in the standings.";
+                    response = "The match has been invalidated .  It will no longer be counted in the standings.";
                     _service.RejectMatch(boardId, matchId, HttpContext.User.Identity.Name);
                 }
             }

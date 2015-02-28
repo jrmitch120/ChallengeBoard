@@ -1,0 +1,25 @@
+﻿@model ChallengeBoard.Email.Models.MatchWithdrawlNotice
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>The Challenge Board: Match Notification</title>
+    <style>
+        p { margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+    <p>
+        Hello @Model.Withdrawee,
+    </p>
+    <p>
+        We're just dropping you a line to let you know that <strong>@Model.Withdrawer</strong> has withdrawn a match 
+        involving you on the <strong>@Model.BoardName</strong> challenge board.  The outcome of this match will no longer be 
+        included in your board rating.
+    </p>
+    <p>
+        Thanks,<br/>
+        The Challenge Board
+    </p>
+</body>
+</html>

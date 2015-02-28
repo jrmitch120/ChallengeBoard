@@ -50,6 +50,27 @@ namespace ChallengeBoard.Models
         public bool Tied { get; set; }
         public bool Verified { get; set; }
         public bool Rejected { get; set; }
-        public bool IsResolved { get { return (Rejected || Verified); } }
+        public bool Withdrawn { get; set; }
+        public bool IsResolved { get { return (Rejected || Verified || Withdrawn); } }
+        public bool IsInvalid { get { return (Rejected || Withdrawn); } }
+
+        public bool Invalidate(Competitor invalidator)
+        {
+            if (IsResolved)
+                return false;
+
+            Resolved = DateTime.Now;
+
+            if (invalidator.CompetitorId == Winner.ProfileUserId)
+                Withdrawn = true;
+            else
+            {
+                Rejected = true;
+                Winner.RejectionsReceived++;
+                Loser.RejectionsGiven++;
+            }
+
+            return true;
+        }
     }
 }

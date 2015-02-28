@@ -210,6 +210,7 @@
     <Compile Include="Email\EmailFactory.cs" />
     <Compile Include="Email\EmailType.cs" />
     <Compile Include="Email\IPostmaster.cs" />
+    <Compile Include="Email\Models\MatchWithdrawlNotice.cs" />
     <Compile Include="Email\Models\PasswordRecovery.cs" />
     <Compile Include="Email\Models\MatchRejectionNotice.cs" />
     <Compile Include="Email\Models\IEmailModel.cs" />
@@ -252,6 +253,10 @@
     <Compile Include="Migrations\201310221841275_LastViewedPost.cs" />
     <Compile Include="Migrations\201310221841275_LastViewedPost.Designer.cs">
       <DependentUpon>201310221841275_LastViewedPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502272035502_MatchWithdrawn.cs" />
+    <Compile Include="Migrations\201502272035502_MatchWithdrawn.Designer.cs">
+      <DependentUpon>201502272035502_MatchWithdrawn.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CompetitorDiscussion.cs" />
@@ -404,6 +409,9 @@
     <Content Include="Email\Templates\PasswordRecovery.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Email\Templates\MatchWithdrawlNotice.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\ChallengeBoard\ignitors.js" />
     <Content Include="Scripts\jquery.tablesorter.sorters.js" />
@@ -511,6 +519,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201310221841275_LastViewedPost.resx">
       <DependentUpon>201310221841275_LastViewedPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502272035502_MatchWithdrawn.resx">
+      <DependentUpon>201502272035502_MatchWithdrawn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

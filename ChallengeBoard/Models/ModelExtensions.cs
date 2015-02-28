@@ -12,6 +12,11 @@ namespace ChallengeBoard.Models
             return (board.Owner.Profile.UserName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
+        public static bool IsOwner(this Board board, Competitor competitor)
+        {
+            return (board.Owner.CompetitorId == competitor.CompetitorId);
+        }
+
         // Competitor
         public static bool CanEdit(this Competitor competitor, Board board, string name)
         {
@@ -37,7 +42,6 @@ namespace ChallengeBoard.Models
         {
             return (competitors.Any(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
         }
-
 
         public static Competitor FindCompetitorByName(this IEnumerable<Competitor> competitors, string name)
         {
@@ -93,10 +97,21 @@ namespace ChallengeBoard.Models
             if (match.Tied)
                 result.Outcome = MatchOutcome.Tie;
 
-            if (match.Rejected)
+            if (match.IsInvalid)
                 result.Invalid = true;
 
             return (result);
+        }
+
+        public static bool Involves(this Match match, Competitor competitor)
+        {
+            return match.Winner.CompetitorId == competitor.CompetitorId ||
+                   match.Loser.CompetitorId == competitor.CompetitorId;
+        }
+
+        public static bool DoesNotInvolve(this Match match, Competitor competitor)
+        {
+            return !Involves(match, competitor);
         }
 
         // Post

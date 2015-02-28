@@ -195,12 +195,12 @@ namespace ChallengeBoard.Services
         public void RejectMatch(int boardId, int matchId, string userName)
         {
             // Used to match against match Loser profile for verification of rejection authority.
-            var userProfile = _repository.UserProfiles.FindProfile(userName);
+            var competior = _repository.GetCompetitorByUserName(boardId, userName);
             var board = _repository.GetBoardById(boardId);
 
             bool adminRejection = false;
 
-            if (userProfile == null)
+            if (competior == null)
                 throw new InvalidOperationException("Can not find your profile.");
             
             // All unresolved matches for this challenge board.
@@ -212,10 +212,10 @@ namespace ChallengeBoard.Services
             if (rejectedMatch == null)
                 throw new ServiceException("Can not find match.");
             
-            if(board.Owner.ProfileUserId == userProfile.UserId) // Board owner can reject anything
+            if(board.IsOwner(competior)) // Board owner can reject anything
                 adminRejection = true;
-            else if (rejectedMatch.Loser.ProfileUserId != userProfile.UserId)  // Loser can reject match
-                throw new ServiceException("You are not able to reject this match.");
+            else if (rejectedMatch.DoesNotInvolve(competior)) // Participants have a say
+                throw new ServiceException("You are not able to modify this match.");
 
             if(rejectedMatch.IsResolved)
                 throw new ServiceException("This match has already been resolved.");
@@ -223,11 +223,8 @@ namespace ChallengeBoard.Services
             if (DateTime.Now > rejectedMatch.VerificationDeadline)
                 throw new ServiceException("The deadline for rejecting this match has passed.");
 
-            rejectedMatch.Rejected = true;
-            rejectedMatch.Resolved = DateTime.Now;
-            rejectedMatch.Winner.RejectionsReceived++;
-            rejectedMatch.Loser.RejectionsGiven++;
-
+            rejectedMatch.Invalidate(competior);
+            
             // Anonymous list of unresolve matches taking place after the rejected match.
             // * These are the matches we need to recalculate
             var matchList =
@@ -264,15 +261,29 @@ namespace ChallengeBoard.Services
 
             _repository.CommitChanges();
 
-            _mailService.SendEmail(rejectedMatch.Winner.Profile.EmailAddress, rejectedMatch.Winner.Profile.UserName,
-                                   "Match Rejected", EmailType.MatchRejectionNotice,
-                                   new MatchRejectionNotice
-                                   {
-                                       RejectorName = adminRejection ? "the board administrator" : rejectedMatch.Loser.Name,
-                                       RejectedName = rejectedMatch.Winner.Name,
-                                       BoardName = board.Name,
-                                       BoardOwnerName = board.Owner.Name
-                                   });
+            if (rejectedMatch.Withdrawn)
+            {
+                _mailService.SendEmail(rejectedMatch.Loser.Profile.EmailAddress, rejectedMatch.Loser.Profile.UserName,
+                    "Match Withdrawn", EmailType.MatchWithdrawlNotice,
+                    new MatchWithdrawlNotice
+                    {
+                        Withdrawer = rejectedMatch.Winner.Name,
+                        Withdrawee = rejectedMatch.Loser.Name,
+                        BoardName = board.Name,
+                    });
+            }
+            else
+            {
+                _mailService.SendEmail(rejectedMatch.Winner.Profile.EmailAddress, rejectedMatch.Winner.Profile.UserName,
+                    "Match Rejected", EmailType.MatchRejectionNotice,
+                    new MatchRejectionNotice
+                    {
+                        RejectorName = adminRejection ? "the board administrator" : rejectedMatch.Loser.Name,
+                        RejectedName = rejectedMatch.Winner.Name,
+                        BoardName = board.Name,
+                        BoardOwnerName = board.Owner.Name
+                    });
+            }
         }
 
         public void SweepMatches()
