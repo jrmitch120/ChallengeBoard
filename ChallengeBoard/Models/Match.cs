@@ -61,7 +61,7 @@ namespace ChallengeBoard.Models
 
             Resolved = DateTime.Now;
 
-            if (invalidator.CompetitorId == Winner.ProfileUserId)
+            if (invalidator.CompetitorId == Winner.CompetitorId)
                 Withdrawn = true;
             else
             {
