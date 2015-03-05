@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ChallengeBoard.Models;
 using Moq;
 using NUnit.Framework;
 using ChallengeBoard.Services;
@@ -198,13 +199,21 @@ namespace ChallengeBoardTests
         }
 
         [Test]
-        public void ThrowsIfNotLoserOrAdmin()
+        public void ThrowsIfNotSubmitterOrLoserOrAdmin()
         {
             var repository = Repository.CreatePopulatedRepository();
+            
             var service = new MatchService(repository, null);
-
             var match = repository.GetUnresolvedMatchesByBoardId(1).First();
-            Assert.Throws<ServiceException>(() => service.RejectMatch(match.Board.BoardId, match.MatchId, match.Winner.Name));
+
+            var profile = new UserProfile {UserName = "Joe Shmoe", UserId = 999};
+            var nonParticipant = new Competitor { CompetitorId = 999, Name = "Joe Shmoe", Rating = 1500, ProfileUserId = 999};
+            
+            repository.Add(profile);
+            repository.Add(nonParticipant);
+
+            repository.CommitChanges();
+            Assert.Throws<ServiceException>(() => service.RejectMatch(match.Board.BoardId, match.MatchId, nonParticipant.Name));
         }
 
         [Test]
