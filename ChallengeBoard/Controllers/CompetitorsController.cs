@@ -18,10 +18,13 @@ namespace ChallengeBoard.Controllers
             _matchService = matchService;
         }
 
-        public new ActionResult Profile(int boardId, int competitorId)
+        public ActionResult Profile(int boardId, int competitorId)
         {
             var board = _repository.GetBoardById(boardId);
             var competitor = _repository.GetCompetitorById(competitorId);
+
+            // Load associated competiotor data into board
+            _repository.GetCompetitorByUserName(boardId, User.Identity.Name);
 
             if (competitor == null)
                 return View("CompetitorNotFound", board);
