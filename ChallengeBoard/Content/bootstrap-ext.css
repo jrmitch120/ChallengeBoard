@@ -441,3 +441,7 @@ ol li {
 #footer {
     height: 70px;
 }
+
+.hero-unit h1 {
+    word-wrap: break-word;
+}
