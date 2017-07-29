@@ -124,7 +124,7 @@ namespace ChallengeBoard.Controllers
         //[AjaxOnly]
         public ActionResult Reject(int boardId, int matchId)
         {
-            var response = "The match has been invalidated .  It will no longer be counted in the standings.";
+            var response = "The match has been invalidated.  It will no longer be counted in the standings.";
 
             try
             {
@@ -154,12 +154,12 @@ namespace ChallengeBoard.Controllers
                 {
                     response = "Your match has been marked as verified.  It will enter the approval queue and " +
                                "be processed as soon as there are no pending matches for either competitor in front of it.  " +
-                               "The approval queue is processed aproximatly every 30 seconds.";
+                               "The approval queue is processed approximately every 30 seconds.";
                     _service.ConfirmMatch(boardId, matchId, HttpContext.User.Identity.Name);
                 }
                 else
                 {
-                    response = "The match has been invalidated .  It will no longer be counted in the standings.";
+                    response = "The match has been invalidated.  It will no longer be counted in the standings.";
                     _service.RejectMatch(boardId, matchId, HttpContext.User.Identity.Name);
                 }
             }
